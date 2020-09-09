@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>架设RTMP流媒体服务器并使用python进行推流 - Wang's blog</title>	
+	<meta name="author" content="zqwang">
+	
+
+	<meta name="description" content="1、服务器架设 服务器不一定要安装在推流程序所在的机器上，也可以安装在发送、接收双方均可访问到的第三台机器上。 安装方式可以使用docker镜像或直接编译安装。 使用docker镜像 github地址：https://github.com/alfg/docker-nginx-rtmp 安装并运行： docker pull alfg/nginx-rtmp docker run -it -p 1935:1935 -p 8080:80 --rm alfg/nginx-rtmp 之后即可推流至： rtmp://<server ip>:1935/stream/$STREAM_NAME 自行编译安装 # 安装依赖库 sudo apt install -y libpcre3 libpcre3-dev openssl libssl-dev zlib1g-dev # 下载nginx源码并解压 wget …">
+
+
+	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
+	<link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+		
+
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	    <div class="feeds">
+	    </div>
+		<a href="" class="title">Wang's blog</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+			
+		<h1>架设RTMP流媒体服务器并使用python进行推流</h1>
+		
+<div class="metadata">
+  <time datetime="2020-09-09T11:44:00+08:00" pubdate>2020-09-09 11:44</time>
+    <address class="vcard author">
+      by <a class="url fn" href="/author/zqwang.html">zqwang</a>
+    </address>
+  in <a href="/category/kai-fa.html">开发</a>
+</div>		
+		<h2>1、服务器架设</h2>
+<p>服务器不一定要安装在推流程序所在的机器上，也可以安装在发送、接收双方均可访问到的第三台机器上。</p>
+<p>安装方式可以使用docker镜像或直接编译安装。</p>
+<h3>使用docker镜像</h3>
+<p>github地址：<a href="https://github.com/alfg/docker-nginx-rtmp">https://github.com/alfg/docker-nginx-rtmp</a></p>
+<p>安装并运行：</p>
+<div class="highlight"><pre><span></span>docker pull alfg/nginx-rtmp
+docker run -it -p <span class="m">1935</span>:1935 -p <span class="m">8080</span>:80 --rm alfg/nginx-rtmp
+</pre></div>
+
+
+<p>之后即可推流至：</p>
+<div class="highlight"><pre><span></span><span class="c">rtmp://&lt;server ip&gt;:1935/stream/$STREAM_NAME</span>
+</pre></div>
+
+
+<h3>自行编译安装</h3>
+<div class="highlight"><pre><span></span><span class="c1"># 安装依赖库</span>
+sudo apt install -y libpcre3 libpcre3-dev openssl libssl-dev zlib1g-dev
+<span class="c1"># 下载nginx源码并解压</span>
+wget http://nginx.org/download/nginx-1.17.8.tar.gz
+tar -xf nginx-1.17.8.tar.gz
+<span class="c1"># 下载nginx-rtmp-module模块源码</span>
+git clone https://github.com/arut/nginx-rtmp-module.git
+<span class="c1"># 编译并安装带nginx-rtmp-module模块的nginx</span>
+<span class="nb">cd</span> nginx-1.17.8
+./configure --add-module<span class="o">=</span>../nginx-rtmp-module
+sudo make install
+</pre></div>
+
+
+<p>配置nginx，将/usr/local/nginx/conf/nginx.conf修改为：</p>
+<div class="highlight"><pre><span></span><span class="n">worker_processes</span>  <span class="mi">1</span><span class="p">;</span>
+
+<span class="n">events</span> <span class="err">{</span>
+    <span class="n">worker_connections</span>  <span class="mi">1024</span><span class="p">;</span>
+<span class="err">}</span>
+
+<span class="n">rtmp</span> <span class="err">{</span>
+        <span class="n">server</span> <span class="err">{</span>
+                <span class="k">listen</span> <span class="mi">1935</span><span class="p">;</span>
+                <span class="n">chunk_size</span> <span class="mi">4096</span><span class="p">;</span>
+
+                <span class="n">application</span> <span class="n">stream</span> <span class="err">{</span>
+                        <span class="n">live</span> <span class="k">on</span><span class="p">;</span>
+                        <span class="n">record</span> <span class="k">off</span><span class="p">;</span>
+                <span class="err">}</span>
+        <span class="err">}</span>
+<span class="err">}</span>
+</pre></div>
+
+
+<p>运行nginx：</p>
+<div class="highlight"><pre><span></span>sudo /usr/local/nginx/sbin/nginx
+</pre></div>
+
+
+<p>之后即可推流至：</p>
+<div class="highlight"><pre><span></span><span class="c">rtmp://&lt;server ip&gt;:1935/stream/$STREAM_NAME</span>
+</pre></div>
+
+
+<p>停止nginx:</p>
+<div class="highlight"><pre><span></span>sudo /usr/local/nginx/sbin/nginx -s stop
+</pre></div>
+
+
+<h1>2、使用python推流</h1>
+<p>python可以使用ffmpeg命令进行推流，有两种方式：直接调用ffmpeg命令，或使用ffmpeg-python库。</p>
+<h2>安装ffmpeg：</h2>
+<div class="highlight"><pre><span></span>sudo apt install -y ffmpeg
+</pre></div>
+
+
+<h2>直接调用ffmpeg命令</h2>
+<p>使用subprocess开启ffmpeg子进程，在python中读取每一帧并进行处理，之后通过管道将图像交给子进程进行推流。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="c1"># 设置视频文件与推流地址</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;test.mp4&#39;</span>
+<span class="n">push_url</span> <span class="o">=</span> <span class="s1">&#39;rtmp://localhost:1935/stream/test&#39;</span>
+
+<span class="c1"># 读取视频属性</span>
+<span class="n">cap</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">fps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_FPS</span><span class="p">))</span>
+<span class="n">width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_FRAME_WIDTH</span><span class="p">))</span>
+<span class="n">height</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_FRAME_HEIGHT</span><span class="p">))</span>
+
+<span class="c1"># ffmpeg命令</span>
+<span class="n">command</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ffmpeg&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;-y&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;-f&#39;</span><span class="p">,</span> <span class="s1">&#39;rawvideo&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;-vcodec&#39;</span><span class="p">,</span> <span class="s1">&#39;rawvideo&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;-pix_fmt&#39;</span><span class="p">,</span> <span class="s1">&#39;bgr24&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;-s&#39;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">x</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span>
+           <span class="s1">&#39;-r&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">fps</span><span class="p">),</span>
+           <span class="s1">&#39;-i&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;-c:v&#39;</span><span class="p">,</span> <span class="s1">&#39;libx264&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;-pix_fmt&#39;</span><span class="p">,</span> <span class="s1">&#39;yuv420p&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;-preset&#39;</span><span class="p">,</span> <span class="s1">&#39;ultrafast&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;-f&#39;</span><span class="p">,</span> <span class="s1">&#39;flv&#39;</span><span class="p">,</span>
+           <span class="n">push_url</span><span class="p">]</span>
+
+<span class="c1"># 开启子进程</span>
+<span class="n">process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="c1"># 读取每一帧</span>
+    <span class="n">ret</span><span class="p">,</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">cap</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">:</span>
+        <span class="k">break</span>
+    <span class="c1"># 处理</span>
+    <span class="c1"># frame = process(frame)</span>
+    <span class="c1"># 交给子进程推流</span>
+    <span class="n">process</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">tobytes</span><span class="p">())</span>
+</pre></div>
+
+
+<h2>使用ffmpeg-python库</h2>
+<p>ffmpeg-python库将ffmpeg命令进行封装，实际仍会启动ffmpeg子进程，但是代码更加简洁。</p>
+<p>github地址：<a href="https://github.com/kkroening/ffmpeg-python">https://github.com/kkroening/ffmpeg-python</a></p>
+<p>安装</p>
+<div class="highlight"><pre><span></span>pip install ffmpeg-python
+</pre></div>
+
+
+<p>使用</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">ffmpeg</span>
+
+<span class="c1"># 设置视频文件与推流地址</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;test.mp4&#39;</span>
+<span class="n">push_url</span> <span class="o">=</span> <span class="s1">&#39;rtmp://localhost:1935/stream/test&#39;</span>
+
+<span class="c1"># 读取视频属性</span>
+<span class="n">cap</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">VideoCapture</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">fps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_FPS</span><span class="p">))</span>
+<span class="n">width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_FRAME_WIDTH</span><span class="p">))</span>
+<span class="n">height</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">CAP_PROP_FRAME_HEIGHT</span><span class="p">))</span>
+
+<span class="c1"># 开启ffmpeg子进程</span>
+<span class="n">process</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">ffmpeg</span>
+    <span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="s1">&#39;pipe:&#39;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;rawvideo&#39;</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="o">=</span><span class="s1">&#39;bgr24&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">x</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span> <span class="n">r</span><span class="o">=</span><span class="n">fps</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">push_url</span><span class="p">,</span> <span class="n">vcodec</span><span class="o">=</span><span class="s1">&#39;libx264&#39;</span><span class="p">,</span> <span class="n">pix_fmt</span><span class="o">=</span><span class="s1">&#39;yuv420p&#39;</span><span class="p">,</span> <span class="n">preset</span><span class="o">=</span><span class="s1">&#39;ultrafast&#39;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;flv&#39;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">run_async</span><span class="p">(</span><span class="n">pipe_stdin</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="c1"># 读取每一帧</span>
+    <span class="n">ret</span><span class="p">,</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">cap</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">:</span>
+        <span class="k">break</span>
+    <span class="c1"># 处理</span>
+    <span class="c1"># frame = process(frame)</span>
+    <span class="c1"># 交给子进程推流</span>
+    <span class="n">process</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">tobytes</span><span class="p">())</span>
+
+<span class="c1"># 关闭子进程输入并等待结束</span>
+<span class="n">process</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">process</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+</pre></div>	
+
+	</article>
+
+	<!--
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+	-->
+
+
+		  </div>	
+		  
+		  <div class="sidebar">
+
+	        <nav>
+	          <h2>分类</h2>
+	          <ul>
+	              <li class="active"><a href="/category/kai-fa.html">开发</a></li>
+	          </ul>
+	        </nav>
+
+	          <aside>
+	          <h2>社交</h2>
+			    <ul class="social">
+				  <li><a href="https://github.com/zqwang-cn">github profile</a><i></i></li>
+			    </ul>
+			  </aside>
+
+	          <aside>
+	            <h2>链接</h2>
+	            <ul>
+	                <li><a href="https://getpelican.com/">Pelican</a></li>
+	                <li><a href="https://www.python.org/">Python.org</a></li>
+	                <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+	            </ul>
+	          </aside>
+
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  © 2020 zqwang - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>
