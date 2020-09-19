@@ -2,9 +2,12 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>Wang's blog</title>	
+	<title>c语言++操作符与函数调用的问题 - Wang's blog</title>	
 	<meta name="author" content="zqwang">
 	
+
+	<meta name="description" content="假设有如下c函数： void func(int a, int b, int c) { printf("%d,%d,%d\n",a,b,c); } 使用如下方式调用： int i=0; func(i++, i++, i++); 希望的输出是： 0,1,2 但是实际输出是： 2,1,0 分析原因，应该是由于c语言的参数压栈顺序为从右向左，因此实际执行的过程是： int i = 0; int c = i; i = i + 1; int b = i; i = i …">
+
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
 	<link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
@@ -25,12 +28,18 @@
 	  <div class="wrapper">
 
 		  <div role="main" class="content">
-
-
-
-      <article>
-        <h1><a href="/c-plusplus-operator-and-function-call-problem.html">c语言++操作符与函数调用的问题</a></h1>
-        <p>假设有如下c函数：</p>
+	<article class="full">
+			
+		<h1>c语言++操作符与函数调用的问题</h1>
+		
+<div class="metadata">
+  <time datetime="2020-09-19T23:24:00+08:00" pubdate>2020-09-19 23:24</time>
+    <address class="vcard author">
+      by <a class="url fn" href="/author/zqwang.html">zqwang</a>
+    </address>
+  in <a href="/category/bi-ji.html">笔记</a>
+<p class="tags">tagged <a href="/tag/c.html">c++</a></p></div>		
+		<p>假设有如下c函数：</p>
 <div class="highlight"><pre><span></span><code><span class="kt">void</span> <span class="nf">func</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">c</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d,%d,%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">);</span>
@@ -109,25 +118,17 @@
 
 
 <p>这与实际输出一致。</p>
-<p><em>备注：以上测试使用的编译器为gcc 9.3.0，实际结果可能因为不同编译器的实现方式不同而不同。</em></p>
-      </article>
+<p><em>备注：以上测试使用的编译器为gcc 9.3.0，实际结果可能因为不同编译器的实现方式不同而不同。</em></p>	
 
-      <hr />
+	</article>
 
-        <div>
-          <h3>Last posts</h3>
-          <ol class="archive">
-    
+	<!--
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+	-->
 
-
-      <li>
-<a href="/install-rtmp-server-and-push-stream-using-python.html" rel="bookmark" title="Permalink to 架设RTMP流媒体服务器并使用python进行推流">架设RTMP流媒体服务器并使用python进行推流</a>
-  <time datetime="2020-09-09T11:44:00+08:00" pubdate>2020-09-09 11:44</time>
-</a>      </li>
-
-
-          </ol>
-        </div>
 
 		  </div>	
 		  
@@ -136,7 +137,7 @@
 	        <nav>
 	          <h2>分类</h2>
 	          <ul>
-	              <li ><a href="/category/bi-ji.html">笔记</a></li>
+	              <li class="active"><a href="/category/bi-ji.html">笔记</a></li>
 	              <li ><a href="/category/kai-fa.html">开发</a></li>
 	          </ul>
 	        </nav>
