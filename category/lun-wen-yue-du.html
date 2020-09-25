@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>论文阅读 - Wang's blog</title>	
+	<meta name="author" content="zqwang">
+	
+
+	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
+	<link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+		
+
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	    <div class="feeds">
+	    </div>
+		<a href="" class="title">Wang's blog</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+
+<h1>Posts categorized under: 论文阅读</h1>
+
+<article class="summary">
+<div class="metadata">
+  <time datetime="2020-09-23T15:44:00+08:00" pubdate>2020-09-23 15:44</time>
+    <address class="vcard author">
+      by <a class="url fn" href="/author/zqwang.html">zqwang</a>
+    </address>
+  in <a href="/category/lun-wen-yue-du.html">论文阅读</a>
+<p class="tags">tagged <a href="/tag/shen-du-xue-xi.html">深度学习</a>, <a href="/tag/wu-ti-jian-ce.html">物体检测</a></p></div>  <div>
+    <h2>
+      <a href="/anchor-free-detection-algorithms-overview.html" rel="bookmark" title="Permalink to Anchor free检测算法概述">Anchor free检测算法概述</a>
+    </h2>
+    <p><h2>0. Anchor based v.s. anchor free</h2>
+<p><img alt="comparison" src="images/anchor-free-detection-algorithms-overview/comparison.png"></p>
+<h3>Anchor based算法</h3>
+<p>什么是anchor： 在图像中预先设置的不同大小与尺度的候选框，覆盖几乎所有位置与尺度，用于对每个位置是否存在物体进行判断。</p>
+<p>基本步骤：Anchor based算法通常分为2步：</p>
+<ul>
+<li>对每个anchor内的图像进行分类，以确定物体类型与其置信度</li>
+<li>对置信度高的anchor边界在小范围内进行回归，以确定准确边界</li>
+</ul>
+<h3>Anchor free算法</h3>
+<p>顾名思义，即不使用anchor的检测算法。通常使用类似分割或关键点检测的方式直接对每个点进行处理。大致可分为2类：</p>
+<ul>
+<li>密集预测（置信度与偏移量）的方法</li>
+<li>基于关键点匹配的方法</li>
+</ul>
+<h2>1. 密集预测的方法</h2>
+<h3>1.0 基本结构</h3>
+<p><img alt="基本结构" src="images/anchor-free-detection-algorithms-overview/category-1-basic-structure.png"></p>
+<h3>1.1 DenseBox</h3>
+<p>Huang L, Yang Y, Deng Y, et al. Densebox: Unifying landmark localization …</p></p>
+  </div>
+</article>
+
+		  </div>	
+		  
+		  <div class="sidebar">
+
+	        <nav>
+	          <h2>分类</h2>
+	          <ul>
+	              <li ><a href="/category/bi-ji.html">笔记</a></li>
+	              <li ><a href="/category/kai-fa.html">开发</a></li>
+	              <li class="active"><a href="/category/lun-wen-yue-du.html">论文阅读</a></li>
+	          </ul>
+	        </nav>
+
+	          <aside>
+	          <h2>社交</h2>
+			    <ul class="social">
+				  <li><a href="https://github.com/zqwang-cn">github</a><i></i></li>
+			    </ul>
+			  </aside>
+
+	          <aside>
+	            <h2>链接</h2>
+	            <ul>
+	                <li><a href="https://getpelican.com/">Pelican</a></li>
+	                <li><a href="https://www.python.org/">Python.org</a></li>
+	                <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+	            </ul>
+	          </aside>
+
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  © 2020 zqwang - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-simplegrey">pelican-simplegrey</a>.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>
