@@ -30,6 +30,43 @@
 
 <article class="summary">
 <div class="metadata">
+  <time datetime="2020-10-15T15:49:00+08:00" pubdate>2020-10-15 15:49</time>
+    <address class="vcard author">
+      by <a class="url fn" href="/author/zqwang.html">zqwang</a>
+    </address>
+  in <a href="/category/bi-ji.html">笔记</a>
+<p class="tags">tagged <a href="/tag/c.html">c++</a></p></div>  <div>
+    <h2>
+      <a href="/c-plusplus-unified-function-interface-return-different-types-of-value.html" rel="bookmark" title="Permalink to c++统一函数接口返回不同类型的值">c++统一函数接口返回不同类型的值</a>
+    </h2>
+    <p><p>假设存在以下函数：</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span> <span class="nf">get_int</span><span class="p">();</span>
+<span class="kt">float</span> <span class="nf">get_float</span><span class="p">();</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">get_string</span><span class="p">();</span>
+</code></pre></div>
+
+
+<p>想要将其整合为一个函数get_value()，根据需要返回不同类型的数据。</p>
+<p>尝试使用函数模板，在函数中根据数据类型执行不同的操作：</p>
+<div class="highlight"><pre><span></span><code><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="n">T</span> <span class="n">get_value</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">T</span> <span class="n">ret</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">is_same</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">get_int</span><span class="p">();</span>
+    <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">is_same</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="kt">float</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">get_float</span><span class="p">();</span>
+    <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">is_same</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">get_string</span><span class="p">();</span>
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>然而这样会出现编译错误。这是由于在实际使用时 …</p></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
   <time datetime="2020-09-19T23:24:00+08:00" pubdate>2020-09-19 23:24</time>
     <address class="vcard author">
       by <a class="url fn" href="/author/zqwang.html">zqwang</a>

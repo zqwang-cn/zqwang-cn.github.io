@@ -2,9 +2,12 @@
 <html lang="">	
 <head>
 	<meta charset="utf-8"/>
-	<title>Wang's blog</title>	
+	<title>c++统一函数接口返回不同类型的值 - Wang's blog</title>	
 	<meta name="author" content="zqwang">
 	
+
+	<meta name="description" content="假设存在以下函数： int get_int(); float get_float(); std::string get_string(); 想要将其整合为一个函数get_value()，根据需要返回不同类型的数据。 尝试使用函数模板，在函数中根据数据类型执行不同的操作： template <typename T> T get_value() { T ret; if (std::is_same<T, int>::value) ret = get_int(); else if (std::is_same<T, float>::value) ret = get_float(); else if (std::is_same<T, std::string>::value) ret = get_string(); return ret; } 然而这样会出现编译错误。这是由于在实际使用时 …">
+
 
 	<link rel="top" href="#" /><link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,400italic,600italic|Source+Code+Pro' rel='stylesheet' type='text/css'></link>
 	<link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
@@ -25,12 +28,18 @@
 	  <div class="wrapper">
 
 		  <div role="main" class="content">
-
-
-
-      <article>
-        <h1><a href="/c-plusplus-unified-function-interface-return-different-types-of-value.html">c++统一函数接口返回不同类型的值</a></h1>
-        <p>假设存在以下函数：</p>
+	<article class="full">
+			
+		<h1>c++统一函数接口返回不同类型的值</h1>
+		
+<div class="metadata">
+  <time datetime="2020-10-15T15:49:00+08:00" pubdate>2020-10-15 15:49</time>
+    <address class="vcard author">
+      by <a class="url fn" href="/author/zqwang.html">zqwang</a>
+    </address>
+  in <a href="/category/bi-ji.html">笔记</a>
+<p class="tags">tagged <a href="/tag/c.html">c++</a></p></div>		
+		<p>假设存在以下函数：</p>
 <div class="highlight"><pre><span></span><code><span class="kt">int</span> <span class="nf">get_int</span><span class="p">();</span>
 <span class="kt">float</span> <span class="nf">get_float</span><span class="p">();</span>
 <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">get_string</span><span class="p">();</span>
@@ -85,37 +94,17 @@
 <span class="p">{</span>
     <span class="n">ret</span> <span class="o">=</span> <span class="n">get_string</span><span class="p">();</span>
 <span class="p">}</span>
-</code></pre></div>
-      </article>
+</code></pre></div>	
 
-      <hr />
+	</article>
 
-        <div>
-          <h3>Last posts</h3>
-          <ol class="archive">
-    
+	<!--
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+	-->
 
-
-      <li>
-<a href="/anchor-free-detection-algorithms-overview.html" rel="bookmark" title="Permalink to Anchor free检测算法概述">Anchor free检测算法概述</a>
-  <time datetime="2020-09-23T15:44:00+08:00" pubdate>2020-09-23 15:44</time>
-<p class="tags">tags: <a href="/tag/shen-du-xue-xi.html">深度学习</a><a href="/tag/wu-ti-jian-ce.html">物体检测</a></p></a>      </li>
-
-
-      <li>
-<a href="/c-plusplus-operator-and-function-call-problem.html" rel="bookmark" title="Permalink to c语言++操作符与函数调用的问题">c语言++操作符与函数调用的问题</a>
-  <time datetime="2020-09-19T23:24:00+08:00" pubdate>2020-09-19 23:24</time>
-<p class="tags">tags: <a href="/tag/c.html">c++</a></p></a>      </li>
-
-
-      <li>
-<a href="/install-rtmp-server-and-push-stream-using-python.html" rel="bookmark" title="Permalink to 架设RTMP流媒体服务器并使用python进行推流">架设RTMP流媒体服务器并使用python进行推流</a>
-  <time datetime="2020-09-09T11:44:00+08:00" pubdate>2020-09-09 11:44</time>
-</a>      </li>
-
-
-          </ol>
-        </div>
 
 		  </div>	
 		  
@@ -124,7 +113,7 @@
 	        <nav>
 	          <h2>分类</h2>
 	          <ul>
-	              <li ><a href="/category/bi-ji.html">笔记</a></li>
+	              <li class="active"><a href="/category/bi-ji.html">笔记</a></li>
 	              <li ><a href="/category/kai-fa.html">开发</a></li>
 	              <li ><a href="/category/lun-wen-yue-du.html">论文阅读</a></li>
 	          </ul>
