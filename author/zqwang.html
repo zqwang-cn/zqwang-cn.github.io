@@ -30,6 +30,34 @@
 
 <article class="summary">
 <div class="metadata">
+  <time datetime="2020-11-11T16:39:00+08:00" pubdate>2020-11-11 16:39</time>
+    <address class="vcard author">
+      by <a class="url fn" href="/author/zqwang.html">zqwang</a>
+    </address>
+  in <a href="/category/gong-ju.html">工具</a>
+</div>  <div>
+    <h2>
+      <a href="/bgslibrary-introduction.html" rel="bookmark" title="Permalink to BGSLibrary背景提取库介绍">BGSLibrary背景提取库介绍</a>
+    </h2>
+    <p><h2>简介</h2>
+<p><a href="https://github.com/andrewssobral/bgslibrary">BGSLibrary</a>(Background Subtraction Library) 是一个背景减除（背景提取）库，它使用C++开发，提供Python/Matlab/Java接口，并可以跨平台使用(Windows/Ubuntu/OS X)。</p>
+<h2>安装</h2>
+<p>可以<a href="https://github.com/andrewssobral/bgslibrary/wiki/Installation-instructions-Ubuntu-or-OSX">编译安装</a>，也可以安装<a href="https://github.com/andrewssobral/bgslibrary/releases">二进制包</a>。但是对于python可以直接使用pip安装，非常方便：</p>
+<div class="highlight"><pre><span></span><code>pip install pybgs
+</code></pre></div>
+
+
+<h2>使用</h2>
+<p>根据<a href="https://github.com/andrewssobral/bgslibrary/blob/master/demo.py">官方demo</a>，使用方法十分简单（以python为例）：</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">pybgs</span> <span class="k">as</span> <span class="nn">bgs</span>
+
+<span class="n">algorithm</span> <span class="o">=</span> <span class="n">bgs</span><span class="o">.</span><span class="n">FrameDifference</span><span class="p">()</span>
+<span class="n">video_file</span> <span class="o">=</span> <span class="s2">&quot;dataset/video.avi …</span></code></pre></div></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
   <time datetime="2020-10-15T15:49:00+08:00" pubdate>2020-10-15 15:49</time>
     <address class="vcard author">
       by <a class="url fn" href="/author/zqwang.html">zqwang</a>
@@ -182,6 +210,7 @@ wget …</code></pre></div></p>
 	          <h2>分类</h2>
 	          <ul>
 	              <li ><a href="/category/bi-ji.html">笔记</a></li>
+	              <li ><a href="/category/gong-ju.html">工具</a></li>
 	              <li ><a href="/category/kai-fa.html">开发</a></li>
 	              <li ><a href="/category/lun-wen-yue-du.html">论文阅读</a></li>
 	          </ul>
