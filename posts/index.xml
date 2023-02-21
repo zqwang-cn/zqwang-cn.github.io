@@ -7,7 +7,77 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2023, zqwang; All rights reserved.</copyright>
-    <lastBuildDate>Wed, 11 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://zqwang-cn.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 30 Dec 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://zqwang-cn.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+      <item>
+        <title>使用nvJPEG加速解码JPG图像</title>
+        <link>https://zqwang-cn.github.io/posts/use-nvjpeg-to-accelerate-jpg-image-decoding/</link>
+        <pubDate>Fri, 30 Dec 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/posts/use-nvjpeg-to-accelerate-jpg-image-decoding/</guid>
+        <description>背景 在读取JPG图像时，需要先对图像进行解码。一般的图像库（如opencv）采用CPU进行解码，如果对速度有很高要求则需要另外实现。
+nvJPEG是英伟达提供的可以使用GPU加速的JPG解码库，它包含在较高版本的CUDA（&amp;gt;10.0）中，如果使用低版本CUDA，则需要另外安装。
+步骤 1. 假设待解码的本地文件为test.jpg，首先将其二进制数据读入内存
+// 以二进制方式打开文件 std::ifstream in_fs(&amp;#34;test.jpg&amp;#34;, std::ifstream::binary); // 获取文件大小 in_fs.seekg(0, std::ios::end); auto in_size = in_fs.tellg(); // 读入全部数据（使用vector避免手动申请/释放空间） std::vector&amp;lt;uchar&amp;gt; in_buf(in_size); in_fs.seekg(0); in_fs.read((char*)in_buf.data(), in_size); 2. 初始化nvJPEG，建立handle与state
+nvjpegHandle_t handle; nvjpegJpegState_t state; nvjpegCreateSimple(&amp;amp;handle); nvjpegJpegStateCreate(handle, &amp;amp;state); 3. 获取图像长宽、通道数、subsampling等信息
+int widths[NVJPEG_MAX_COMPONENT]; int heights[NVJPEG_MAX_COMPONENT]; int channels; nvjpegChromaSubsampling_t subsampling; nvjpegGetImageInfo(handle, in_buf.data(), in_size, &amp;amp;channels, &amp;amp;subsampling, widths, heights); 4. 设置输出参数并解码
+解码时，除了需要传入输入数据及大小外，还需要指定输出格式（nvjpegOutputFormat_t）及输出图像信息（nvjpegImage_t，包含每个通道的行宽度pitch，以及每个通道的输出缓存地址channel）
+此处指定输出格式为NVJPEG_OUTPUT_BGRI，该格式将所有输出写入channel[0]中，格式为&amp;quot;BGRBGRBGR&amp;hellip;&amp;quot;，因此picth[0]为图像宽度×3，channel[0]缓存大小至少应为图像长度×图像宽度×3。如果需要使用其它格式请参考官方文档
+// 计算输出行宽度与总大小 int mul = 3; int out_step = widths[0] * mul; int out_size = out_step * heights[0]; // 设置输出信息，并在显存上申请缓存 nvjpegImage_t out_buf; out_buf.</description>
+      </item>
+    
+      <item>
+        <title>cv::Mat通道顺序转换（HWC转CHW）</title>
+        <link>https://zqwang-cn.github.io/posts/cv-mat-channel-transpose-hwc-to-chw/</link>
+        <pubDate>Fri, 29 Apr 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/posts/cv-mat-channel-transpose-hwc-to-chw/</guid>
+        <description> 简介 在深度学习的图像前处理中，一般会将HWC格式的图像转换为CHW格式，因此需要进行通道顺序转换操作。不同的框架提供了不同的操作：
+在python版OpenCV中，使用numpy.transpose（OpenCV本身不支持） 在pytorch中，使用torch.permute 在tensorflow中，使用tf.transpose C++版OpenCV中进行HWC转CHW C++版本OpenCV不提供通道转换操作，可以使用以下方法进行HWC转CHW（不支持任意转换操作）：
+// 原始图像，尺寸为(h, w, c) cv::Mat image; int h = image.rows; int w = image.cols; int c = image.channels(); // 尺寸转换为(h*w, c, 1)，此步骤不对内存进行修改 image = image.reshape(1, h * w); // 图像转置，尺寸变为(c, h*w, 1) image = image.t(); // 尺寸转换为(c, h, w)，此步骤不对内存进行修改 image = image.reshape(w, c); </description>
+      </item>
+    
+      <item>
+        <title>在Linux中使用微信/企业微信</title>
+        <link>https://zqwang-cn.github.io/posts/use-wechat-wework-in-linux/</link>
+        <pubDate>Thu, 21 Apr 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/posts/use-wechat-wework-in-linux/</guid>
+        <description>简介 通过Wine运行Windows程序 使用Docker避免复杂的Wine配置 微信 1. 首次运行
+sudo docker run -d --name wechat --device /dev/snd --ipc=&amp;#34;host&amp;#34; \ -v /tmp/.X11-unix:/tmp/.X11-unix \ -v $HOME/WeChatFiles:/WeChatFiles \ -e DISPLAY=unix$DISPLAY \ -e XMODIFIERS=@im=fcitx \ -e QT_IM_MODULE=fcitx \ -e GTK_IM_MODULE=fcitx \ -e AUDIO_GID=`getent group audio | cut -d: -f3` \ -e GID=`id -g` \ -e UID=`id -u` \ bestwu/wechat 2. 停止
+sudo docker stop wechat 3. 再次运行
+sudo docker start wechat 企业微信 1. 首次运行
+sudo docker run -d --name wework --device /dev/snd --ipc host \ -v /tmp/.</description>
+      </item>
+    
+      <item>
+        <title>使用iptables控制仅限指定IP访问指定端口</title>
+        <link>https://zqwang-cn.github.io/posts/use-iptables-to-control-port-access/</link>
+        <pubDate>Wed, 20 Apr 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/posts/use-iptables-to-control-port-access/</guid>
+        <description> 背景 在服务器上，如果将某个端口开放使所有IP都可以访问，则可能会引起攻击或增加不必要的流量。此时可以使用iptables控制仅使需要的IP可以访问。
+步骤 1. 首先禁止所有IP访问端口：
+iptables -I INPUT -p tcp --dport {port} -j DROP 2. 之后将该端口开放给指定IP：
+iptables -I INPUT -s {ip} -p tcp --dport {port} -j ACCEPT 其中ip可以为单一IP（如192.168.1.1），也可以为带掩码的一组IP（如192.168.1.0/24）。
+3. 导入/导出规则
+# 导出 iptables-save &amp;gt; {file} # 导入 iptables-restore &amp;lt; {file} 4. 重启后自动导入规则
+无论直接添加的规则还是导入的规则，在重启后都不会保存，需要重新添加或导入。因此需要在/etc/rc.local中使用iptables-restore自动导入规则。
+说明 如需针对udp协议，可将上述命令中的tcp替换为udp 运行iptables需要root权限 目前在Ubuntu中iptables不是服务，不能使用service iptables save保存规则 </description>
+      </item>
+    
+      <item>
+        <title>编译OpenCV以支持CUDA功能</title>
+        <link>https://zqwang-cn.github.io/posts/compile-opencv-to-support-cuda/</link>
+        <pubDate>Wed, 20 Apr 2022 00:00:00 +0000</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/posts/compile-opencv-to-support-cuda/</guid>
+        <description> 背景 在Linux系统中，使用apt等包管理软件安装的OpenCV默认不支持CUDA，如需使用则要自行编译。
+步骤 1. 从OpenCV官网下载源码，将其内容解压至opencv-{version}/。
+2. 从github下载OpenCV contrib包，将其解压至opencv-{version}/opencv_contrib-{version}/。注意两个包的版本要相同。
+3. 在opencv-{version}/下建立build文件夹，执行以下命令：
+cd opencv-{version}/build cmake -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-{version}/modules -DWITH_CUDA=1 .. make -j8 install 说明 在执行cmake命令时，如需其它功能，可以自行添加其它编译变量 在编译前可能需要使用apt等安装依赖 </description>
+      </item>
+    
       <item>
         <title>BGSLibrary背景提取库介绍</title>
         <link>https://zqwang-cn.github.io/posts/bgslibrary-introduction/</link>

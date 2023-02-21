@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+  <head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo 0.110.0">
+<meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
+
+
+<title>使用nvJPEG加速解码JPG图像 | Wang&#39;s blog</title>
+
+<meta name="author" content="zqwang">
+
+
+
+<meta name="robots" content="index follow">
+
+
+
+
+  
+    <link rel="canonical" href="https://zqwang-cn.github.io/posts/use-nvjpeg-to-accelerate-jpg-image-decoding/">
+  
+
+
+
+
+
+
+
+
+<meta property="og:site_name" content="Wang&#39;s blog">
+<meta property="og:title" content="使用nvJPEG加速解码JPG图像">
+
+  <meta property="og:url" content="https://zqwang-cn.github.io/posts/use-nvjpeg-to-accelerate-jpg-image-decoding/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:type" content="article">
+  
+  
+    <meta property="article:published_time" content="2022-12-30">
+    <meta property="article:modified_time" content="2022-12-30">
+    <meta property="og:updated_time" content="2022-12-30">
+  
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="theme-color" content="#222">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "mainEntityOfPage": {
+        "@type": "WebSite",
+        "@id": "https://zqwang-cn.github.io/"
+      },
+      "headline": "使用nvJPEG加速解码JPG图像",
+      "description": "",
+      
+      "url": "https://zqwang-cn.github.io/posts/use-nvjpeg-to-accelerate-jpg-image-decoding/",
+      "inLanguage": "en",
+      "datePublished": "2022-12-30",
+      "dateModified": "2022-12-30",
+      "wordCount" : "117",
+      "publisher": {
+        "@type": "Person",
+        "name": "zqwang"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "zqwang",
+        
+        
+      }
+    }
+  </script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://zqwang-cn.github.io/css/main.min.c166fa5a48e8b326dc193e5c2ea65b6f96720911149d941bddb3b0b8eff62af3.css" integrity="sha256-wWb6WkjosybcGT5cLqZbb5ZyCREUnZQb3bOwuO/2KvM=" crossorigin="anonymous">
+
+
+
+<noscript>
+
+  
+  
+
+  
+    <meta name="theme-color" content="#1dbc91" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1f676b" media="(prefers-color-scheme: light)">
+  
+
+  
+  <link rel="stylesheet" href="https://zqwang-cn.github.io/css/noscript.min.3f3b95436b19eaeb9223fb12c0b86737d53ee0a47fdba271a886c244bc03975c.css" integrity="sha256-PzuVQ2sZ6uuSI/sSwLhnN9U&#43;4KR/26JxqIbCRLwDl1w=" crossorigin="anonymous">
+
+</noscript>
+
+
+
+<link rel="preload" href="/fonts/open-sans-v34-latin-700.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-italic.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-regular.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/oswald-v29-latin-700.woff2" as="font" crossorigin="anonymous">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="https://zqwang-cn.github.io/js/main.f1da21dfea83dc0c36cea0b202c14a97e00aedab567e32702eb120f5ab8d974b.js" integrity="sha256-8doh3&#43;qD3Aw2zqCyAsFKl&#43;AK7atWfjJwLrEg9auNl0s=" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body>
+
+    <header>
+      
+
+  <a href="/">Wang&#39;s blog</a>
+
+
+
+
+  
+    <nav aria-label="Main menu.">
+      <ul>
+        
+          <li>
+            <a class="btn" href="/">About</a>
+          </li>
+        
+          <li>
+            <a class="btn" href="/posts/">Posts</a>
+          </li>
+        
+      </ul>
+    </nav>
+  
+
+
+    </header>
+
+    <div class="filler">
+      
+
+  <main>
+    <article>
+      <header>
+        
+        <h1>使用nvJPEG加速解码JPG图像</h1>
+
+        
+          <div class="terms">
+            <ul><li><a class="btn" href="/tags/%E5%85%B6%E4%BB%96/">其他</a></li></ul>
+          </div>
+          <p>
+            
+              Published on <time datetime="2022-12-30">2022-12-30</time>
+            
+          </p>
+        
+        
+        
+        
+      </header>
+    
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="背景"><a class="anchor" href="#背景" title='Anchor for: 背景.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 背景</h2> 
+
+<p>在读取JPG图像时，需要先对图像进行解码。一般的图像库（如opencv）采用CPU进行解码，如果对速度有很高要求则需要另外实现。</p>
+<p>nvJPEG是英伟达提供的可以使用GPU加速的JPG解码库，它包含在较高版本的CUDA（&gt;10.0）中，如果使用低版本CUDA，则需要另外安装。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="步骤"><a class="anchor" href="#步骤" title='Anchor for: 步骤.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 步骤</h2> 
+
+<p>1. 假设待解码的本地文件为test.jpg，首先将其二进制数据读入内存</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl">    <span class="c1">// 以二进制方式打开文件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">in_fs</span><span class="p">(</span><span class="s">&#34;test.jpg&#34;</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span><span class="o">::</span><span class="n">binary</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 获取文件大小
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">in_fs</span><span class="p">.</span><span class="n">seekg</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">end</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">auto</span> <span class="n">in_size</span> <span class="o">=</span> <span class="n">in_fs</span><span class="p">.</span><span class="n">tellg</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 读入全部数据（使用vector避免手动申请/释放空间）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">uchar</span><span class="o">&gt;</span> <span class="n">in_buf</span><span class="p">(</span><span class="n">in_size</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">in_fs</span><span class="p">.</span><span class="n">seekg</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">in_fs</span><span class="p">.</span><span class="n">read</span><span class="p">((</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">in_buf</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">in_size</span><span class="p">);</span>
+</span></span></code></pre></div><p>2. 初始化nvJPEG，建立handle与state</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl">    <span class="n">nvjpegHandle_t</span> <span class="n">handle</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">nvjpegJpegState_t</span> <span class="n">state</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">nvjpegCreateSimple</span><span class="p">(</span><span class="o">&amp;</span><span class="n">handle</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">nvjpegJpegStateCreate</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">state</span><span class="p">);</span>
+</span></span></code></pre></div><p>3. 获取图像长宽、通道数、subsampling等信息</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">widths</span><span class="p">[</span><span class="n">NVJPEG_MAX_COMPONENT</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">heights</span><span class="p">[</span><span class="n">NVJPEG_MAX_COMPONENT</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">channels</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">nvjpegChromaSubsampling_t</span> <span class="n">subsampling</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">nvjpegGetImageInfo</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">in_buf</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">in_size</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">channels</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">subsampling</span><span class="p">,</span> <span class="n">widths</span><span class="p">,</span> <span class="n">heights</span><span class="p">);</span>
+</span></span></code></pre></div><p>4. 设置输出参数并解码</p>
+<p>解码时，除了需要传入输入数据及大小外，还需要指定输出格式（nvjpegOutputFormat_t）及输出图像信息（nvjpegImage_t，包含每个通道的行宽度pitch，以及每个通道的输出缓存地址channel）</p>
+<p>此处指定输出格式为NVJPEG_OUTPUT_BGRI，该格式将所有输出写入channel[0]中，格式为&quot;BGRBGRBGR&hellip;&quot;，因此picth[0]为图像宽度×3，channel[0]缓存大小至少应为图像长度×图像宽度×3。如果需要使用其它格式请参考官方文档</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl">    <span class="c1">// 计算输出行宽度与总大小
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">mul</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">out_step</span> <span class="o">=</span> <span class="n">widths</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">mul</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">out_size</span> <span class="o">=</span> <span class="n">out_step</span> <span class="o">*</span> <span class="n">heights</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 设置输出信息，并在显存上申请缓存
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">nvjpegImage_t</span> <span class="n">out_buf</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">out_buf</span><span class="p">.</span><span class="n">pitch</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">out_step</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cudaMalloc</span><span class="p">((</span><span class="kt">void</span><span class="o">**</span><span class="p">)</span><span class="o">&amp;</span><span class="n">out_buf</span><span class="p">.</span><span class="n">channel</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">out_size</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 解码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">auto</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">nvjpegDecode</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">in_buf</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span> <span class="n">in_size</span><span class="p">,</span> <span class="n">NVJPEG_OUTPUT_BGRI</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">out_buf</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">);</span>
+</span></span></code></pre></div><p>5. 输出格式NVJPEG_OUTPUT_BGRI与opencv的默认格式完全相同，因此可以直接拷贝到cv::Mat中使用。另外也可以直接使用缓存建立cv::cuda::GpuMat，无需拷贝即可使用</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl">    <span class="c1">// 根据长宽建立opencv图像
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">image</span><span class="p">(</span><span class="n">heights</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">widths</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">CV_8UC3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 将数据拷贝后即可直接使用image
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">cudaMemcpy</span><span class="p">(</span><span class="n">image</span><span class="p">.</span><span class="n">data</span><span class="p">,</span> <span class="n">out_buf</span><span class="p">.</span><span class="n">channel</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">out_size</span><span class="p">,</span> <span class="n">cudaMemcpyDeviceToHost</span><span class="p">);</span>
+</span></span></code></pre></div><p>6. 释放缓存与nvJPEG的handle与state</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl">    <span class="n">cudaFree</span><span class="p">(</span><span class="n">out_buf</span><span class="p">.</span><span class="n">channel</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">nvjpegJpegStateDestroy</span><span class="p">(</span><span class="n">state</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">nvjpegDestroy</span><span class="p">(</span><span class="n">handle</span><span class="p">);</span>
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h2 id="参考"><a class="anchor" href="#参考" title='Anchor for: 参考.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 参考</h2> 
+
+<ul>
+<li><a href="https://developer.nvidia.com/nvjpeg">官方文档</a></li>
+<li><a href="https://github.com/NVIDIA/CUDALibrarySamples">官方demo</a></li>
+</ul>
+
+
+
+    </article>
+  </main>
+
+
+    </div>
+    
+    <footer>
+      
+
+
+  
+
+    
+
+    
+      
+      
+    
+    
+    <p>Generated with <a href="https://gohugo.io">Hugo</a> using the <a href="https://gitlab.com/rmaguiar/hugo-theme-color-your-world">Color Your World</a> theme.</p>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="req-js">
+  <button class="outline-dashed" title="Change to light/dark mode."><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="#1dbc91" title="Change accent color." aria-label="Change accent color."><datalist id="presets"><option value="#1f676b"><option value="#1dbc91"><option value="#225670"><option value="#dd587c"><option value="#902b37"><option value="#f3a530"><option value="#754e85"><option value="#7fc121"><option value="#a8314a"><option value="#ff7433"><option value="#3e6728"><option value="#c063bd"><option value="#805080"><option value="#9d629d"><option value="#a064a0"><option value="#7daa50"><option value="#284531"><option value="#285790"><option value="#F5A83D"><option value="#88aa33"><option value="#015660"><option value="#bf274e"><option value="#bf4242"><option value="#51b37c"></datalist>
+</div>
+
+
+
+  <noscript>
+    <p class="noscript">Unable to execute JavaScript. Some features were disabled.</p>
+  </noscript>
+
+
+
+    </footer>
+    
+    
+    
+
+    
+    
+
+  </body>
+</html>
