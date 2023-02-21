@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Wang&#39;s blog</title>
+    <link>https://zqwang-cn.github.io/posts/</link>
+    <description>Wang&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Copyright © 2023, zqwang; All rights reserved.</copyright>
+    <lastBuildDate>Wed, 11 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://zqwang-cn.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+      <item>
+        <title>BGSLibrary背景提取库介绍</title>
+        <link>https://zqwang-cn.github.io/posts/bgslibrary-introduction/</link>
+        <pubDate>Wed, 11 Nov 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/posts/bgslibrary-introduction/</guid>
+        <description>简介 BGSLibrary(Background Subtraction Library) 是一个背景减除（背景提取）库，它使用C++开发，提供Python/Matlab/Java接口，并可以跨平台使用(Windows/Ubuntu/OS X)。
+安装 可以编译安装，也可以安装二进制包。但是对于python可以直接使用pip安装，非常方便：
+pip install pybgs 使用 根据官方demo，使用方法十分简单（以python为例）：
+import numpy as np import cv2 import pybgs as bgs algorithm = bgs.FrameDifference() video_file = &amp;#34;dataset/video.avi&amp;#34; capture = cv2.VideoCapture(video_file) while True: flag, frame = capture.read() if not flag: break img_output = algorithm.apply(frame) img_bgmodel = algorithm.getBackgroundModel() cv2.imshow(&amp;#39;video&amp;#39;, frame) cv2.imshow(&amp;#39;img_output&amp;#39;, img_output) cv2.imshow(&amp;#39;img_bgmodel&amp;#39;, img_bgmodel) if cv2.waitKey(10) == 27: break 所有算法具有相同接口，如需更换算法只需修改algorithm变量即可。
+支持的算法 支持算法列表</description>
+      </item>
+    
+      <item>
+        <title>c&#43;&#43;统一函数接口返回不同类型的值</title>
+        <link>https://zqwang-cn.github.io/posts/c-plusplus-unified-function-interface-return-different-types-of-value/</link>
+        <pubDate>Thu, 15 Oct 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/posts/c-plusplus-unified-function-interface-return-different-types-of-value/</guid>
+        <description>假设存在以下函数：
+int get_int(); float get_float(); std::string get_string(); 想要将其整合为一个函数get_value()，根据需要返回不同类型的数据。
+尝试使用函数模板，在函数中根据数据类型执行不同的操作：
+template &amp;lt;typename T&amp;gt; T get_value() { T ret; if (std::is_same&amp;lt;T, int&amp;gt;::value) ret = get_int(); else if (std::is_same&amp;lt;T, float&amp;gt;::value) ret = get_float(); else if (std::is_same&amp;lt;T, std::string&amp;gt;::value) ret = get_string(); return ret; } 然而这样会出现编译错误。这是由于在实际使用时，编译器会根据T的实际类型将模板实例化为一个普通函数，例如当T为int时，实例化的函数为：
+int get_value() { int ret; if (std::is_same&amp;lt;int, int&amp;gt;::value) ret = get_int(); else if (std::is_same&amp;lt;int, float&amp;gt;::value) ret = get_float(); else if (std::is_same&amp;lt;int, std::string&amp;gt;::value) ret = get_string(); return ret; } 此时两个else if语句中的代码虽然永远不会执行，但是它们却不能通过编译。因此此方法无效。</description>
+      </item>
+    
+      <item>
+        <title>Anchor free检测算法概述</title>
+        <link>https://zqwang-cn.github.io/posts/anchor-free-detection-algorithms-overview/</link>
+        <pubDate>Wed, 23 Sep 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/posts/anchor-free-detection-algorithms-overview/</guid>
+        <description>0. Anchor based v.s. anchor free Anchor based算法 什么是anchor： 在图像中预先设置的不同大小与尺度的候选框，覆盖几乎所有位置与尺度，用于对每个位置是否存在物体进行判断。
+基本步骤：Anchor based算法通常分为2步：
+对每个anchor内的图像进行分类，以确定物体类型与其置信度 对置信度高的anchor边界在小范围内进行回归，以确定准确边界 Anchor free算法 顾名思义，即不使用anchor的检测算法。通常使用类似分割或关键点检测的方式直接对每个点进行处理。大致可分为2类：
+密集预测（置信度与偏移量）的方法 基于关键点匹配的方法 1. 密集预测的方法 1.0 基本结构 1.1 DenseBox Huang L, Yang Y, Deng Y, et al. Densebox: Unifying landmark localization with end to end object detection[J]. arXiv preprint arXiv:1509.04874, 2015.
+结构 class分支为人脸中心一个圆形区域的heatmap box分支为到边界的距离 class分支与box分支均采用L2 loss 设计用于人脸检测，类别数量C=1 特点 将图像裁剪为patch分别进行处理 使用类似编码器/解码器的结构进行多尺度特征融合 使用hard negative mining解决正负样本不平衡的问题 可以使用landmark增强效果 评价 最早的anchor free检测算法之一，最新的同类算法仍然采用大致相同的思路，只是在细节进行改进。 1.2 UnitBox Yu J, Jiang Y, Wang Z, et al.</description>
+      </item>
+    
+      <item>
+        <title>c语言&#43;&#43;操作符与函数调用的问题</title>
+        <link>https://zqwang-cn.github.io/posts/c-plusplus-operator-and-function-call-problem/</link>
+        <pubDate>Sat, 19 Sep 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/posts/c-plusplus-operator-and-function-call-problem/</guid>
+        <description>假设有如下c函数：
+void func(int a, int b, int c) { printf(&amp;#34;%d,%d,%d\n&amp;#34;,a,b,c); } 使用如下方式调用：
+int i=0; func(i++, i++, i++); 希望的输出是：
+0,1,2 但是实际输出是：
+2,1,0 分析原因，应该是由于c语言的参数压栈顺序为从右向左，因此实际执行的过程是：
+int i = 0; int c = i; i = i + 1; int b = i; i = i + 1; int a = i; i = i + 1; func(a, b, c); 但是如果使用如下方式调用：
+int i=0; func(++i, ++i, ++i); 输出却是：
+3,3,3 其原因猜测是因为，与i++不同，++i操作没有生成临时变量，因此最后使用的是同一个i。其执行过程如下：
+int i = 0; i = i + 1; i = i + 1; i = i + 1; func(i, i, i); 为了验证以上猜想，考虑如下调用：</description>
+      </item>
+    
+      <item>
+        <title>架设RTMP流媒体服务器并使用python进行推流</title>
+        <link>https://zqwang-cn.github.io/posts/install-rtmp-server-and-push-stream-using-python/</link>
+        <pubDate>Wed, 09 Sep 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/posts/install-rtmp-server-and-push-stream-using-python/</guid>
+        <description>1、服务器架设 服务器不一定要安装在推流程序所在的机器上，也可以安装在发送、接收双方均可访问到的第三台机器上。
+安装方式可以使用docker镜像或直接编译安装。
+使用docker镜像 github地址：https://github.com/alfg/docker-nginx-rtmp
+安装并运行：
+docker pull alfg/nginx-rtmp docker run -it -p 1935:1935 -p 8080:80 --rm alfg/nginx-rtmp 之后即可推流至：
+rtmp://&amp;lt;server ip&amp;gt;:1935/stream/$STREAM_NAME 自行编译安装 # 安装依赖库 sudo apt install -y libpcre3 libpcre3-dev openssl libssl-dev zlib1g-dev # 下载nginx源码并解压 wget http://nginx.org/download/nginx-1.17.8.tar.gz tar -xf nginx-1.17.8.tar.gz # 下载nginx-rtmp-module模块源码 git clone https://github.com/arut/nginx-rtmp-module.git # 编译并安装带nginx-rtmp-module模块的nginx cd nginx-1.17.8 ./configure --add-module=../nginx-rtmp-module sudo make install 配置nginx，配置文件地址为：/usr/local/nginx/conf/nginx.conf。由于目前浏览器已经禁止使用Flash，不能直接播放rtmp流，因此可以选择添加hls配置。
+worker_processes 1; events { worker_connections 1024; } rtmp { server { listen 1935; chunk_size 4096; application stream { live on; record off; # hls配置 hls on; hls_path /var/www/hls; hls_fragment 3; hls_playlist_length 60; } } } http { server { listen 80; # hls配置 location /hls { # Disable cache add_header Cache-Control no-cache; # CORS setup add_header &amp;#39;Access-Control-Allow-Origin&amp;#39; &amp;#39;*&amp;#39; always; add_header &amp;#39;Access-Control-Expose-Headers&amp;#39; &amp;#39;Content-Length&amp;#39;; # allow CORS preflight requests if ($request_method = &amp;#39;OPTIONS&amp;#39;) { add_header &amp;#39;Access-Control-Allow-Origin&amp;#39; &amp;#39;*&amp;#39;; add_header &amp;#39;Access-Control-Max-Age&amp;#39; 1728000; add_header &amp;#39;Content-Type&amp;#39; &amp;#39;text/plain charset=UTF-8&amp;#39;; add_header &amp;#39;Content-Length&amp;#39; 0; return 204; } types { application/vnd.</description>
+      </item>
+    
+  </channel>
+</rss>

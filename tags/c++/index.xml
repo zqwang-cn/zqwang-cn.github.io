@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Wang&#39;s blog</title>
+    <link>https://zqwang-cn.github.io/tags/c&#43;&#43;/</link>
+    <description>Wang&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Copyright © 2023, zqwang; All rights reserved.</copyright>
+    <lastBuildDate>Thu, 15 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://zqwang-cn.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+      <item>
+        <title>c&#43;&#43;统一函数接口返回不同类型的值</title>
+        <link>https://zqwang-cn.github.io/posts/c-plusplus-unified-function-interface-return-different-types-of-value/</link>
+        <pubDate>Thu, 15 Oct 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/posts/c-plusplus-unified-function-interface-return-different-types-of-value/</guid>
+        <description>假设存在以下函数：
+int get_int(); float get_float(); std::string get_string(); 想要将其整合为一个函数get_value()，根据需要返回不同类型的数据。
+尝试使用函数模板，在函数中根据数据类型执行不同的操作：
+template &amp;lt;typename T&amp;gt; T get_value() { T ret; if (std::is_same&amp;lt;T, int&amp;gt;::value) ret = get_int(); else if (std::is_same&amp;lt;T, float&amp;gt;::value) ret = get_float(); else if (std::is_same&amp;lt;T, std::string&amp;gt;::value) ret = get_string(); return ret; } 然而这样会出现编译错误。这是由于在实际使用时，编译器会根据T的实际类型将模板实例化为一个普通函数，例如当T为int时，实例化的函数为：
+int get_value() { int ret; if (std::is_same&amp;lt;int, int&amp;gt;::value) ret = get_int(); else if (std::is_same&amp;lt;int, float&amp;gt;::value) ret = get_float(); else if (std::is_same&amp;lt;int, std::string&amp;gt;::value) ret = get_string(); return ret; } 此时两个else if语句中的代码虽然永远不会执行，但是它们却不能通过编译。因此此方法无效。</description>
+      </item>
+    
+      <item>
+        <title>c语言&#43;&#43;操作符与函数调用的问题</title>
+        <link>https://zqwang-cn.github.io/posts/c-plusplus-operator-and-function-call-problem/</link>
+        <pubDate>Sat, 19 Sep 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/posts/c-plusplus-operator-and-function-call-problem/</guid>
+        <description>假设有如下c函数：
+void func(int a, int b, int c) { printf(&amp;#34;%d,%d,%d\n&amp;#34;,a,b,c); } 使用如下方式调用：
+int i=0; func(i++, i++, i++); 希望的输出是：
+0,1,2 但是实际输出是：
+2,1,0 分析原因，应该是由于c语言的参数压栈顺序为从右向左，因此实际执行的过程是：
+int i = 0; int c = i; i = i + 1; int b = i; i = i + 1; int a = i; i = i + 1; func(a, b, c); 但是如果使用如下方式调用：
+int i=0; func(++i, ++i, ++i); 输出却是：
+3,3,3 其原因猜测是因为，与i++不同，++i操作没有生成临时变量，因此最后使用的是同一个i。其执行过程如下：
+int i = 0; i = i + 1; i = i + 1; i = i + 1; func(i, i, i); 为了验证以上猜想，考虑如下调用：</description>
+      </item>
+    
+  </channel>
+</rss>

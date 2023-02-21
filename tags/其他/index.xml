@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Wang&#39;s blog</title>
+    <link>https://zqwang-cn.github.io/tags/%E5%85%B6%E4%BB%96/</link>
+    <description>Wang&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Copyright © 2023, zqwang; All rights reserved.</copyright>
+    <lastBuildDate>Wed, 11 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://zqwang-cn.github.io/tags/%E5%85%B6%E4%BB%96/index.xml" rel="self" type="application/rss+xml" />
+      <item>
+        <title>BGSLibrary背景提取库介绍</title>
+        <link>https://zqwang-cn.github.io/posts/bgslibrary-introduction/</link>
+        <pubDate>Wed, 11 Nov 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/posts/bgslibrary-introduction/</guid>
+        <description>简介 BGSLibrary(Background Subtraction Library) 是一个背景减除（背景提取）库，它使用C++开发，提供Python/Matlab/Java接口，并可以跨平台使用(Windows/Ubuntu/OS X)。
+安装 可以编译安装，也可以安装二进制包。但是对于python可以直接使用pip安装，非常方便：
+pip install pybgs 使用 根据官方demo，使用方法十分简单（以python为例）：
+import numpy as np import cv2 import pybgs as bgs algorithm = bgs.FrameDifference() video_file = &amp;#34;dataset/video.avi&amp;#34; capture = cv2.VideoCapture(video_file) while True: flag, frame = capture.read() if not flag: break img_output = algorithm.apply(frame) img_bgmodel = algorithm.getBackgroundModel() cv2.imshow(&amp;#39;video&amp;#39;, frame) cv2.imshow(&amp;#39;img_output&amp;#39;, img_output) cv2.imshow(&amp;#39;img_bgmodel&amp;#39;, img_bgmodel) if cv2.waitKey(10) == 27: break 所有算法具有相同接口，如需更换算法只需修改algorithm变量即可。
+支持的算法 支持算法列表</description>
+      </item>
+    
+      <item>
+        <title>架设RTMP流媒体服务器并使用python进行推流</title>
+        <link>https://zqwang-cn.github.io/posts/install-rtmp-server-and-push-stream-using-python/</link>
+        <pubDate>Wed, 09 Sep 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/posts/install-rtmp-server-and-push-stream-using-python/</guid>
+        <description>1、服务器架设 服务器不一定要安装在推流程序所在的机器上，也可以安装在发送、接收双方均可访问到的第三台机器上。
+安装方式可以使用docker镜像或直接编译安装。
+使用docker镜像 github地址：https://github.com/alfg/docker-nginx-rtmp
+安装并运行：
+docker pull alfg/nginx-rtmp docker run -it -p 1935:1935 -p 8080:80 --rm alfg/nginx-rtmp 之后即可推流至：
+rtmp://&amp;lt;server ip&amp;gt;:1935/stream/$STREAM_NAME 自行编译安装 # 安装依赖库 sudo apt install -y libpcre3 libpcre3-dev openssl libssl-dev zlib1g-dev # 下载nginx源码并解压 wget http://nginx.org/download/nginx-1.17.8.tar.gz tar -xf nginx-1.17.8.tar.gz # 下载nginx-rtmp-module模块源码 git clone https://github.com/arut/nginx-rtmp-module.git # 编译并安装带nginx-rtmp-module模块的nginx cd nginx-1.17.8 ./configure --add-module=../nginx-rtmp-module sudo make install 配置nginx，配置文件地址为：/usr/local/nginx/conf/nginx.conf。由于目前浏览器已经禁止使用Flash，不能直接播放rtmp流，因此可以选择添加hls配置。
+worker_processes 1; events { worker_connections 1024; } rtmp { server { listen 1935; chunk_size 4096; application stream { live on; record off; # hls配置 hls on; hls_path /var/www/hls; hls_fragment 3; hls_playlist_length 60; } } } http { server { listen 80; # hls配置 location /hls { # Disable cache add_header Cache-Control no-cache; # CORS setup add_header &amp;#39;Access-Control-Allow-Origin&amp;#39; &amp;#39;*&amp;#39; always; add_header &amp;#39;Access-Control-Expose-Headers&amp;#39; &amp;#39;Content-Length&amp;#39;; # allow CORS preflight requests if ($request_method = &amp;#39;OPTIONS&amp;#39;) { add_header &amp;#39;Access-Control-Allow-Origin&amp;#39; &amp;#39;*&amp;#39;; add_header &amp;#39;Access-Control-Max-Age&amp;#39; 1728000; add_header &amp;#39;Content-Type&amp;#39; &amp;#39;text/plain charset=UTF-8&amp;#39;; add_header &amp;#39;Content-Length&amp;#39; 0; return 204; } types { application/vnd.</description>
+      </item>
+    
+  </channel>
+</rss>

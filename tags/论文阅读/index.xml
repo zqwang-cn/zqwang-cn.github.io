@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Wang&#39;s blog</title>
+    <link>https://zqwang-cn.github.io/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</link>
+    <description>Wang&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Copyright © 2023, zqwang; All rights reserved.</copyright>
+    <lastBuildDate>Wed, 23 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://zqwang-cn.github.io/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/index.xml" rel="self" type="application/rss+xml" />
+      <item>
+        <title>Anchor free检测算法概述</title>
+        <link>https://zqwang-cn.github.io/posts/anchor-free-detection-algorithms-overview/</link>
+        <pubDate>Wed, 23 Sep 2020 00:00:00 +0000</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/posts/anchor-free-detection-algorithms-overview/</guid>
+        <description>0. Anchor based v.s. anchor free Anchor based算法 什么是anchor： 在图像中预先设置的不同大小与尺度的候选框，覆盖几乎所有位置与尺度，用于对每个位置是否存在物体进行判断。
+基本步骤：Anchor based算法通常分为2步：
+对每个anchor内的图像进行分类，以确定物体类型与其置信度 对置信度高的anchor边界在小范围内进行回归，以确定准确边界 Anchor free算法 顾名思义，即不使用anchor的检测算法。通常使用类似分割或关键点检测的方式直接对每个点进行处理。大致可分为2类：
+密集预测（置信度与偏移量）的方法 基于关键点匹配的方法 1. 密集预测的方法 1.0 基本结构 1.1 DenseBox Huang L, Yang Y, Deng Y, et al. Densebox: Unifying landmark localization with end to end object detection[J]. arXiv preprint arXiv:1509.04874, 2015.
+结构 class分支为人脸中心一个圆形区域的heatmap box分支为到边界的距离 class分支与box分支均采用L2 loss 设计用于人脸检测，类别数量C=1 特点 将图像裁剪为patch分别进行处理 使用类似编码器/解码器的结构进行多尺度特征融合 使用hard negative mining解决正负样本不平衡的问题 可以使用landmark增强效果 评价 最早的anchor free检测算法之一，最新的同类算法仍然采用大致相同的思路，只是在细节进行改进。 1.2 UnitBox Yu J, Jiang Y, Wang Z, et al.</description>
+      </item>
+    
+  </channel>
+</rss>

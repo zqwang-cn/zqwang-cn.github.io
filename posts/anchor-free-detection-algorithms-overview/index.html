@@ -1,0 +1,2009 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+  <head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo 0.110.0">
+<meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
+
+
+<title>Anchor free检测算法概述 | Wang&#39;s blog</title>
+
+<meta name="author" content="zqwang">
+
+
+
+<meta name="robots" content="index follow">
+
+
+
+
+  
+    <link rel="canonical" href="https://zqwang-cn.github.io/posts/anchor-free-detection-algorithms-overview/">
+  
+
+
+
+
+
+
+
+
+<meta property="og:site_name" content="Wang&#39;s blog">
+<meta property="og:title" content="Anchor free检测算法概述">
+
+  <meta property="og:url" content="https://zqwang-cn.github.io/posts/anchor-free-detection-algorithms-overview/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:type" content="article">
+  
+  
+    <meta property="article:published_time" content="2020-09-23">
+    <meta property="article:modified_time" content="2020-09-23">
+    <meta property="og:updated_time" content="2020-09-23">
+  
+
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="theme-color" content="#222">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "mainEntityOfPage": {
+        "@type": "WebSite",
+        "@id": "https://zqwang-cn.github.io/"
+      },
+      "headline": "Anchor free检测算法概述",
+      "description": "",
+      
+      "url": "https://zqwang-cn.github.io/posts/anchor-free-detection-algorithms-overview/",
+      "inLanguage": "en",
+      "datePublished": "2020-09-23",
+      "dateModified": "2020-09-23",
+      "wordCount" : "558",
+      "publisher": {
+        "@type": "Person",
+        "name": "zqwang"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "zqwang",
+        
+        
+      }
+    }
+  </script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://zqwang-cn.github.io/css/main.min.c166fa5a48e8b326dc193e5c2ea65b6f96720911149d941bddb3b0b8eff62af3.css" integrity="sha256-wWb6WkjosybcGT5cLqZbb5ZyCREUnZQb3bOwuO/2KvM=" crossorigin="anonymous">
+
+
+
+<noscript>
+
+  
+  
+
+  
+    <meta name="theme-color" content="#1dbc91" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1f676b" media="(prefers-color-scheme: light)">
+  
+
+  
+  <link rel="stylesheet" href="https://zqwang-cn.github.io/css/noscript.min.3f3b95436b19eaeb9223fb12c0b86737d53ee0a47fdba271a886c244bc03975c.css" integrity="sha256-PzuVQ2sZ6uuSI/sSwLhnN9U&#43;4KR/26JxqIbCRLwDl1w=" crossorigin="anonymous">
+
+</noscript>
+
+
+
+<link rel="preload" href="/fonts/open-sans-v34-latin-700.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-italic.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-regular.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/oswald-v29-latin-700.woff2" as="font" crossorigin="anonymous">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="https://zqwang-cn.github.io/js/main.f1da21dfea83dc0c36cea0b202c14a97e00aedab567e32702eb120f5ab8d974b.js" integrity="sha256-8doh3&#43;qD3Aw2zqCyAsFKl&#43;AK7atWfjJwLrEg9auNl0s=" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body>
+
+    <header>
+      
+
+  <a href="/">Wang&#39;s blog</a>
+
+
+
+
+  
+    <nav aria-label="Main menu.">
+      <ul>
+        
+          <li>
+            <a class="btn" href="/">About</a>
+          </li>
+        
+          <li>
+            <a class="btn" href="/posts/">Posts</a>
+          </li>
+        
+      </ul>
+    </nav>
+  
+
+
+    </header>
+
+    <div class="filler">
+      
+
+  <main>
+    <article>
+      <header>
+        
+        <h1>Anchor free检测算法概述</h1>
+
+        
+          <div class="terms">
+            <ul><li><a class="btn" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a></li><li><a class="btn" href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a></li></ul>
+          </div>
+          <p>
+            
+              Published on <time datetime="2020-09-23">2020-09-23</time>
+            
+          </p>
+        
+        
+        
+        
+      </header>
+    
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="0-anchor-based-vs-anchor-free"><a class="anchor" href="#0-anchor-based-vs-anchor-free" title='Anchor for: 0. Anchor based v.s. anchor free.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 0. Anchor based v.s. anchor free</h2> 
+
+<p>
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+    
+    
+    
+      
+      
+        <img
+          
+          loading="lazy"
+          src="img/comparison.png"
+          alt="comparison"
+        />
+      
+    
+    
+  
+  
+
+</p>
+
+
+
+
+
+
+
+
+
+  <h3 id="anchor-based算法"><a class="anchor" href="#anchor-based算法" title='Anchor for: Anchor based算法.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> Anchor based算法</h3> 
+
+<p>什么是anchor： 在图像中预先设置的不同大小与尺度的候选框，覆盖几乎所有位置与尺度，用于对每个位置是否存在物体进行判断。</p>
+<p>基本步骤：Anchor based算法通常分为2步：</p>
+<ul>
+<li>对每个anchor内的图像进行分类，以确定物体类型与其置信度</li>
+<li>对置信度高的anchor边界在小范围内进行回归，以确定准确边界</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h3 id="anchor-free算法"><a class="anchor" href="#anchor-free算法" title='Anchor for: Anchor free算法.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> Anchor free算法</h3> 
+
+<p>顾名思义，即不使用anchor的检测算法。通常使用类似分割或关键点检测的方式直接对每个点进行处理。大致可分为2类：</p>
+<ul>
+<li>密集预测（置信度与偏移量）的方法</li>
+<li>基于关键点匹配的方法</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h2 id="1-密集预测的方法"><a class="anchor" href="#1-密集预测的方法" title='Anchor for: 1. 密集预测的方法.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 1. 密集预测的方法</h2> 
+
+
+
+
+
+
+
+
+
+
+  <h3 id="10-基本结构"><a class="anchor" href="#10-基本结构" title='Anchor for: 1.0 基本结构.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 1.0 基本结构</h3> 
+
+<p>
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+    
+    
+    
+      
+      
+        <img
+          
+          loading="lazy"
+          src="img/category-1-basic-structure.png"
+          alt="基本结构"
+        />
+      
+    
+    
+  
+  
+
+</p>
+
+
+
+
+
+
+
+
+
+  <h3 id="11-densebox"><a class="anchor" href="#11-densebox" title='Anchor for: 1.1 DenseBox.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 1.1 DenseBox</h3> 
+
+<p>Huang L, Yang Y, Deng Y, et al. Densebox: Unifying landmark localization with end to end object detection[J]. arXiv preprint arXiv:1509.04874, 2015.</p>
+<p>
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+    
+    
+    
+      
+      
+        <img
+          
+          loading="lazy"
+          src="img/densebox.png"
+          alt="DenseBox"
+        />
+      
+    
+    
+  
+  
+
+</p>
+
+
+
+
+
+
+
+
+
+  <h4 id="结构"><a class="anchor" href="#结构" title='Anchor for: 结构.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 结构</h4> 
+
+<ul>
+<li>class分支为人脸中心一个圆形区域的heatmap</li>
+<li>box分支为到边界的距离</li>
+<li>class分支与box分支均采用L2 loss</li>
+<li>设计用于人脸检测，类别数量C=1</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="特点"><a class="anchor" href="#特点" title='Anchor for: 特点.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 特点</h4> 
+
+<ul>
+<li>将图像裁剪为patch分别进行处理</li>
+<li>使用类似编码器/解码器的结构进行多尺度特征融合</li>
+<li>使用hard negative mining解决正负样本不平衡的问题</li>
+<li>可以使用landmark增强效果</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="评价"><a class="anchor" href="#评价" title='Anchor for: 评价.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 评价</h4> 
+
+<ul>
+<li>最早的anchor free检测算法之一，最新的同类算法仍然采用大致相同的思路，只是在细节进行改进。</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h3 id="12-unitbox"><a class="anchor" href="#12-unitbox" title='Anchor for: 1.2 UnitBox.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 1.2 UnitBox</h3> 
+
+<p>Yu J, Jiang Y, Wang Z, et al. Unitbox: An advanced object detection network[C]//Proceedings of the 24th ACM international conference on Multimedia. 2016: 516-520.</p>
+<p>
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+    
+    
+    
+      
+      
+        <img
+          
+          loading="lazy"
+          src="img/unitbox.png"
+          alt="UnitBox"
+        />
+      
+    
+    
+  
+  
+
+</p>
+
+
+
+
+
+
+
+
+
+  <h4 id="结构-1"><a class="anchor" href="#结构-1" title='Anchor for: 结构.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 结构</h4> 
+
+<ul>
+<li>与DenseBox类似</li>
+<li>box分支采用IoU loss</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="特点-1"><a class="anchor" href="#特点-1" title='Anchor for: 特点.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 特点</h4> 
+
+<ul>
+<li>采用IoU loss将到4个边界的距离当作一个整体进行训练，提升了检测效果</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="评价-1"><a class="anchor" href="#评价-1" title='Anchor for: 评价.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 评价</h4> 
+
+<ul>
+<li>在DenseBox基础上改进了loss函数，提升效果</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h3 id="13-yolov1"><a class="anchor" href="#13-yolov1" title='Anchor for: 1.3 YOLOv1.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 1.3 YOLOv1</h3> 
+
+<p>Redmon J, Divvala S, Girshick R, et al. You only look once: Unified, real-time object detection[C]//Proceedings of the IEEE conference on computer vision and pattern recognition. 2016: 779-788.</p>
+<p>
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+    
+    
+    
+      
+      
+        <img
+          
+          loading="lazy"
+          src="img/yolo.jpg"
+          alt="YOLO"
+        />
+      
+    
+    
+  
+  
+
+</p>
+
+
+
+
+
+
+
+
+
+  <h4 id="结构-2"><a class="anchor" href="#结构-2" title='Anchor for: 结构.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 结构</h4> 
+
+<ul>
+<li>将图像划分为网格，并为每个网格学习B组物体存在置信度、中心点坐标与尺寸，以及属于C个类别的置信度</li>
+<li>类似L2 loss的组合loss函数</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="特点-2"><a class="anchor" href="#特点-2" title='Anchor for: 特点.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 特点</h4> 
+
+<ul>
+<li>模型简单，且预测并不那么“密集”，因此的速度较快</li>
+<li>但是也存在相应缺点，比如可检测的物体数量受限</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="评价-2"><a class="anchor" href="#评价-2" title='Anchor for: 评价.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 评价</h4> 
+
+<ul>
+<li>为速度而生的算法，优点与缺点都比较明显</li>
+<li>后续算法改为使用anchor</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h3 id="14-centernet-keypoint"><a class="anchor" href="#14-centernet-keypoint" title='Anchor for: 1.4 CenterNet Keypoint.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 1.4 CenterNet Keypoint</h3> 
+
+<p>Zhou X, Wang D, Krähenbühl P. Objects as points[J]. arXiv preprint arXiv:1904.07850, 2019.</p>
+<p>
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+    
+    
+    
+      
+      
+        <img
+          
+          loading="lazy"
+          src="img/centernet-keypoint.png"
+          alt="centernet-keypoint"
+        />
+      
+    
+    
+  
+  
+
+</p>
+
+
+
+
+
+
+
+
+
+  <h4 id="结构-3"><a class="anchor" href="#结构-3" title='Anchor for: 结构.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 结构</h4> 
+
+<ul>
+<li>学习中心点heatmap、offset与bounding box尺寸（长宽）</li>
+<li>使用focal loss与L1 loss</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="特点-3"><a class="anchor" href="#特点-3" title='Anchor for: 特点.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 特点</h4> 
+
+<ul>
+<li>将每个物体当作一个点，使用关键点检测的方式进行物体检测</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="评价-3"><a class="anchor" href="#评价-3" title='Anchor for: 评价.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 评价</h4> 
+
+<ul>
+<li>虽然效果并不是最好的，但是十分简单灵活，运行速度也较快</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h3 id="15-fcos"><a class="anchor" href="#15-fcos" title='Anchor for: 1.5 FCOS.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 1.5 FCOS</h3> 
+
+<p>Tian Z, Shen C, Chen H, et al. Fcos: Fully convolutional one-stage object detection[C]//Proceedings of the IEEE international conference on computer vision. 2019: 9627-9636.</p>
+<p>
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+    
+    
+    
+      
+      
+        <img
+          
+          loading="lazy"
+          src="img/fcos.png"
+          alt="FCOS"
+        />
+      
+    
+    
+  
+  
+
+</p>
+
+
+
+
+
+
+
+
+
+  <h4 id="结构-4"><a class="anchor" href="#结构-4" title='Anchor for: 结构.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 结构</h4> 
+
+<ul>
+<li>使用FPN提取多尺度特征</li>
+<li>每个尺度学习每个点的分类heatmap及其到4个边界的距离</li>
+<li>添加centerness分支以减少靠近边缘的低质量点的影响</li>
+<li>采用focal loss与IoU loss</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="特点-4"><a class="anchor" href="#特点-4" title='Anchor for: 特点.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 特点</h4> 
+
+<ul>
+<li>添加多尺度的处理</li>
+<li>使用centerness去除低质量点，保留高质量点，以提升效果</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="评价-4"><a class="anchor" href="#评价-4" title='Anchor for: 评价.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 评价</h4> 
+
+<ul>
+<li>基本思路没有变，但是对多个细节进行了改善，从而极大地提升了检测效果</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h3 id="16-foveabox"><a class="anchor" href="#16-foveabox" title='Anchor for: 1.6 FoveaBox.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 1.6 FoveaBox</h3> 
+
+<p>Kong T, Sun F, Liu H, et al. Foveabox: Beyond anchor-based object detector[J]. arXiv preprint arXiv:1904.03797, 2019.</p>
+<p>
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+    
+    
+    
+      
+      
+        <img
+          
+          loading="lazy"
+          src="img/foveabox.png"
+          alt="FoveaBox"
+        />
+      
+    
+    
+  
+  
+
+</p>
+
+
+
+
+
+
+
+
+
+  <h4 id="结构-5"><a class="anchor" href="#结构-5" title='Anchor for: 结构.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 结构</h4> 
+
+<ul>
+<li>使用FPN提取多尺度特征，每个尺度处理一定尺寸的物体</li>
+<li>class分支只对物体中心区域进行处理</li>
+<li>使用focal loss与L1 loss</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="特点-5"><a class="anchor" href="#特点-5" title='Anchor for: 特点.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 特点</h4> 
+
+<ul>
+<li>添加多尺度的处理</li>
+<li>受人眼的启发，只使用中心区域置的点，避免边缘低质量点的影响</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="评价-5"><a class="anchor" href="#评价-5" title='Anchor for: 评价.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 评价</h4> 
+
+<ul>
+<li>与FCOS异曲同工，相当于CenterNet Keypoint的增强</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h2 id="2-基于关键点匹配的方法"><a class="anchor" href="#2-基于关键点匹配的方法" title='Anchor for: 2. 基于关键点匹配的方法.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 2. 基于关键点匹配的方法</h2> 
+
+
+
+
+
+
+
+
+
+
+  <h3 id="20-基本结构"><a class="anchor" href="#20-基本结构" title='Anchor for: 2.0 基本结构.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 2.0 基本结构</h3> 
+
+<p>
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+    
+    
+    
+      
+      
+        <img
+          
+          loading="lazy"
+          src="img/category-2-basic-structure.png"
+          alt="基本结构"
+        />
+      
+    
+    
+  
+  
+
+</p>
+
+
+
+
+
+
+
+
+
+  <h3 id="21-cornernet"><a class="anchor" href="#21-cornernet" title='Anchor for: 2.1 CornerNet.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 2.1 CornerNet</h3> 
+
+<p>Law H, Deng J. Cornernet: Detecting objects as paired keypoints[C]//Proceedings of the European Conference on Computer Vision (ECCV). 2018: 734-750.</p>
+<p>
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+    
+    
+    
+      
+      
+        <img
+          
+          loading="lazy"
+          src="img/cornernet.jpg"
+          alt="CornerNet"
+        />
+      
+    
+    
+  
+  
+
+</p>
+
+
+
+
+
+
+
+
+
+  <h4 id="结构-6"><a class="anchor" href="#结构-6" title='Anchor for: 结构.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 结构</h4> 
+
+<ul>
+<li>学习左上角与右下角两个关键点heatmap</li>
+<li>为每个关键点学习学习embedding并用其进行匹配</li>
+<li>为每个关键点学习offset以提升精度</li>
+<li>关键点采用改进的focal loss</li>
+<li>embedding采用push loss与pull loss</li>
+<li>offset采用smooth L1 loss</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="特点-6"><a class="anchor" href="#特点-6" title='Anchor for: 特点.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 特点</h4> 
+
+<ul>
+<li>提出corner pooling，首先通过边界pooling得到边界特征图，再将两个边界特征图相加得到角点特征图</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="评价-6"><a class="anchor" href="#评价-6" title='Anchor for: 评价.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 评价</h4> 
+
+<ul>
+<li>提出一种新的anchor free检测思路，通过检测关键点并进行匹配的方式得到物体的bounding box</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h3 id="22-centernet-triplets"><a class="anchor" href="#22-centernet-triplets" title='Anchor for: 2.2 CenterNet Triplets.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 2.2 CenterNet Triplets</h3> 
+
+<p>Duan K, Bai S, Xie L, et al. Centernet: Object detection with keypoint triplets[J]. arXiv preprint arXiv:1904.08189, 2019, 1(2): 4.</p>
+<p>
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+    
+    
+    
+      
+      
+        <img
+          
+          loading="lazy"
+          src="img/centernet-triplets.png"
+          alt="CenterNet-triplets"
+        />
+      
+    
+    
+  
+  
+
+</p>
+
+
+
+
+
+
+
+
+
+  <h4 id="结构-7"><a class="anchor" href="#结构-7" title='Anchor for: 结构.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 结构</h4> 
+
+<ul>
+<li>学习左上、右下与中心点3个关键点heatmap</li>
+<li>角点学习embedding与offset，中心点学习offset</li>
+<li>角点使用embedding匹配后，bounding box中心区域存在中心点则保留，否则不保留</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="特点-7"><a class="anchor" href="#特点-7" title='Anchor for: 特点.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 特点</h4> 
+
+<ul>
+<li>在corner pooling的基础上提出cascade corner pooling与center pooling，以增强关键点的特征</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="评价-7"><a class="anchor" href="#评价-7" title='Anchor for: 评价.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 评价</h4> 
+
+<ul>
+<li>基本思路延续CornerNet，添加中心点的验证以提高角点匹配准确率</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h3 id="23-extremenet"><a class="anchor" href="#23-extremenet" title='Anchor for: 2.3 ExtremeNet.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 2.3 ExtremeNet</h3> 
+
+<p>Zhou X, Zhuo J, Krahenbuhl P. Bottom-up object detection by grouping extreme and center points[C]//Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2019: 850-859.</p>
+<p>
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+    
+    
+    
+      
+      
+        <img
+          
+          loading="lazy"
+          src="img/extremenet.png"
+          alt="ExtremeNet"
+        />
+      
+    
+    
+  
+  
+
+</p>
+
+
+
+
+
+
+
+
+
+  <h4 id="结构-8"><a class="anchor" href="#结构-8" title='Anchor for: 结构.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 结构</h4> 
+
+<ul>
+<li>不是学习角点，而是学习4个边界上的极值点与中心点heatmap，以及它们的offset</li>
+<li>暴力搜索匹配5个关键点</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="特点-8"><a class="anchor" href="#特点-8" title='Anchor for: 特点.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 特点</h4> 
+
+<ul>
+<li>使用边界极值点更加简单与直观</li>
+<li>使用了额外的segmentation信息生成groun truth</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="评价-8"><a class="anchor" href="#评价-8" title='Anchor for: 评价.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 评价</h4> 
+
+<ul>
+<li>与CornerNet相比创新并不大，且使用了额外的分割信息，无法通用</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h3 id="24-centripetalnet"><a class="anchor" href="#24-centripetalnet" title='Anchor for: 2.4 CentripetalNet.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 2.4 CentripetalNet</h3> 
+
+<p>Dong Z, Li G, Liao Y, et al. Centripetalnet: Pursuing high-quality keypoint pairs for object detection[C]//Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. 2020: 10519-10528.</p>
+<p>
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+    
+    
+    
+      
+      
+        <img
+          
+          loading="lazy"
+          src="img/centripetalnet.png"
+          alt="CentripetalNet"
+        />
+      
+    
+    
+  
+  
+
+</p>
+
+
+
+
+
+
+
+
+
+  <h4 id="结构-9"><a class="anchor" href="#结构-9" title='Anchor for: 结构.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 结构</h4> 
+
+<ul>
+<li>学习左上、右下两个关键点heatmap</li>
+<li>每个关键点不学习embedding，而是学习一个向心偏移，如果两个角点对应的中心点接近，则进行匹配</li>
+<li>向心偏移采用smooth L1 loss</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="特点-9"><a class="anchor" href="#特点-9" title='Anchor for: 特点.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 特点</h4> 
+
+<ul>
+<li>提出“十字星可变形卷积”以增强角点特征</li>
+<li>添加实例分割分支</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="评价-9"><a class="anchor" href="#评价-9" title='Anchor for: 评价.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 评价</h4> 
+
+<ul>
+<li>对CornerNet进行改进，使用向心偏移替代embedding进行角点匹配，使用“十字星可变形卷积”增加角点特征</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h3 id="25-borderdet"><a class="anchor" href="#25-borderdet" title='Anchor for: 2.5 BorderDet.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 2.5 BorderDet</h3> 
+
+<p>Qiu H, Ma Y, Li Z, et al. BorderDet: Border Feature for Dense Object Detection[J]. arXiv preprint arXiv:2007.11056, 2020.</p>
+<p>
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+    
+    
+    
+      
+      
+        <img
+          
+          loading="lazy"
+          src="img/borderdet.jpg"
+          alt="BorderDet"
+        />
+      
+    
+    
+  
+  
+
+</p>
+
+
+
+
+
+
+
+
+
+  <h4 id="结构-10"><a class="anchor" href="#结构-10" title='Anchor for: 结构.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 结构</h4> 
+
+<ul>
+<li>使用二级结构，第一级为一个普通检测网络（FCOS），输出coarse bounding box，第二级网络对第一级的测结果进行refine</li>
+<li>第二级网络（Border Alignment Module）根据coarse bounding box提取边缘特征以丰富每一点的特征</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="特点-10"><a class="anchor" href="#特点-10" title='Anchor for: 特点.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 特点</h4> 
+
+<ul>
+<li>实际上提出了一个可以对任意检测算法进行refine的模块（Border Alignment Module），通过收集bounding box边缘特征以提高检测效果</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="评价-10"><a class="anchor" href="#评价-10" title='Anchor for: 评价.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 评价</h4> 
+
+<ul>
+<li>巧妙地提取了边缘信息以丰富特征，可以方便地与其它算法集成。但是必须在一个一级检测算法基础上使用。</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h3 id="26-saccadenet"><a class="anchor" href="#26-saccadenet" title='Anchor for: 2.6 SaccadeNet.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 2.6 SaccadeNet</h3> 
+
+<p>Lan S, Ren Z, Wu Y, et al. SaccadeNet: A Fast and Accurate Object Detector[C]//Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. 2020: 10397-10406.</p>
+<p>
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+    
+    
+    
+      
+      
+        <img
+          
+          loading="lazy"
+          src="img/saccadenet.png"
+          alt="SaccadeNet"
+        />
+      
+    
+    
+  
+  
+
+</p>
+
+
+
+
+
+
+
+
+
+  <h3 id="结构-11"><a class="anchor" href="#结构-11" title='Anchor for: 结构.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 结构</h3> 
+
+<ul>
+<li>与BorderDet非常类似，只是第一级网络相当于使用了CenterNet Keypoint</li>
+<li>不是提取边缘特征，而是将4个角点处的特征进行双线性插值作为新的特征</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="评价-11"><a class="anchor" href="#评价-11" title='Anchor for: 评价.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 评价</h4> 
+
+<ul>
+<li>与BorderDet类似但略简单</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h3 id="27-reppoints"><a class="anchor" href="#27-reppoints" title='Anchor for: 2.7 RepPoints.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 2.7 RepPoints</h3> 
+
+<p>Yang Z, Liu S, Hu H, et al. Reppoints: Point set representation for object detection[C]//Proceedings of the IEEE International Conference on Computer Vision. 2019: 9657-9666.</p>
+<p>
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+    
+    
+    
+      
+      
+        <img
+          
+          loading="lazy"
+          src="img/reppoints.png"
+          alt="RepPoints"
+        />
+      
+    
+    
+  
+  
+
+</p>
+
+
+
+
+
+
+
+
+
+  <h4 id="结构-12"><a class="anchor" href="#结构-12" title='Anchor for: 结构.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 结构</h4> 
+
+<ul>
+<li>与前2篇类似，采用二级网络，第一级提出coarse RepPoints，第二级进行refine</li>
+<li>并非学习角点或边缘，而是学习任意n个有代表性的点（RepPoints）</li>
+<li>使用可微转换函数将RepPoints转换为bounding box与ground truth对比</li>
+<li>使用FPN提取多尺度特征，每个尺度处理一定尺寸的物体</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="特点-11"><a class="anchor" href="#特点-11" title='Anchor for: 特点.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 特点</h4> 
+
+<ul>
+<li>使用一组n个点表示一个物体</li>
+<li>只标注中心点，能够自动学习出物体中有代表性的特征点</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="评价-12"><a class="anchor" href="#评价-12" title='Anchor for: 评价.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 评价</h4> 
+
+<ul>
+<li>提出了一种新的物体表示方法（原来大多采用bounding box的x,y,w,h）</li>
+<li>上面几种方法可以认为是本方法的特例</li>
+<li>可以认为是DCNv3</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h3 id="28-cpn"><a class="anchor" href="#28-cpn" title='Anchor for: 2.8 CPN.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 2.8 CPN</h3> 
+
+<p>Duan K, Xie L, Qi H, et al. Corner Proposal Network for Anchor-free, Two-stage Object Detection[J]. arXiv preprint arXiv:2007.13816, 2020.</p>
+<p>
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+    
+    
+    
+      
+      
+        <img
+          
+          loading="lazy"
+          src="img/cpn.png"
+          alt="CPN"
+        />
+      
+    
+    
+  
+  
+
+</p>
+
+
+
+
+
+
+
+
+
+  <h4 id="结构-13"><a class="anchor" href="#结构-13" title='Anchor for: 结构.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 结构</h4> 
+
+<ul>
+<li>两个阶段，第一阶段使用与CornerNet类似的方法求得角点，不进行匹配；第二阶段对所有角点两两组成的候选bounding box中的图像使用分类算法进行验证</li>
+<li>为提高效率，第二阶段先使用一个二分类模型过滤掉明显错误的候选bounding box，再使用一个多分类模型进一步过滤</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="特点-12"><a class="anchor" href="#特点-12" title='Anchor for: 特点.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 特点</h4> 
+
+<ul>
+<li>使用了bounding box内部图像的全部信息，而不是只使用个别关键点信息或边界信息，因此特征更加丰富</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="评价-13"><a class="anchor" href="#评价-13" title='Anchor for: 评价.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 评价</h4> 
+
+<ul>
+<li>虽然号称是anchor free算法，实际上相当于使用CornerNet的结果作为anchor proposal，再进行anchor based方法的第二步分类，感觉更接近anchor based方法；或者可以看作在CornerNet后添加了更加复杂的验证步骤</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h2 id="3-总结"><a class="anchor" href="#3-总结" title='Anchor for: 3. 总结.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 3. 总结</h2> 
+
+<ul>
+<li>FPN与focal loss的出现使anchor free算法的效果得到了提升，从而迎来了一波新的研究热潮</li>
+<li>直接使用bounding box效果并不好，因此如何重新设计ground truth是anchor free算法的关键点</li>
+<li>关键点匹配类算法的重点在于如何对关键点进行正确匹配以及如何使用更多物体内部的特征</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h2 id="参考文献"><a class="anchor" href="#参考文献" title='Anchor for: 参考文献.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 参考文献</h2> 
+
+<ul>
+<li><a href="https://bbs.cvmart.net/articles/442/zhong-bang-13-pian-ji-yu-anchor-free-de-mu-biao-jian-ce-fang-fa">https://bbs.cvmart.net/articles/442/zhong-bang-13-pian-ji-yu-anchor-free-de-mu-biao-jian-ce-fang-fa</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/62103812">https://zhuanlan.zhihu.com/p/62103812</a></li>
+<li><a href="https://bbs.huaweicloud.com/blogs/174617">https://bbs.huaweicloud.com/blogs/174617</a></li>
+</ul>
+
+
+
+    </article>
+  </main>
+
+
+    </div>
+    
+    <footer>
+      
+
+
+  
+
+    
+
+    
+      
+      
+    
+    
+    <p>Generated with <a href="https://gohugo.io">Hugo</a> using the <a href="https://gitlab.com/rmaguiar/hugo-theme-color-your-world">Color Your World</a> theme.</p>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="req-js">
+  <button class="outline-dashed" title="Change to light/dark mode."><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="#1dbc91" title="Change accent color." aria-label="Change accent color."><datalist id="presets"><option value="#1f676b"><option value="#1dbc91"><option value="#225670"><option value="#dd587c"><option value="#902b37"><option value="#f3a530"><option value="#754e85"><option value="#7fc121"><option value="#a8314a"><option value="#ff7433"><option value="#3e6728"><option value="#c063bd"><option value="#805080"><option value="#9d629d"><option value="#a064a0"><option value="#7daa50"><option value="#284531"><option value="#285790"><option value="#F5A83D"><option value="#88aa33"><option value="#015660"><option value="#bf274e"><option value="#bf4242"><option value="#51b37c"></datalist>
+</div>
+
+
+
+  <noscript>
+    <p class="noscript">Unable to execute JavaScript. Some features were disabled.</p>
+  </noscript>
+
+
+
+    </footer>
+    
+    
+    
+
+    
+    
+
+  </body>
+</html>
