@@ -3,7 +3,7 @@
   <head prefix="og: http://ogp.me/ns#">
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="generator" content="Hugo 0.110.0">
+<meta name="generator" content="Hugo 0.111.3">
 <meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
 
 
@@ -103,7 +103,7 @@
       "inLanguage": "en",
       "datePublished": "2022-04-20",
       "dateModified": "2022-04-20",
-      "wordCount" : "49",
+      "wordCount" : "123",
       "publisher": {
         "@type": "Person",
         "name": "zqwang"
@@ -312,7 +312,20 @@
 </span></span><span class="line"><span class="cl">iptables-restore &lt; <span class="o">{</span>file<span class="o">}</span>
 </span></span></code></pre></div><p>4. 重启后自动导入规则</p>
 <p>无论直接添加的规则还是导入的规则，在重启后都不会保存，需要重新添加或导入。因此需要在/etc/rc.local中使用iptables-restore自动导入规则。</p>
-
+<p>5. 使用脚本自动添加当前ssh登录ip</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">ip</span><span class="o">=</span><span class="sb">`</span>who <span class="p">|</span> grep -o <span class="s2">&#34;[0-9]*\.[0-9]*\.[0-9]*\.&#34;</span> <span class="p">|</span> tail -n 1<span class="sb">`</span><span class="s2">&#34;0/24&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">port</span><span class="o">=</span><span class="m">12345</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="nv">$ip</span>:<span class="nv">$port</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">iptables -C INPUT -s <span class="nv">$ip</span> -p tcp --dport <span class="nv">$port</span> -j ACCEPT
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">1</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	iptables -I INPUT -s <span class="nv">$ip</span> -p tcp --dport <span class="nv">$port</span> -j ACCEPT
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">iptables -C INPUT -s <span class="si">${</span><span class="nv">ip</span><span class="si">}</span> -p udp --dport <span class="nv">$port</span> -j ACCEPT
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">1</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">	iptables -I INPUT -s <span class="si">${</span><span class="nv">ip</span><span class="si">}</span> -p udp --dport <span class="nv">$port</span> -j ACCEPT
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span></code></pre></div>
 
 
 

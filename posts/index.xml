@@ -55,14 +55,15 @@ sudo docker run -d --name wework --device /dev/snd --ipc host \ -v /tmp/.</descr
         <pubDate>Wed, 20 Apr 2022 00:00:00 +0000</pubDate>
         
         <guid>https://zqwang-cn.github.io/posts/use-iptables-to-control-port-access/</guid>
-        <description> 背景 在服务器上，如果将某个端口开放使所有IP都可以访问，则可能会引起攻击或增加不必要的流量。此时可以使用iptables控制仅使需要的IP可以访问。
+        <description>背景 在服务器上，如果将某个端口开放使所有IP都可以访问，则可能会引起攻击或增加不必要的流量。此时可以使用iptables控制仅使需要的IP可以访问。
 步骤 1. 首先禁止所有IP访问端口：
 iptables -I INPUT -p tcp --dport {port} -j DROP 2. 之后将该端口开放给指定IP：
 iptables -I INPUT -s {ip} -p tcp --dport {port} -j ACCEPT 其中ip可以为单一IP（如192.168.1.1），也可以为带掩码的一组IP（如192.168.1.0/24）。
 3. 导入/导出规则
 # 导出 iptables-save &amp;gt; {file} # 导入 iptables-restore &amp;lt; {file} 4. 重启后自动导入规则
 无论直接添加的规则还是导入的规则，在重启后都不会保存，需要重新添加或导入。因此需要在/etc/rc.local中使用iptables-restore自动导入规则。
-说明 如需针对udp协议，可将上述命令中的tcp替换为udp 运行iptables需要root权限 目前在Ubuntu中iptables不是服务，不能使用service iptables save保存规则 </description>
+5. 使用脚本自动添加当前ssh登录ip
+ip=`who | grep -o &amp;#34;[0-9]*\.[0-9]*\.[0-9]*\.&amp;#34; | tail -n 1`&amp;#34;0/24&amp;#34; port=12345 echo $ip:$port iptables -C INPUT -s $ip -p tcp --dport $port -j ACCEPT if [ $?</description>
       </item>
     
       <item>
