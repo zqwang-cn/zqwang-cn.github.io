@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Wang&#39;s blog</title>
+    <link>https://zqwang-cn.github.io/tags/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+    <description>Wang&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Copyright © 2023, zqwang; All rights reserved.</copyright>
+    <lastBuildDate>Tue, 04 Apr 2023 13:26:25 +0800</lastBuildDate><atom:link href="https://zqwang-cn.github.io/tags/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+      <item>
+        <title>一、变量与常量</title>
+        <link>https://zqwang-cn.github.io/rust-study-notes/variables-and-constants/</link>
+        <pubDate>Thu, 16 Mar 2023 23:37:05 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/rust-study-notes/variables-and-constants/</guid>
+        <description>变量 变量绑定 使用let语句将字面值或另一变量绑定至一个变量。Rust是静态类型语言，每个变量的类型在编译期就已经确定，变量类型可以手动指定也可由编译器推断。
+// 将字面值绑定至变量 let an_integer = 1u32; // 将另一变量绑定至此变量 let copied_integer = an_integer; 可变性 基本上所有的语言中，变量默认都是可变的。但是在Rust中，为了达到最大的安全性，变量默认为不可变的，如需使用可变变量，需要使用mut显示声明。
+// 声明不可变变量 let immutable_binding = 1; // 错误，不可修改不可变变量 immutable_binding += 1 // 声明可变变量 let mut mutable_binding = 1; // 修改可变变量 mutable_binding += 1; 作用域 每个变量有其作用域，它被限制为只在其所在代码块中有效。
+fn main() { // 此变量在整个main函数内有效 let long_lived_binding = 1; // 此代码块的作用域小于main函数 { // 此变量只在当前代码块中有效 let short_lived_binding = 2; // 正确 println!(&amp;#34;inner short: {}&amp;#34;, short_lived_binding); } // 代码块结束 // 错误，超出作用域，无法使用此变量 println!</description>
+      </item>
+    
+      <item>
+        <title>二、所有权与借用</title>
+        <link>https://zqwang-cn.github.io/rust-study-notes/ownership-and-borrowing/</link>
+        <pubDate>Fri, 17 Mar 2023 19:43:21 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/rust-study-notes/ownership-and-borrowing/</guid>
+        <description>RAII（资源获取即初始化） 为了能够正常释放资源，避免出现C/C++中很容易出现的资源泄漏，Rust强制执行RAII。RAII要求任何对象在离开其作用域时，必须调用其析构函数并释放资源。Rust中的析构函数通过Drop特性实现。
+fn create_box() { // 在函数中申请堆上资源 let _box1 = Box::new(3i32); // 函数结束时释放_box1 } fn main() { // 在主函数中申请堆上资源 let _box2 = Box::new(5i32); { // 在一个代码块中申请堆上资源 let _box3 = Box::new(4i32); // 代码块结束时释放_box3 } // 申请很多资源，无需手动释放 for _ in 0u32..1_000 { create_box(); } // 主函数结束时释放_box2 } 所有权与移动语义 所有权：为了能够安全地释放资源，Rust引入了所有权规则：
+每个变量有且只能有一个所有者 在退出作用域时，所有者负责释放资源 这避免了多次释放同一资源，另外也有一些变量不拥有资源（即引用）。
+移动语义：默认情况下，在使用let进行赋值，或者向函数传递参数时，所有权会进行转移。在进行移动后，原来的变量不能再使用，这避免了悬挂指针。
+// 此函数获取堆上资源的所有权 fn destroy_box(c: Box&amp;lt;i32&amp;gt;) { println!(&amp;#34;Destroying a box that contains {}&amp;#34;, c); // 函数结束时c被释放 } // 栈上资源只会进行复制 let x = 5u32; let y = x; // 堆上资源会进行移动，移动后a不能再使用 let a = Box::new(5i32); let b = a; // 调用函数将b的所有权移动到函数中，移动后b不能再使用 destroy_box(b); 可变性变化 变量的可变性在移动时可以进行变化。</description>
+      </item>
+    
+      <item>
+        <title>三、控制流</title>
+        <link>https://zqwang-cn.github.io/rust-study-notes/control-flow/</link>
+        <pubDate>Sat, 18 Mar 2023 00:49:56 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/rust-study-notes/control-flow/</guid>
+        <description>分支语句（if-else） 分支语句if-else的用法基本与其它语言相同。
+// 单独使用if，使用if-else，或者使用if-else if-else等均可 if n &amp;lt; 0 { print!(&amp;#34;{} is negative&amp;#34;, n); } else if n &amp;gt; 0 { print!(&amp;#34;{} is positive&amp;#34;, n); } else { print!(&amp;#34;{} is zero&amp;#34;, n); } // if-else语句是表达式，可以作为值使用，但是所有分支的返回值类型必须相同 let big_n = if n &amp;lt; 10 &amp;amp;&amp;amp; n &amp;gt; -10 { println!(&amp;#34;, and is a small number, increase ten-fold&amp;#34;); 10 * n } else { println!(&amp;#34;, and is a big number, halve the number&amp;#34;); n / 2 }; 循环语句 无限循环（loop） 无限循环语句，只能使用break或return退出。</description>
+      </item>
+    
+      <item>
+        <title>四、函数与闭包</title>
+        <link>https://zqwang-cn.github.io/rust-study-notes/functions-and-closures/</link>
+        <pubDate>Sun, 19 Mar 2023 00:40:01 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/rust-study-notes/functions-and-closures/</guid>
+        <description>函数 函数使用fn关键字声明，如有需要，则指定参数名称与类型，以及返回值的类型。返回方式除了可以使用return外，还可以在最后一条语句给出一个表达式。
+fn add_one(x: i32) -&amp;gt; i32 { x + 1 } 语句与表达式 Rust程序由语句组成，常见的语句有let语句与表达式语句 代码块也是表达式，它的最后一个表达式被返回。需要注意的是，如果最后一个表达式以分号结尾，则返回值为() 函数指针 函数指针的类型是fn，在使用时还需要指定输入输出类型。
+fn do_twice(f: fn(i32) -&amp;gt; i32, arg: i32) -&amp;gt; i32 { f(arg) + f(arg) } // 将add_one函数指针作为do_twice的参数 let answer = do_twice(add_one, 5); 函数指针fn是一个类型，所以在作为参数时可以直接使用，而无需使用泛型并使用闭包特性进行限制。此外，fn实现了全部3种闭包特性（Fn，FnMut与FnOnce），这意味着可以将函数指针传给所有将闭包作为参数的函数。因此，在写函数时最好使用泛型与闭包特性，这样函数与闭包都可以作为参数。
+但是，在与外部代码交互时，可能只接收函数指针作为参数。
+闭包 闭包是可以捕获环境中变量的函数，相当于lambda表达式。
+// 一个捕获了变量x的闭包 |val| val + x 闭包的特点有：
+使用||代替() 如果只有一条语句可以省略{} 可以捕获环境中的变量 捕获变量 闭包可以捕获环境中的变量。可以通过以下3种方式：
+引用：&amp;amp;T 可变引用：&amp;amp;mut T 值：T // 引用捕获 let color = String::from(&amp;#34;green&amp;#34;); let print = || println!(&amp;#34;`color`: {}&amp;#34;, color); print(); // 可变引用捕获 let mut count = 0; let mut inc = || { count += 1; println!</description>
+      </item>
+    
+      <item>
+        <title>五、类型</title>
+        <link>https://zqwang-cn.github.io/rust-study-notes/types/</link>
+        <pubDate>Mon, 20 Mar 2023 23:37:45 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/rust-study-notes/types/</guid>
+        <description>内置类型 标量类型 有符号整型：i8, i16, i32, i64, i128, isize 无符号整型：u8, u16, u32, u64, u128, usize 浮点型：f32, f64 字符型：char（4字节Unicode字符） 布尔型：bool（true/false） unit类型：类型为()，有且仅有一个值()。类似void 复合类型 复合类型有元组与数组两种，它们的长度与其中变量的类型在声明后均不可变。
+元组：由多个不同类型的变量组成 let x: (i32, f64, u8) = (-1, 2.0, 3); // 声明元组 let a = x.0; // 取元组中的元素 let (a, b, c) = x; // 解构 数组：由多个同一类型的变量组成 let a: [i32; 5] = [1, 2, 3, 4, 5]; // 声明数组 let a = [3; 5]; // 使用同一变量初始化 let x = a[0]; // 取数组中的元素 切片：使用切片可以更加方便地操作序列数据，但是它本身不包含数据，只是一种引用，包含起始位置与长度两个字段 let a: [i32; 5] = [1, 2, 3, 4, 5]; // 声明数组 let s: &amp;amp;[i32] = &amp;amp;a[1.</description>
+      </item>
+    
+      <item>
+        <title>六、泛型</title>
+        <link>https://zqwang-cn.github.io/rust-study-notes/generics/</link>
+        <pubDate>Tue, 21 Mar 2023 14:00:03 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/rust-study-notes/generics/</guid>
+        <description>泛型是用于编写功能确定，类型待定的代码模板的机制，可以有效减少代码冗余。类似于C++中的模板。
+在函数中使用 // 定义一个使用泛型的函数 fn foo&amp;lt;T&amp;gt;(arg: T) { ... } // 编译器自动识别T为i32 foo(1); // 编译器自动识别T为&amp;amp;str foo(&amp;#34;string&amp;#34;); // 手动设置T为i32 foo::&amp;lt;i32&amp;gt;(1); 在结构体中使用 // 定义一个使用泛型的结构体 struct Point&amp;lt;T&amp;gt; { x: T, y: T, } // 自动识别T为i32 let integer = Point { x: 5, y: 10 }; // 自动识别T为f64 let float = Point { x: 1.0, y: 4.0 }; // 错误，x与y必须具有相同的类型 let wont_work = Point { x: 5, y: 4.0 }; // 手动设置T为u8 let uint8 = Point::&amp;lt;u8&amp;gt; { x: 1, y: 2 }; 在枚举中使用 std库中的Option与Result是非常常用的使用了泛型的枚举结构。</description>
+      </item>
+    
+      <item>
+        <title>七、特性</title>
+        <link>https://zqwang-cn.github.io/rust-study-notes/traits/</link>
+        <pubDate>Wed, 22 Mar 2023 17:50:53 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/rust-study-notes/traits/</guid>
+        <description>特性是为未知类型Self定义的一组方法，类似于Java的接口。特性可以为任意类型实现，包括内置类型，如i64/&amp;amp;str等。
+定义特性 // 定义一个特性，无需实现 pub trait Summary { fn summarize(&amp;amp;self) -&amp;gt; String; } // 定义特性时可以提供默认实现 pub trait Summary { fn summarize(&amp;amp;self) -&amp;gt; String { String::from(&amp;#34;(Read more...)&amp;#34;) } } 实现特性 特性必须为某个类型实现，可以认为是为这个类型添加了相应的方法。
+impl Summary for NewsArticle { fn summarize(&amp;amp;self) -&amp;gt; String { format!(&amp;#34;{}, by {} ({})&amp;#34;, self.headline, self.author, self.location) } } 使用impl Trait impl Trait是一个语法糖，它相当于在泛型函数中使用泛型范围（trait bound）。可以将impl Trait作为函数的输入参数或者返回值，使代码更简洁易读，但是需要注意此时的函数是静态泛型函数，并不能动态接收或返回不同的类型。
+作为输入参数 // 使用impl Trait作为输入参数 pub fn notify(item: &amp;amp;impl Summary) { println!(&amp;#34;Breaking news! {}&amp;#34;, item.summarize()); } // 使用+表示参数需要实现多个特性 pub fn notify(item: &amp;amp;(impl Summary + Display)) {} 作为返回值 // 使用impl Trait作为返回值 fn returns_summarizable() -&amp;gt; impl Summary {} 使用dyn返回实现特性的动态类型 Rust编译器必须知道函数返回值占用空间的大小，但是对于同样一个特性，不同的实现类型占用空间不同，因此不能直接将特性作为返回值。但是，可以通过返回一个Box指向一个实现特性的变量来解决这一问题。由于Box大小确定，因此这是可行的。由于Rust要求在堆上分配内存时必须显示说明，因此这种情况下需要使用dyn关键字。</description>
+      </item>
+    
+      <item>
+        <title>八、标准库 - 常用集合类型</title>
+        <link>https://zqwang-cn.github.io/rust-study-notes/std-lib-common-collections/</link>
+        <pubDate>Thu, 23 Mar 2023 12:51:57 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/rust-study-notes/std-lib-common-collections/</guid>
+        <description>Vec Vec是长度可变的数组，它在堆上分配空间，且能自动进行内存管理，类似于C++的std::vector。一个Vec包含3个参数：
+数据指针 长度 容量 // 建立空Vec let v: Vec&amp;lt;i32&amp;gt; = Vec::new(); // 使用初始值建立Vec let v = vec![1, 2, 3]; // 添加值 v.push(4); // 获取值 let third: &amp;amp;i32 = &amp;amp;v[2]; let third: Option&amp;lt;&amp;amp;i32&amp;gt; = v.get(2); // 迭代值 for i in &amp;amp;v { println!(&amp;#34;{i}&amp;#34;); } for i in &amp;amp;mut v { *i += 50; } String String是在堆上分配空间的动态字符串类型（区别于内置静态字符串类型&amp;amp;str），类似于C++的std::string。String底层存储使用Vec&amp;lt;u8&amp;gt;类型，但是保证总是有效的UTF8编码字符串。因此String中每个字符的大小不一致，需要小心使用。
+// 建立空String let mut s = String::new(); // 将&amp;amp;str转换为String let s = &amp;#34;initial contents&amp;#34;.</description>
+      </item>
+    
+      <item>
+        <title>九、标准库 - 智能指针</title>
+        <link>https://zqwang-cn.github.io/rust-study-notes/std-lib-smart-pointers/</link>
+        <pubDate>Fri, 24 Mar 2023 13:53:31 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/rust-study-notes/std-lib-smart-pointers/</guid>
+        <description>Box Box是最简单的智能指针，它在堆上分配内存。Box只能有一个持有者，类似于C++的std::unique_ptr。Box没有性能开销，同时也没有额外功能。一般在以下情况下使用
+要使用一个在编译期无法知道大小的类型 要转换大量数据的所有权但是不想拷贝数据 要使用实现了某个特性，但并不关心其具体类型的类型 // 声明一个Box并储存一个值 let a = Box::new(5); // 取Box中储存的值（解引用，需要实现Deref特性） let b = *a; // 强制解引 println!(&amp;#34;a = {}&amp;#34;, a); // 提前释放内存（可自动释放，需要实现Drop特性） drop(a); Rc Rc是带引用计数的智能指针，可以有多个持有者，类似于C++的std::shared_ptr。
+// 声明一个Rc并储存一个值 let rc_a: Rc&amp;lt;String&amp;gt; = Rc::new(&amp;#34;Rc examples&amp;#34;.to_string()); // 复制指针（底层数据不变，引用计数+1） let rc_b: Rc&amp;lt;String&amp;gt; = Rc::clone(&amp;amp;rc_a); // 查看引用计数 println!(&amp;#34;Reference Count of rc_a: {}&amp;#34;, Rc::strong_count(&amp;amp;rc_a)); // 判断两个Rc是否指向同一数据 println!(&amp;#34;rc_a and rc_b are equal: {}&amp;#34;, rc_a.eq(&amp;amp;rc_b)); // 通过Rc直接使用底层数据的方法 println!(&amp;#34;Length of the value inside rc_a: {}&amp;#34;, rc_a.</description>
+      </item>
+    
+      <item>
+        <title>十、标准库 - 并发</title>
+        <link>https://zqwang-cn.github.io/rust-study-notes/std-lib-concurrency/</link>
+        <pubDate>Sat, 25 Mar 2023 23:12:30 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/rust-study-notes/std-lib-concurrency/</guid>
+        <description>安全并高效地处理并发是Rust的主要目标之一。Rust使用所有权与类型系统可以同时处理内存安全与并发安全问题。
+线程（Thread） // 使用spawn建立线程，使其运行一个闭包 let handle = thread::spawn(|| { for i in 1..10 { println!(&amp;#34;hi number {} from the spawned thread!&amp;#34;, i); } }); // 使用join等待线程结束 handle.join().unwrap(); // 使用sleep令当前线程休眠 thread::sleep(Duration::from_millis(1)); // 为了使线程闭包能够使用外部变量，需要使用move关键字移动所有权 let v = vec![1, 2, 3]; let handle = thread::spawn(move || { println!(&amp;#34;Here&amp;#39;s a vector: {:?}&amp;#34;, v); }); 通道 通过消息传递来进行安全的并发是一种越来越流行的思想。因此Rust标准库中实现了通道，它可以由sender发送数据给receiver。
+// 建立通道，获得sender与receiver let (tx, rx) = mpsc::channel(); // 在新线程中使用sender发送数据，注意需要将sender移动至新线程 thread::spawn(move || { let val = String::from(&amp;#34;Hi&amp;#34;); // 为了保证安全，使用通道发送数据时，数据被移动 tx.</description>
+      </item>
+    
+      <item>
+        <title>十一、标准库 - 其它</title>
+        <link>https://zqwang-cn.github.io/rust-study-notes/std-lib-misc/</link>
+        <pubDate>Sun, 26 Mar 2023 17:07:48 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/rust-study-notes/std-lib-misc/</guid>
+        <description>路径 使用std::path中的Path与PathBuf表示系统路径。其中Path是不可变版本，PathBuf为可变版本。
+// 建立Path后不可变 let path = Path::new(&amp;#34;.&amp;#34;); // 从字符串建立PathBuf let mut buf = PathBuf::from(&amp;#34;.&amp;#34;); // 将Path转换为PathBuf let mut buf = path.to_path_buf(); // 修改PathBuf buf.push(&amp;#34;a&amp;#34;); buf.push(&amp;#34;b.txt&amp;#34;); buf.set_file_name(&amp;#34;c.tar&amp;#34;); buf.set_extension(&amp;#34;zip&amp;#34;); 文件I/O // 打开文件用于读取 let mut file = File::open(&amp;amp;path).unwrap(); // 读取文件内容到String let mut s = String::new(); file.read_to_string(&amp;amp;mut s).unwrap(); // 建立文件用于写入 let mut file = File::create(&amp;amp;path).unwrap(); // 将字符串写入文件 file.write_all(&amp;#34;content&amp;#34;.as_bytes()).unwrap(); 子进程 使用std::process::Command执行命令建立子进程。可以使用管道与其交互，等待执行完成并获取返回值。
+let output = Command::new(&amp;#34;rustc&amp;#34;) // 要执行的命令 .arg(&amp;#34;--version&amp;#34;) // 参数 .output() // 等待执行完毕并获取结果 .</description>
+      </item>
+    
+      <item>
+        <title>十二、错误处理</title>
+        <link>https://zqwang-cn.github.io/rust-study-notes/error-handling/</link>
+        <pubDate>Mon, 27 Mar 2023 11:35:30 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/rust-study-notes/error-handling/</guid>
+        <description>panic 最简单的错误处理方式是使用panic!宏，它简单地打印错误并退出程序。
+panic!(&amp;#34;crash and burn&amp;#34;); abort/unwind 处理panic有两种方式，可以通过编译器参数或配置文件的方式设置。默认为unwind
+unwind：回溯调用栈并进行清理工作 abort：立即退出 Option 在Rust中，如果一个函数返回类型T，则它必须返回一个变量，不能返回空（类似NULL或nullptr），这样可以避免用户不检查空指针造成错误。如果确实需要返回空，则可以使用Option。Option是std库提供的一个枚举类型。Option&amp;lt;T&amp;gt;的取值为以下二者之一：
+Some(T)：包含一个T类型的元素 None：不包含任何元素 编译器会强制用户处理值为None的情况，从而提高安全性。Option的操作方式有：
+match：与其它枚举的处理方式相同，需要处理所有可能情况 解包：为Some时获取其值，为None时执行不同操作 unwrap：为None时panic expect：为None时使用自定义信息报错 ?：为None时使当前所在函数返回None or：为None时返回另一值。链式、立即 or_else：为None时调用函数获取值并返回。链式、延迟 get_or_insert：为None时插入值。立即 get_or_insert_with：为None时调用函数获取值并插入。延迟 使用combinator进行后续操作： map：有值则对其进行操作，否则返回None and_then：有值则解包其值并进行操作，否则返回None Result Option只返回了错误，但是并不知道错误的原因。Result加强了这一点。一个Result&amp;lt;T, E&amp;gt;的取值为以下二者之一：
+Ok(T)：成功，并返回一个T类型的值 Err(E)：失败，并返回一个E类型错误 Result同样可以使用match, unwrap, ?, map, and_then等进行操作。</description>
+      </item>
+    
+      <item>
+        <title>十三、迭代器</title>
+        <link>https://zqwang-cn.github.io/rust-study-notes/iterators/</link>
+        <pubDate>Tue, 28 Mar 2023 17:38:06 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/rust-study-notes/iterators/</guid>
+        <description> 使用迭代器处理系列数据 使用迭代器可以对一系列数据依次进行处理。直到使用迭代器时，它不产生任何影响。
+let v1 = vec![1, 2, 3]; // 获取Vec的迭代器 let v1_iter = v1.iter(); // 在for-in循环中使用迭代器 for val in v1_iter { println!(&amp;#34;Got: {}&amp;#34;, val); } 迭代器特性 迭代器需要实现类似如下的特性：
+pub trait Iterator { type Item; fn next(&amp;amp;mut self) -&amp;gt; Option&amp;lt;Self::Item&amp;gt;; } 消耗适配器 指会消耗掉迭代器的方法，调用这些方法后就不能再使用迭代器。
+let v1 = vec![1, 2, 3]; let v1_iter = v1.iter(); let total: i32 = v1_iter.sum(); 迭代器适配器 指会生成其它迭代器的方法，它们并不消耗原来的迭代器。
+let v1: Vec&amp;lt;i32&amp;gt; = vec![1, 2, 3]; v1.iter().map(|x| x + 1); </description>
+      </item>
+    
+      <item>
+        <title>十四、模式与匹配</title>
+        <link>https://zqwang-cn.github.io/rust-study-notes/patterns-and-matching/</link>
+        <pubDate>Wed, 29 Mar 2023 21:42:31 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/rust-study-notes/patterns-and-matching/</guid>
+        <description>模式是Rust的一种特殊语法，用于对类型的结构进行匹配。一个模式由若干以下项组成：
+字面值 解构的数组、枚举、结构体或元组 变量 通配符 占位符 在模式有效的范围内，它描述了数据的形状。程序将值与模式进行匹配，以确定它是否有正确的形状，并决定是否进一步执行一段代码。
+可以使用模式的位置 match分支 在match中使用模式要求穷举所有可能性，一种保证穷举的方法是在最后一个分支处理所有剩余所有可能性。使用_可以匹配任何可能性并且不绑定值，所以一般用在最后一个分支。
+match x { None =&amp;gt; None, Some(i) =&amp;gt; Some(i + 1), } if-let条件表达式 if-let/else-if/else-if-let可以混用。使用if-let的缺点是如果不在最后使用else，则不能穷举所有情况。
+if let Some(color) = favorite_color { println!(&amp;#34;Using your favorite color, {color}, as the background&amp;#34;); } else if is_tuesday { println!(&amp;#34;Tuesday is green day!&amp;#34;); } else if let Ok(age) = age { if age &amp;gt; 30 { println!(&amp;#34;Using purple as the background color&amp;#34;); } else { println!(&amp;#34;Using orange as the background color&amp;#34;); } } else { println!</description>
+      </item>
+    
+      <item>
+        <title>十五、生命周期</title>
+        <link>https://zqwang-cn.github.io/rust-study-notes/lifetime/</link>
+        <pubDate>Thu, 30 Mar 2023 21:57:18 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/rust-study-notes/lifetime/</guid>
+        <description>生命周期是编译器的借用检查器用来保证所有借用都有效的一个概念。一个变量的生命周期从它被创建开始到它被销毁结束。
+fn main() { let i = 3; // i生命周期开始 ─────────────────────────────┐ // │ { // │ let borrow1 = &amp;amp;i; // 借用`borrow1`生命周期开始 ──────┐│ // ││ println!(&amp;#34;borrow1: {}&amp;#34;, borrow1); // ││ } // `borrow1`生命周期结束 ─────────────────────────────┘│ // │ // │ { // │ let borrow2 = &amp;amp;i; // 借用`borrow2`生命周期开始 ──────┐│ // ││ println!(&amp;#34;borrow2: {}&amp;#34;, borrow2); // ││ } // `borrow2`生命周期结束 ─────────────────────────────┘│ // │ } // i生命周期结束 ────────────────────────────────────────┘ 显式标注 借用检查器使用显式生命周期标注来决定引用需要有效多久。
+// foo具有一个生命周期参数&amp;#39;a，foo的生命周期不能超过&amp;#39;a foo&amp;lt;&amp;#39;a&amp;gt; // 一个带生命周期标注的类型 &amp;amp;&amp;#39;a T // 使用多个生命周期参数，foo的生命周期不能超过&amp;#39;a或&amp;#39;b foo&amp;lt;&amp;#39;a, &amp;#39;b&amp;gt; 在函数中使用 带有生命周期的函数签名具有一些约束：</description>
+      </item>
+    
+      <item>
+        <title>十六、宏</title>
+        <link>https://zqwang-cn.github.io/rust-study-notes/macros/</link>
+        <pubDate>Fri, 31 Mar 2023 19:32:52 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/rust-study-notes/macros/</guid>
+        <description>分类 Rust中的宏分为两类：使用macro_rules!声明的声明式宏与以下3种过程宏：
+自定义#[derive]宏：可以使用derive属性在结构体与枚举上添加指定代码 类属性宏：自定义可以在任何项目上使用的属性 类函数宏：看起来像函数但是在它们的参数上进行操作 为什么使用宏 DRY（不要重复自己）：可以避免重复同样的代码 DSL（领域特定语言）：可以定义用于特定用途的自定义语法 Variadic（可变参数函数）：可以定义接收任意数量参数的接口（类似函数），例如println! 宏与函数的不同 宏是用代码写其它代码的方式，即元编程。在编译前，编译器会将宏展开并进行编译。与C等语言的宏不同，Rust的宏不是简单的字符串展开，而是会生成抽象语法树，这避免了无法预期的问题。宏与函数都是用于减少代码量，但是宏有一些函数没有的能力。
+函数必须指定参数的个数与类型，宏可以接收任意数量参数 宏在编译前展开，函数在运行期间调用，所以宏可以做许多函数无法做的事情，例如在一个类型上实现一个特性 宏的缺点是更加复杂，难于理解与维护，因为是在间接地用代码编写代码 宏必须先定义并加引入作用域才能使用，而函数可以在任何地方定义与调用 使用macro_rules!进行元编程的声明式宏 声明式宏允许编写一个类似match的结构，在编译时，如果传入值匹配其中一个分支，则将宏替换为对应的代码。使用macro_rules!定义宏：
+// 定义宏 macro_rules! say_hello { () =&amp;gt; { println!(&amp;#34;Hello!&amp;#34;); }; } // 调用宏 say_hello!() 语法 参数与指示符 宏的参数定义方式如下，每个参数带有前缀$，冒号后为其指示符，表示该参数的类型。
+($func_name:ident) 可能的指示符有：
+block：块 expr：表达式 ident：标识符，如变量、函数名 item：项，如函数、结构体、模块等 literal：字面值常量 pat：模式 path：路径 stmt：语句 tt：语法树 ty：类型 vis：visibility限定词 完整的列表在这里。
+重载 宏可以重载，使用不同的参数组合。
+macro_rules! test { // 一个参数组合 ($left:expr; and $right:expr) =&amp;gt; { println!(&amp;#34;{:?} and {:?} is {:?}&amp;#34;, stringify!($left), stringify!($right), $left &amp;amp;&amp;amp; $right) }; // 另一个参数组合 ($left:expr; or $right:expr) =&amp;gt; { println!</description>
+      </item>
+    
+      <item>
+        <title>十七、不安全操作</title>
+        <link>https://zqwang-cn.github.io/rust-study-notes/unsafe-operations/</link>
+        <pubDate>Sat, 01 Apr 2023 11:34:52 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/rust-study-notes/unsafe-operations/</guid>
+        <description>Rust编译器的静态检查可以保证代码是非常安全的，但是它过于严格，拒绝了一些可能有效的代码。因此如果确定需要使用这些代码，则要使用不安全操作告诉编译器放松条件。此外，如果要执行一些底层系统级操作，则必须要使用不安全操作。
+解引裸指针 引用是由编译器保证总是有效的，因此可以安全地使用。在不安全的Rust中，有两种新的裸指针类型：*const T与*mut T。使用裸指针在放弃了安全性保证的同时，可以得到极大的性能提升或与其它语言/硬件进行交互的能力。与引用和智能指针不同，裸指针有以下特点：
+允许忽略借用规则，同时可以有任意个指针指向同一地址 不保证裸指针指向有效数据 可以为空 不实现自动清理 以下代码从引用建立裸指针，可知指向的数据是有效的：
+let mut num = 5; // 建立不可变指针 let r1 = &amp;amp;num as *const i32; // 建立可变指针 let r2 = &amp;amp;mut num as *mut i32; 以下代码从任意内存位置建立指针，不能保证指向有效数据：
+let address = 0x012345usize; let r = address as *const i32; 建立裸指针本身是安全的，但是由于指向的数据不一定有效，所以解引裸指针是不安全的：
+unsafe { println!(&amp;#34;r1 is: {}&amp;#34;, *r1); println!(&amp;#34;r2 is: {}&amp;#34;, *r2); } 调用不安全函数或方法 在函数声明前添加unsafe关键字声明不安全函数，这意味着调用者需要自行保证调用的正确性。调用此类函数需要在unsafe块中进行。
+// 声明unsafe函数 unsafe fn dangerous() {} // 调用unsafe函数 unsafe { dangerous(); } 可以将不安全代码封装在安全函数中，无需将整个函数标记为不安全。</description>
+      </item>
+    
+      <item>
+        <title>十八、代码组织</title>
+        <link>https://zqwang-cn.github.io/rust-study-notes/code-organization/</link>
+        <pubDate>Sun, 02 Apr 2023 22:14:35 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/rust-study-notes/code-organization/</guid>
+        <description>Rust提供了一系列特性用于管理代码的组织结构，包括：
+Package（包）：Cargo提供的可以建立、测试与分享箱的结构 Crate（箱）：模块组成的树，构成一个库或可执行文件 Module（模块）与use（引入）：用于控制代码结构、作用域与路径的隐私性 Path（路径）：命名结构体、函数或模块的方式 Crate（箱） 箱是编译器每次编译的最小单位。箱分为两类：
+二进制箱：是可以编译为可执行文件的程序，包含main函数 库箱：不包含main函数，用于分享功能 每个箱从一个根文件开始编译，可能包含多个文件。
+Package（包） 包是包管理器Cargo提供的结构，它包含一个配置文件Cargo.toml。一个包可以包含多个箱，但是最多有一个库箱。默认情况下，src/main.rs是二进制箱的根文件，src/lib.rs是库箱的根文件。
+Module（模块） 使用模块可以对代码进行组织以提高可读性与可用性，每个箱都由一组树状的模块组成。
+使用以下命令建立一个库：
+cargo new restaurant --lib 在src/lib.rs中添加以下代码：
+mod front_of_house { mod hosting { fn add_to_waitlist() {} fn seat_at_table() {} } mod serving { fn take_order() {} fn serve_order() {} fn take_payment() {} } } 以上代码形成的模块树如下，其中根自动命名为crate：
+crate └── front_of_house ├── hosting │ ├── add_to_waitlist │ └── seat_at_table └── serving ├── take_order ├── serve_order └── take_payment Path（路径） 使用路径在模块树中引用项目 路径有两种形式：</description>
+      </item>
+    
+      <item>
+        <title>十九、测试</title>
+        <link>https://zqwang-cn.github.io/rust-study-notes/tests/</link>
+        <pubDate>Mon, 03 Apr 2023 12:54:41 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/rust-study-notes/tests/</guid>
+        <description>测试是检查其它代码是否正常工作的Rust函数。典型的测试函数执行以下三个动作：
+设置需要的数据和状态 运行测试代码 检查结果是否符合预期 如何编写测试函数 使用cargo new建立一个库项目时，会自动生成一个测试模块。测试函数前需要添加#[test]属性，之后使用cargo test命令会自动运行测试。
+#[cfg(test)] mod tests { #[test] fn it_works() { let result = 2 + 2; assert_eq!(result, 4); } } 使用assert!宏检查结果 assert!用于保证条件为true，为true则继续执行程序，为false则调用panic!。
+#[derive(Debug)] struct Rectangle { width: u32, height: u32, } impl Rectangle { fn can_hold(&amp;amp;self, other: &amp;amp;Rectangle) -&amp;gt; bool { self.width &amp;gt; other.width &amp;amp;&amp;amp; self.height &amp;gt; other.height } } #[cfg(test)] mod tests { use super::*; // 此测试会成功 #[test] fn larger_can_hold_smaller() { let larger = Rectangle { width: 8, height: 7, }; let smaller = Rectangle { width: 5, height: 1, }; assert!</description>
+      </item>
+    
+      <item>
+        <title>二十、其他</title>
+        <link>https://zqwang-cn.github.io/rust-study-notes/others/</link>
+        <pubDate>Tue, 04 Apr 2023 13:26:25 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/rust-study-notes/others/</guid>
+        <description>属性（Attribute） 属性是提供给模块、箱或其它项目的元数据。
+dead_code 用于关闭编译器对于无用代码的警告。
+#[allow(dead_code)] fn unused_function() {} crate_type与crate_name 用于指定箱的类型与名称。
+#![crate_type = &amp;#34;lib&amp;#34;] #![crate_name = &amp;#34;rary&amp;#34;] cfg 用于检查设置。
+// 在符合条件时才编译 #[cfg(target_os = &amp;#34;linux&amp;#34;)] fn are_you_on_linux() { println!(&amp;#34;You are running linux!&amp;#34;); } // 在程序中使用宏获取设置 if cfg!(target_os = &amp;#34;linux&amp;#34;) { println!(&amp;#34;Yes. It&amp;#39;s definitely linux!&amp;#34;); } else { println!(&amp;#34;Yes. It&amp;#39;s definitely *not* linux!&amp;#34;); } 可以使用自定义属性：
+#[cfg(some_condition)] fn conditional_function() { println!(&amp;#34;condition met!&amp;#34;); } 但是需要在编译时手动传入：
+rustc --cfg some_condition custom.rs &amp;amp;&amp;amp; ./custom 面向对象编程（OOP）特点 怎样才算OOP语言这一点并没有明确的共识。虽然Rust的语法与普通的OOP语言相差较大，但是它仍然具有OOP的主要特点。
+对象包含数据与行为：结构与枚举中包含数据，使用impl块可以为它们实现方法，因此可以将结构和枚举视为对象 封装：使用pub可以控制结构内部变量/方法的可见性 继承：继承的作用是代码复用与多态，虽然Rust本身并不提供继承机制，但是通过使用特性可以实现这两个功能 原始标识符 原始标识符允许使用关键字作为标识符。这在Rust引入新关键字，而某些旧版本代码使用了同名标识符时非常有用。</description>
+      </item>
+    
+  </channel>
+</rss>

@@ -4,6 +4,346 @@
   
   
     <url>
+      <loc>https://zqwang-cn.github.io/rust-study-notes/variables-and-constants/</loc>
+      
+      
+        <lastmod>2023-03-16T23:37:05+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/rust-study-notes/ownership-and-borrowing/</loc>
+      
+      
+        <lastmod>2023-03-17T19:43:21+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/rust-study-notes/control-flow/</loc>
+      
+      
+        <lastmod>2023-03-18T00:49:56+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/rust-study-notes/functions-and-closures/</loc>
+      
+      
+        <lastmod>2023-03-19T00:40:01+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/rust-study-notes/types/</loc>
+      
+      
+        <lastmod>2023-03-20T23:37:45+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/rust-study-notes/generics/</loc>
+      
+      
+        <lastmod>2023-03-21T14:00:03+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/rust-study-notes/traits/</loc>
+      
+      
+        <lastmod>2023-03-22T17:50:53+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/rust-study-notes/std-lib-common-collections/</loc>
+      
+      
+        <lastmod>2023-03-23T12:51:57+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/rust-study-notes/std-lib-smart-pointers/</loc>
+      
+      
+        <lastmod>2023-03-24T13:53:31+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/rust-study-notes/std-lib-concurrency/</loc>
+      
+      
+        <lastmod>2023-03-25T23:12:30+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/rust-study-notes/std-lib-misc/</loc>
+      
+      
+        <lastmod>2023-03-26T17:07:48+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/rust-study-notes/error-handling/</loc>
+      
+      
+        <lastmod>2023-03-27T11:35:30+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/rust-study-notes/iterators/</loc>
+      
+      
+        <lastmod>2023-03-28T17:38:06+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/rust-study-notes/patterns-and-matching/</loc>
+      
+      
+        <lastmod>2023-03-29T21:42:31+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/rust-study-notes/lifetime/</loc>
+      
+      
+        <lastmod>2023-03-30T21:57:18+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/rust-study-notes/macros/</loc>
+      
+      
+        <lastmod>2023-03-31T19:32:52+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/rust-study-notes/unsafe-operations/</loc>
+      
+      
+        <lastmod>2023-04-01T11:34:52+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/rust-study-notes/code-organization/</loc>
+      
+      
+        <lastmod>2023-04-02T22:14:35+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/rust-study-notes/tests/</loc>
+      
+      
+        <lastmod>2023-04-03T12:54:41+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/rust-study-notes/others/</loc>
+      
+      
+        <lastmod>2023-04-04T13:26:25+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
       <loc>https://zqwang-cn.github.io/posts/use-nvjpeg-to-accelerate-jpg-image-decoding/</loc>
       
       
