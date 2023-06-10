@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+  <head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo 0.113.0">
+<meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
+
+
+<title>列表初始化 | Wang&#39;s blog</title>
+
+<meta name="author" content="zqwang">
+
+
+
+<meta name="robots" content="index follow">
+
+
+
+
+  
+    <link rel="canonical" href="https://zqwang-cn.github.io/cpp-new-features/list-initialization/">
+  
+
+
+
+
+
+
+
+
+<meta property="og:site_name" content="Wang&#39;s blog">
+<meta property="og:title" content="列表初始化">
+
+  <meta property="og:url" content="https://zqwang-cn.github.io/cpp-new-features/list-initialization/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:type" content="website">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="theme-color" content="#222">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://zqwang-cn.github.io/",
+      "inLanguage": "en",
+      "name": "Wang's blog",
+      "description": "Wang's blog",
+      "publisher": "zqwang"
+    }
+  </script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://zqwang-cn.github.io/css/main.min.c166fa5a48e8b326dc193e5c2ea65b6f96720911149d941bddb3b0b8eff62af3.css" integrity="sha256-wWb6WkjosybcGT5cLqZbb5ZyCREUnZQb3bOwuO/2KvM=" crossorigin="anonymous">
+
+
+
+<noscript>
+
+  
+  
+
+  
+    <meta name="theme-color" content="#1dbc91" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1f676b" media="(prefers-color-scheme: light)">
+  
+
+  
+  <link rel="stylesheet" href="https://zqwang-cn.github.io/css/noscript.min.3f3b95436b19eaeb9223fb12c0b86737d53ee0a47fdba271a886c244bc03975c.css" integrity="sha256-PzuVQ2sZ6uuSI/sSwLhnN9U&#43;4KR/26JxqIbCRLwDl1w=" crossorigin="anonymous">
+
+</noscript>
+
+
+
+<link rel="preload" href="/fonts/open-sans-v34-latin-700.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-italic.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-regular.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/oswald-v29-latin-700.woff2" as="font" crossorigin="anonymous">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="https://zqwang-cn.github.io/js/main.f1da21dfea83dc0c36cea0b202c14a97e00aedab567e32702eb120f5ab8d974b.js" integrity="sha256-8doh3&#43;qD3Aw2zqCyAsFKl&#43;AK7atWfjJwLrEg9auNl0s=" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body>
+
+    <header>
+      
+
+  <a href="/">Wang&#39;s blog</a>
+
+
+
+
+  
+    <nav aria-label="Main menu.">
+      <ul>
+        
+          <li>
+            <a class="btn" href="/">Home</a>
+          </li>
+        
+      </ul>
+    </nav>
+  
+
+
+    </header>
+
+    <div class="filler">
+      
+
+  <main>
+    <article>
+      <header>
+        
+        <h1>列表初始化</h1>
+
+        
+          <div class="terms">
+            <ul><li><a class="btn" href="/tags/c&#43;&#43;%E6%96%B0%E7%89%B9%E6%80%A7/">c&#43;&#43;新特性</a></li></ul>
+          </div>
+          <p>
+            
+              Published on <time datetime="2023-06-08">2023-06-08</time>
+            
+          </p>
+        
+        
+        
+        
+      </header>
+    
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<p>列表初始化是使用花括号初始化器对变量进行初始化的方式。C++11之前只能用于数组等少量类型，C++11后将这种方式推广至所有类型。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="初始化非类类型"><a class="anchor" href="#初始化非类类型" title='Anchor for: 初始化非类类型.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 初始化非类类型</h2> 
+
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 不使用列表初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">a</span><span class="p">;</span>              <span class="c1">// 默认初始化，值不确定
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="kt">int</span><span class="p">();</span>      <span class="c1">// 零初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="nf">c</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>           <span class="c1">// 直接初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>          <span class="c1">// 复制初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 使用列表初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">e</span><span class="p">{};</span>            <span class="c1">// 零初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">f</span><span class="p">{</span><span class="mi">1</span><span class="p">};</span>           <span class="c1">// 直接初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">g</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">};</span>        <span class="c1">// 复制初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">h</span> <span class="o">=</span> <span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">};</span>     <span class="c1">// 直接初始化临时量，然后复制初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 列表初始化引用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">r1</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">};</span> <span class="c1">// 绑定const左值引用到临时变量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="o">&amp;&amp;</span><span class="n">r2</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">};</span>      <span class="c1">// 绑定右值引用到临时变量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">r3</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">};</span>       <span class="c1">// 错误，不能绑定右值到非const左值引用
+</span></span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h2 id="初始化类类型"><a class="anchor" href="#初始化类类型" title='Anchor for: 初始化类类型.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 初始化类类型</h2> 
+
+
+
+
+
+
+
+
+
+
+  <h3 id="初始化聚合类型"><a class="anchor" href="#初始化聚合类型" title='Anchor for: 初始化聚合类型.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 初始化聚合类型</h3> 
+
+<p>聚合类型是下列类型之一：</p>
+<ul>
+<li>数组类型</li>
+<li>符合以下条件的类类型
+<ul>
+<li>没有用户声明或继承的构造函数</li>
+<li>没有私有或受保护的非静态数据成员</li>
+<li>没有虚基类</li>
+<li>没有私有或受保护的直接基类</li>
+<li>没有虚成员函数</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 聚合类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">struct</span> <span class="nc">base1</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">b1</span><span class="p">,</span> <span class="n">b2</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 非聚合类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">struct</span> <span class="nc">base2</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">base2</span><span class="p">()</span> <span class="o">:</span> <span class="n">b3</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">b3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// C++17里是聚合类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">struct</span> <span class="nc">derived</span> <span class="o">:</span> <span class="n">base1</span><span class="p">,</span> <span class="n">base2</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">d</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><p>使用列表初始化聚合类型相当于使用列表中的元素按顺序初始化该类型中的每个变量。列表可嵌套，但是列表元素个数不能超过聚合类型元素个数。</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 一个复杂聚合类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">struct</span> <span class="nc">S</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="nc">Foo</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">j</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 初始化聚合类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">S</span> <span class="n">s1</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">}}};</span>                      <span class="c1">// 嵌套列表初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">S</span> <span class="n">s2</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">};</span>                          <span class="c1">// 同s1，进行花括号消除
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">S</span> <span class="n">s3</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">}}};</span>                         <span class="c1">// 同s1，使用直接列表初始化语法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">S</span> <span class="n">s4</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">};</span>                             <span class="c1">// 同s2，使用直接列表初始化语法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 初始化数组
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">ar</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">};</span>                               <span class="c1">// 通过初始化列表推导出数组长度为3
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">char</span> <span class="n">cr</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="sc">&#39;b&#39;</span><span class="p">,</span> <span class="sc">&#39;c&#39;</span><span class="p">,</span> <span class="sc">&#39;d&#39;</span><span class="p">};</span>                  <span class="c1">// 错误，初始化列表长度大于数组长度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">char</span> <span class="n">cr</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="sc">&#39;a&#39;</span><span class="p">};</span>                                 <span class="c1">// 初始化列表长度小于数组长度，多出的元素初始化为0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">ar2d1</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">{{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">},</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}};</span>                 <span class="c1">// 完全花括号
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">ar2d2</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">};</span>                     <span class="c1">// 花括号消除
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">ar2d3</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">{{</span><span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="mi">2</span><span class="p">}};</span>                       <span class="c1">// 仅初始化第一列，第二列为0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 初始化std::string数组，其中每个元素可使用不同的初始化方式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">ars</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="s">&#34;one&#34;</span><span class="p">),</span>            <span class="c1">// 复制初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                     <span class="s">&#34;two&#34;</span><span class="p">,</span>                         <span class="c1">// 转换，然后复制初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                     <span class="p">{</span><span class="sc">&#39;t&#39;</span><span class="p">,</span> <span class="sc">&#39;h&#39;</span><span class="p">,</span> <span class="sc">&#39;r&#39;</span><span class="p">,</span> <span class="sc">&#39;e&#39;</span><span class="p">,</span> <span class="sc">&#39;e&#39;</span><span class="p">}};</span>    <span class="c1">// 列表初始化
+</span></span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h3 id="初始化非聚合类型"><a class="anchor" href="#初始化非聚合类型" title='Anchor for: 初始化非聚合类型.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 初始化非聚合类型</h3> 
+
+<p>对于非聚合类型，寻找最匹配的构造函数对其进行初始化，寻找顺序为：</p>
+<ul>
+<li>以初始化列表为参数的构造函数</li>
+<li>以初始化列表中的值作为参数的非explicit构造函数</li>
+</ul>
+<p>其中，初始化列表类型<code>std::initializer_list&lt;T&gt;</code>的对象是一个访问<code>const T</code>类型对象数组的轻量代理对象。它一般不会手动生成，而是在列表初始化非聚合类型时自动生成。用户可提供以初始化列表对象为参数的构造函数用于自定义列表初始化。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="使用列表初始化的优点"><a class="anchor" href="#使用列表初始化的优点" title='Anchor for: 使用列表初始化的优点.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 使用列表初始化的优点</h2> 
+
+<ul>
+<li>可替代其它初始化方式，对任何变量进行初始化</li>
+<li>可接受任意长度数据</li>
+<li>防止类型窄化。列表初始化对隐式类型转换加以限制，避免了其它初始化方式可能造成的精度丢失</li>
+</ul>
+
+
+
+    </article>
+  </main>
+
+
+    </div>
+    
+    <footer>
+      
+
+
+  
+
+    
+
+    
+      
+      
+    
+    
+    <p>Generated with <a href="https://gohugo.io">Hugo</a> using the <a href="https://gitlab.com/rmaguiar/hugo-theme-color-your-world">Color Your World</a> theme.</p>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="req-js">
+  <button class="outline-dashed" title="Change to light/dark mode."><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="#1dbc91" title="Change accent color." aria-label="Change accent color."><datalist id="presets"><option value="#1f676b"><option value="#1dbc91"><option value="#225670"><option value="#dd587c"><option value="#902b37"><option value="#f3a530"><option value="#754e85"><option value="#7fc121"><option value="#a8314a"><option value="#ff7433"><option value="#3e6728"><option value="#c063bd"><option value="#805080"><option value="#9d629d"><option value="#a064a0"><option value="#7daa50"><option value="#284531"><option value="#285790"><option value="#F5A83D"><option value="#88aa33"><option value="#015660"><option value="#bf274e"><option value="#bf4242"><option value="#51b37c"></datalist>
+</div>
+
+
+
+  <noscript>
+    <p class="noscript">Unable to execute JavaScript. Some features were disabled.</p>
+  </noscript>
+
+
+
+    </footer>
+    
+    
+    
+
+    
+    
+
+  </body>
+</html>

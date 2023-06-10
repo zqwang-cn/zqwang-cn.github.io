@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+  <head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo 0.113.0">
+<meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
+
+
+<title>其他特性 | Wang&#39;s blog</title>
+
+<meta name="author" content="zqwang">
+
+
+
+<meta name="robots" content="index follow">
+
+
+
+
+  
+    <link rel="canonical" href="https://zqwang-cn.github.io/cpp-new-features/other-features/">
+  
+
+
+
+
+
+
+
+
+<meta property="og:site_name" content="Wang&#39;s blog">
+<meta property="og:title" content="其他特性">
+
+  <meta property="og:url" content="https://zqwang-cn.github.io/cpp-new-features/other-features/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:type" content="website">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="theme-color" content="#222">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://zqwang-cn.github.io/",
+      "inLanguage": "en",
+      "name": "Wang's blog",
+      "description": "Wang's blog",
+      "publisher": "zqwang"
+    }
+  </script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://zqwang-cn.github.io/css/main.min.c166fa5a48e8b326dc193e5c2ea65b6f96720911149d941bddb3b0b8eff62af3.css" integrity="sha256-wWb6WkjosybcGT5cLqZbb5ZyCREUnZQb3bOwuO/2KvM=" crossorigin="anonymous">
+
+
+
+<noscript>
+
+  
+  
+
+  
+    <meta name="theme-color" content="#1dbc91" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1f676b" media="(prefers-color-scheme: light)">
+  
+
+  
+  <link rel="stylesheet" href="https://zqwang-cn.github.io/css/noscript.min.3f3b95436b19eaeb9223fb12c0b86737d53ee0a47fdba271a886c244bc03975c.css" integrity="sha256-PzuVQ2sZ6uuSI/sSwLhnN9U&#43;4KR/26JxqIbCRLwDl1w=" crossorigin="anonymous">
+
+</noscript>
+
+
+
+<link rel="preload" href="/fonts/open-sans-v34-latin-700.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-italic.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-regular.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/oswald-v29-latin-700.woff2" as="font" crossorigin="anonymous">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="https://zqwang-cn.github.io/js/main.f1da21dfea83dc0c36cea0b202c14a97e00aedab567e32702eb120f5ab8d974b.js" integrity="sha256-8doh3&#43;qD3Aw2zqCyAsFKl&#43;AK7atWfjJwLrEg9auNl0s=" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body>
+
+    <header>
+      
+
+  <a href="/">Wang&#39;s blog</a>
+
+
+
+
+  
+    <nav aria-label="Main menu.">
+      <ul>
+        
+          <li>
+            <a class="btn" href="/">Home</a>
+          </li>
+        
+      </ul>
+    </nav>
+  
+
+
+    </header>
+
+    <div class="filler">
+      
+
+  <main>
+    <article>
+      <header>
+        
+        <h1>其他特性</h1>
+
+        
+          <div class="terms">
+            <ul><li><a class="btn" href="/tags/c&#43;&#43;%E6%96%B0%E7%89%B9%E6%80%A7/">c&#43;&#43;新特性</a></li></ul>
+          </div>
+          <p>
+            
+              Published on <time datetime="2023-06-10">2023-06-10</time>
+            
+          </p>
+        
+        
+        
+        
+      </header>
+    
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="nullptr"><a class="anchor" href="#nullptr" title='Anchor for: nullptr.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> nullptr</h2> 
+
+<p>C++11以前通常用NULL表示空指针，但是NULL是用#define定义的，通常定义为0：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#define NULL 0
+</span></span></span></code></pre></div><p>因此实际上它与数值0没有区别，这在重载时会引发混乱。如果定义以下两个重载函数：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">foo</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">foo</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span>
+</span></span></code></pre></div><p>在用NULL作为参数调用时：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">foo</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+</span></span></code></pre></div><p>用户应该希望调用char*版本，然而由于NULL实际上是0，会导致调用int版本。为了解决这一问题，C++11引入了nullptr关键字用来专门表示空指针。它是std::nullptr_t类型的纯右值，可以隐式转换为任何指针类型及任何成员指针类型。使用nullptr调用上述函数：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">foo</span><span class="p">(</span><span class="k">nullptr</span><span class="p">);</span>
+</span></span></code></pre></div><p>可以正确调用char*版本。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="基于范围的for循环"><a class="anchor" href="#基于范围的for循环" title='Anchor for: 基于范围的for循环.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 基于范围的for循环</h2> 
+
+<p>C++11引入了基于范围的for循环，它相当于其它语言的for-each或for-in循环，可以使循环代码更加简洁。</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">arr</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span><span class="nl">i</span> <span class="p">:</span> <span class="n">arr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h2 id="条件表达式中支持初始化语句"><a class="anchor" href="#条件表达式中支持初始化语句" title='Anchor for: 条件表达式中支持初始化语句.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 条件表达式中支持初始化语句</h2> 
+
+<p>c++17中支持在if或者switch语句中进行初始化，这个能力的出现能够让代码更加简洁。</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="p">{{</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#34;a&#34;</span><span class="p">}};</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="k">auto</span> <span class="n">res</span> <span class="o">=</span> <span class="n">c</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#34;b&#34;</span><span class="p">));</span> <span class="o">!</span><span class="n">res</span><span class="p">.</span><span class="n">second</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;key 1 exist&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;insert success, value:&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">res</span><span class="p">.</span><span class="n">first</span><span class="o">-&gt;</span><span class="n">second</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h2 id="非成员函数stdbegin与stdend"><a class="anchor" href="#非成员函数stdbegin与stdend" title='Anchor for: 非成员函数std::begin()与std::end().'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 非成员函数std::begin()与std::end()</h2> 
+
+<p>C++标准库中的容器都实现了begin()与end()成员函数，用于获取首尾迭代器。例如：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">b</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">e</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">();</span>
+</span></span></code></pre></div><p>但是对于非标准库中的其它可迭代对象，如数组或用户自定义类型，则不能使用begin()与end()成员函数。此时可以使用非成员函数std::begin()与std::end()实现同样的功能：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">arr</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">b</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">begin</span><span class="p">(</span><span class="n">arr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">e</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">end</span><span class="p">(</span><span class="n">arr</span><span class="p">);</span>
+</span></span></code></pre></div><p>对于标准库中的容器，调用成员函数与非成员函数的作用完全相同。因此，推荐在所有需要迭代的情况下使用非成员函数，这种做法更加通用，且不会出错。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="变量模板"><a class="anchor" href="#变量模板" title='Anchor for: 变量模板.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 变量模板</h2> 
+
+<p>C++14允许通过变量模板定义一族变量：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 声明变量模板
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="k">constexpr</span> <span class="n">T</span> <span class="n">pi</span> <span class="o">=</span> <span class="n">T</span><span class="p">(</span><span class="mf">3.1415926535897932385</span><span class="n">L</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 在函数模板中使用对应的变量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">T</span> <span class="n">circular_area</span><span class="p">(</span><span class="n">T</span> <span class="n">r</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">pi</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="n">r</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>在类作用域中使用时，变量模板声明一个静态数据成员模板：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="o">::</span><span class="n">literals</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">matrix_constants</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">using</span> <span class="n">pauli</span> <span class="o">=</span> <span class="n">hermitian_matrix</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="mi">2</span><span class="o">&gt;</span><span class="p">;</span>                   <span class="c1">// 别名模版
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="k">constexpr</span> <span class="n">pauli</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">sigmaX</span> <span class="o">=</span> <span class="p">{{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">}};</span>    <span class="c1">// 静态数据成员模板
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="k">constexpr</span> <span class="n">pauli</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">sigmaY</span> <span class="o">=</span> <span class="p">{{</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="n">i</span><span class="p">},</span> <span class="p">{</span><span class="mi">1</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">}};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="k">constexpr</span> <span class="n">pauli</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">sigmaZ</span> <span class="o">=</span> <span class="p">{{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">},</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">}};</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><p>与其他静态成员一样，静态数据成员模板也需要一个定义。这种定义可以在类定义外提供：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">limits</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="k">const</span> <span class="n">T</span> <span class="n">min</span><span class="p">;</span>         <span class="c1">// 静态数据成员模板的声明
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="n">T</span> <span class="n">limits</span><span class="o">::</span><span class="n">min</span> <span class="o">=</span> <span class="p">{};</span>       <span class="c1">// 静态数据成员模板的定义
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">X</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="n">T</span> <span class="n">s</span><span class="p">;</span>                 <span class="c1">// 类模板的非模板静态数据成员的声明
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="n">T</span> <span class="n">X</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">s</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                  <span class="c1">// 类模板的非模板静态数据成员的定义
+</span></span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h2 id="inline变量"><a class="anchor" href="#inline变量" title='Anchor for: inline变量.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> inline变量</h2> 
+
+<p>inline变量可以让变量有多于一次的定义。C++17之前，我们定义全局变量，总需要将变量定义在cpp文件中，然后再通过extern关键字来告诉编译器，这个变量已经在其他地方定义过了。inline变量出现后，我们可以直接将全局变量定义在头文件中，而不用担心出现redefined错误信息。</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// test.h
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">inline</span> <span class="kt">void</span> <span class="nf">print</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;hello world&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kr">inline</span> <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//  func.h
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#include</span> <span class="cpf">&#34;test.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kr">inline</span> <span class="kt">void</span> <span class="nf">add</span><span class="p">(</span><span class="kt">int</span> <span class="n">arg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">num</span> <span class="o">+=</span> <span class="n">arg</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">print</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//  main.cpp
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cp">#include</span> <span class="cpf">&#34;func.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">print</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">add</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h2 id="嵌套命名空间"><a class="anchor" href="#嵌套命名空间" title='Anchor for: 嵌套命名空间.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 嵌套命名空间</h2> 
+
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 传统写法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">namespace</span> <span class="n">A</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">namespace</span> <span class="n">B</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">namespace</span> <span class="n">C</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 新写法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">namespace</span> <span class="n">A</span><span class="o">::</span><span class="n">B</span><span class="o">::</span><span class="n">C</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h2 id="自定义字面值自定义后缀运算符"><a class="anchor" href="#自定义字面值自定义后缀运算符" title='Anchor for: 自定义字面值（自定义后缀运算符）.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 自定义字面值（自定义后缀运算符）</h2> 
+
+<p>在C++11中，可以在字面值的后面加一些后缀，将它们转换为所需要的值。例如：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 90度角对应的弧度值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">double</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">90.0</span><span class="n">_deg</span><span class="p">;</span>
+</span></span></code></pre></div><p>这是通过定义以下后缀运算符实现的：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">constexpr</span> <span class="kt">long</span> <span class="kt">double</span> <span class="k">operator</span><span class="s">&#34;&#34;</span> <span class="n">_deg</span><span class="p">(</span><span class="kt">long</span> <span class="kt">double</span> <span class="n">deg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">deg</span> <span class="o">*</span> <span class="mf">3.14159265358979323846264</span><span class="n">L</span> <span class="o">/</span> <span class="mi">180</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>后缀运算符的参数只能是以下类型：</p>
+<ul>
+<li>const char *</li>
+<li>unsigned long long int</li>
+<li>long double</li>
+<li>char</li>
+<li>wchar_t</li>
+<li>char8_t</li>
+<li>char16_t</li>
+<li>char32_t</li>
+<li>const char *, std::size_t</li>
+<li>const wchar_t *, std::size_t</li>
+<li>const char8_t *, std::size_t</li>
+<li>const char16_t *, std::size_t</li>
+<li>const char32_t *, std::size_t</li>
+</ul>
+<p>其返回值类型不受限制，因此可以用于返回自定义类型的字面值。</p>
+
+
+
+    </article>
+  </main>
+
+
+    </div>
+    
+    <footer>
+      
+
+
+  
+
+    
+
+    
+      
+      
+    
+    
+    <p>Generated with <a href="https://gohugo.io">Hugo</a> using the <a href="https://gitlab.com/rmaguiar/hugo-theme-color-your-world">Color Your World</a> theme.</p>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="req-js">
+  <button class="outline-dashed" title="Change to light/dark mode."><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="#1dbc91" title="Change accent color." aria-label="Change accent color."><datalist id="presets"><option value="#1f676b"><option value="#1dbc91"><option value="#225670"><option value="#dd587c"><option value="#902b37"><option value="#f3a530"><option value="#754e85"><option value="#7fc121"><option value="#a8314a"><option value="#ff7433"><option value="#3e6728"><option value="#c063bd"><option value="#805080"><option value="#9d629d"><option value="#a064a0"><option value="#7daa50"><option value="#284531"><option value="#285790"><option value="#F5A83D"><option value="#88aa33"><option value="#015660"><option value="#bf274e"><option value="#bf4242"><option value="#51b37c"></datalist>
+</div>
+
+
+
+  <noscript>
+    <p class="noscript">Unable to execute JavaScript. Some features were disabled.</p>
+  </noscript>
+
+
+
+    </footer>
+    
+    
+    
+
+    
+    
+
+  </body>
+</html>

@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+  <head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo 0.113.0">
+<meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
+
+
+<title>类型推导 | Wang&#39;s blog</title>
+
+<meta name="author" content="zqwang">
+
+
+
+<meta name="robots" content="index follow">
+
+
+
+
+  
+    <link rel="canonical" href="https://zqwang-cn.github.io/cpp-new-features/type-deduction/">
+  
+
+
+
+
+
+
+
+
+<meta property="og:site_name" content="Wang&#39;s blog">
+<meta property="og:title" content="类型推导">
+
+  <meta property="og:url" content="https://zqwang-cn.github.io/cpp-new-features/type-deduction/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:type" content="website">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="theme-color" content="#222">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://zqwang-cn.github.io/",
+      "inLanguage": "en",
+      "name": "Wang's blog",
+      "description": "Wang's blog",
+      "publisher": "zqwang"
+    }
+  </script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://zqwang-cn.github.io/css/main.min.c166fa5a48e8b326dc193e5c2ea65b6f96720911149d941bddb3b0b8eff62af3.css" integrity="sha256-wWb6WkjosybcGT5cLqZbb5ZyCREUnZQb3bOwuO/2KvM=" crossorigin="anonymous">
+
+
+
+<noscript>
+
+  
+  
+
+  
+    <meta name="theme-color" content="#1dbc91" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1f676b" media="(prefers-color-scheme: light)">
+  
+
+  
+  <link rel="stylesheet" href="https://zqwang-cn.github.io/css/noscript.min.3f3b95436b19eaeb9223fb12c0b86737d53ee0a47fdba271a886c244bc03975c.css" integrity="sha256-PzuVQ2sZ6uuSI/sSwLhnN9U&#43;4KR/26JxqIbCRLwDl1w=" crossorigin="anonymous">
+
+</noscript>
+
+
+
+<link rel="preload" href="/fonts/open-sans-v34-latin-700.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-italic.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-regular.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/oswald-v29-latin-700.woff2" as="font" crossorigin="anonymous">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="https://zqwang-cn.github.io/js/main.f1da21dfea83dc0c36cea0b202c14a97e00aedab567e32702eb120f5ab8d974b.js" integrity="sha256-8doh3&#43;qD3Aw2zqCyAsFKl&#43;AK7atWfjJwLrEg9auNl0s=" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body>
+
+    <header>
+      
+
+  <a href="/">Wang&#39;s blog</a>
+
+
+
+
+  
+    <nav aria-label="Main menu.">
+      <ul>
+        
+          <li>
+            <a class="btn" href="/">Home</a>
+          </li>
+        
+      </ul>
+    </nav>
+  
+
+
+    </header>
+
+    <div class="filler">
+      
+
+  <main>
+    <article>
+      <header>
+        
+        <h1>类型推导</h1>
+
+        
+          <div class="terms">
+            <ul><li><a class="btn" href="/tags/c&#43;&#43;%E6%96%B0%E7%89%B9%E6%80%A7/">c&#43;&#43;新特性</a></li></ul>
+          </div>
+          <p>
+            
+              Published on <time datetime="2023-06-06">2023-06-06</time>
+            
+          </p>
+        
+        
+        
+        
+      </header>
+    
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<p>C++是强类型语言，使用每个变量前必须声明其类型。如果不进行类型推导，则用户必须自行声明所有变量的类型，对于一些复杂的类型（如容器的迭代器）或临时类型（如lambda表达式），这是没有意义甚至无法完成的。为此，C++11标准引入了auto与decltype两个关键字用于进行类型推导，使得编译器可以自动推导出变量的类型。这样做有以下好处：</p>
+<ul>
+<li>鲁棒性：即使更改表达式的类型也能正常工作</li>
+<li>性能：可以保证没有进行转换</li>
+<li>可用性：不必担心类型名称拼写困难或拼写有误</li>
+<li>效率：代码会变得更高效</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h2 id="auto"><a class="anchor" href="#auto" title='Anchor for: auto.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> auto</h2> 
+
+<p>在C++11之前，auto关键字为存储期说明符，但是基本不使用。C++11之后将此关键字用于类型推导，其基本语法是：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">auto</span> <span class="err">变量名</span> <span class="err">初始化器</span><span class="p">;</span>
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h3 id="基本用法"><a class="anchor" href="#基本用法" title='Anchor for: 基本用法.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 基本用法</h3> 
+
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 通用初始化语法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">a</span><span class="p">{</span><span class="mi">42</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 赋值语法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 通用赋值语法，它结合了上述两种形式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">c</span> <span class="o">=</span> <span class="p">{</span><span class="mf">3.14159</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 直接初始化或构造函数样式的语法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="nf">d</span><span class="p">(</span><span class="mf">1.41421f</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 通过表达式推导
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">e</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 通过函数返回值推导
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">f</span> <span class="o">=</span> <span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 推导new操作符结果
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">g</span> <span class="o">=</span> <span class="k">new</span> <span class="k">auto</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 推导lambda表达式类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">lambda1</span> <span class="o">=</span> <span class="p">[](</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">3</span><span class="p">;</span> <span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 可在一行定义多个变量，但是不能出现冲突
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">x</span> <span class="o">=</span> <span class="n">a</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">y</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="o">*</span><span class="n">z</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">e</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// C++14后可自动推导函数返回值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="nf">func</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// C++14后可自动推导lambda函数的参数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">lambda2</span> <span class="o">=</span> <span class="p">[](</span><span class="k">auto</span> <span class="n">a</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">a</span><span class="p">;</span> <span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// C++17后可自动推导非类型模板参数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">auto</span> <span class="n">I</span><span class="o">&gt;</span> <span class="k">struct</span> <span class="nc">A</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 在for循环中使用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">vec</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">vec</span><span class="p">.</span><span class="n">cbegin</span><span class="p">();</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">vec</span><span class="p">.</span><span class="n">cend</span><span class="p">();</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">v</span> <span class="p">:</span> <span class="n">vec</span><span class="p">)</span> <span class="p">{}</span>
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h3 id="使用大括号初始化时的类型推导"><a class="anchor" href="#使用大括号初始化时的类型推导" title='Anchor for: 使用大括号初始化时的类型推导.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 使用大括号初始化时的类型推导</h3> 
+
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">A</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">};</span>   <span class="c1">// std::initializer_list&lt;int&gt;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">B</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">};</span>      <span class="c1">// std::initializer_list&lt;int&gt;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">C</span><span class="p">{</span><span class="mi">4</span><span class="p">};</span>         <span class="c1">// C++17后为int，之前为std::initializer_list&lt;int&gt;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="mi">5</span><span class="p">,</span> <span class="mf">6.7</span><span class="p">};</span> <span class="c1">// 错误，初始化列表中元素类型不同
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">E</span><span class="p">{</span><span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">};</span>      <span class="c1">// C++17后非法，之前为std::initializer_list&lt;int&gt;
+</span></span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h3 id="引用与cv限定符"><a class="anchor" href="#引用与cv限定符" title='Anchor for: 引用与cv限定符.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 引用与cv限定符</h3> 
+
+<p>使用auto进行类型推导时会删除引用、const限定符和volatile限定符，如有需要可自行添加。对于指针无影响。</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 一个int类型与一个int&amp;类型变量
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">&amp;</span><span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 使用auto会删除引用
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>         <span class="c1">// c为int
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">d</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>         <span class="c1">// d同样为int
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 手动添加引用、const或volatile
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="o">&amp;</span><span class="n">e</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>        <span class="c1">// e为int&amp;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">const</span> <span class="k">auto</span> <span class="n">f</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>   <span class="c1">// f为const int
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 对于指针，auto与auto*均可
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">g</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">;</span>        <span class="c1">// g为int*
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="o">*</span><span class="n">h</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">;</span>       <span class="c1">// h为int*
+</span></span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h3 id="错误使用"><a class="anchor" href="#错误使用" title='Anchor for: 错误使用.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 错误使用</h3> 
+
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 必须初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 一行内出现冲突
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">arr</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// auto_arr推导为指针
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">auto_arr</span> <span class="o">=</span> <span class="n">arr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 不能用于推导数组
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">auto_arr2</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span><span class="p">;</span>
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h2 id="decltype"><a class="anchor" href="#decltype" title='Anchor for: decltype.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> decltype</h2> 
+
+<p>decltype关键字是为了解决auto关键字只能对变量进行类型推导的缺陷而出现的，其基本语法如下：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">decltype</span><span class="p">(</span><span class="err">实体</span><span class="o">/</span><span class="err">表达式</span><span class="p">)</span>
+</span></span></code></pre></div><p>编译器推导参数的类型并返回，不会实际计算表达式的值。</p>
+
+
+
+
+
+
+
+
+
+  <h3 id="推导规则"><a class="anchor" href="#推导规则" title='Anchor for: 推导规则.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 推导规则</h3> 
+
+<ul>
+<li>如果参数是没有括号的标识表达式或没有括号的类成员访问表达式，返回该实体的类型</li>
+<li>如果参数是其它类型为T的表达式
+<ul>
+<li>如果表达式是将亡值，返回T&amp;&amp;</li>
+<li>如果表达式是左值，返回T&amp;</li>
+<li>如果表达式是纯右值，返回T</li>
+</ul>
+</li>
+<li>如果对象带有括号，那么它会被当做左值表达式，从而decltype(x)和decltype((x))通常是不同的类型。</li>
+<li>decltype与auto不同，decltype不会删除引用、const限定符与volatile限定符。</li>
+</ul>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">A</span> <span class="p">{</span> <span class="kt">double</span> <span class="n">x</span><span class="p">;</span> <span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="n">A</span> <span class="o">*</span><span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">decltype</span><span class="p">(</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">x</span><span class="p">)</span> <span class="n">y</span><span class="p">;</span>           <span class="c1">// y的类型是double（其声明类型）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">decltype</span><span class="p">((</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">x</span><span class="p">))</span> <span class="n">z</span> <span class="o">=</span> <span class="n">y</span><span class="p">;</span>     <span class="c1">// z的类型是const double&amp;（左值表达式）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">33</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">decltype</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>      <span class="c1">// j的类型为int
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 一个lambda表达式，其类型是独有且无名的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">f</span> <span class="o">=</span> <span class="p">[](</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">int</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">decltype</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="n">g</span> <span class="o">=</span> <span class="n">f</span><span class="p">;</span>          <span class="c1">// g的类型与f相同
+</span></span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h3 id="自动推导函数的返回值类型"><a class="anchor" href="#自动推导函数的返回值类型" title='Anchor for: 自动推导函数的返回值类型.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 自动推导函数的返回值类型</h3> 
+
+<p>如果一个函数的返回值类型可由其参数类型确定，如下面的函数：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="k">decltype</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span> <span class="n">add</span><span class="p">(</span><span class="n">T</span> <span class="n">x</span><span class="p">,</span> <span class="n">U</span> <span class="n">y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>但是上述写法是错误的，在C++11中可以使用拖尾返回类型解决：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">add</span><span class="p">(</span><span class="n">T</span> <span class="n">x</span><span class="p">,</span> <span class="n">U</span> <span class="n">y</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">decltype</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>从C++14开始，可以直接使用auto进行推导：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">add</span><span class="p">(</span><span class="n">T</span> <span class="n">x</span><span class="p">,</span> <span class="n">U</span> <span class="n">y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h3 id="decltypeauto"><a class="anchor" href="#decltypeauto" title='Anchor for: decltype(auto).'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> decltype(auto)</h3> 
+
+<p>使用auto进行类型推导会删除引用与cv限定符，如果想要保留，可以使用decltype(auto)。</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 使用decltype(auto) x = expr;推导变量类型，相当于decltype(expr) x = expr;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">decltype</span><span class="p">(</span><span class="k">auto</span><span class="p">)</span> <span class="n">c1</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>      <span class="c1">// c1的类型是int
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">decltype</span><span class="p">(</span><span class="k">auto</span><span class="p">)</span> <span class="n">c2</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="p">);</span>    <span class="c1">// c2的类型是int&amp;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">decltype</span><span class="p">(</span><span class="k">auto</span><span class="p">)</span> <span class="n">z</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">};</span>  <span class="c1">// 错误，{1, 2}不是表达式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 使用decltype(auto)推导函数返回值类型，可保留返回值的引用与cv限定符
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">F</span><span class="p">,</span> <span class="k">class</span><span class="err">... </span><span class="nc">Args</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="k">decltype</span><span class="p">(</span><span class="k">auto</span><span class="p">)</span> <span class="n">PerfectForward</span><span class="p">(</span><span class="n">F</span> <span class="n">fun</span><span class="p">,</span> <span class="n">Args</span> <span class="o">&amp;&amp;</span><span class="p">...</span><span class="n">args</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nf">fun</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Args</span><span class="o">&gt;</span><span class="p">(</span><span class="n">args</span><span class="p">)...);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div>
+
+
+    </article>
+  </main>
+
+
+    </div>
+    
+    <footer>
+      
+
+
+  
+
+    
+
+    
+      
+      
+    
+    
+    <p>Generated with <a href="https://gohugo.io">Hugo</a> using the <a href="https://gitlab.com/rmaguiar/hugo-theme-color-your-world">Color Your World</a> theme.</p>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="req-js">
+  <button class="outline-dashed" title="Change to light/dark mode."><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="#1dbc91" title="Change accent color." aria-label="Change accent color."><datalist id="presets"><option value="#1f676b"><option value="#1dbc91"><option value="#225670"><option value="#dd587c"><option value="#902b37"><option value="#f3a530"><option value="#754e85"><option value="#7fc121"><option value="#a8314a"><option value="#ff7433"><option value="#3e6728"><option value="#c063bd"><option value="#805080"><option value="#9d629d"><option value="#a064a0"><option value="#7daa50"><option value="#284531"><option value="#285790"><option value="#F5A83D"><option value="#88aa33"><option value="#015660"><option value="#bf274e"><option value="#bf4242"><option value="#51b37c"></datalist>
+</div>
+
+
+
+  <noscript>
+    <p class="noscript">Unable to execute JavaScript. Some features were disabled.</p>
+  </noscript>
+
+
+
+    </footer>
+    
+    
+    
+
+    
+    
+
+  </body>
+</html>

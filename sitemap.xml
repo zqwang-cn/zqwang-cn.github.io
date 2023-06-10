@@ -38,10 +38,44 @@
   
   
     <url>
+      <loc>https://zqwang-cn.github.io/cpp-new-features/rvalue-reference/</loc>
+      
+      
+        <lastmod>2023-06-03T15:51:24+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
       <loc>https://zqwang-cn.github.io/rust-study-notes/ownership-and-borrowing/</loc>
       
       
         <lastmod>2023-03-17T19:43:21+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/cpp-new-features/function-object-and-lambda-expression/</loc>
+      
+      
+        <lastmod>2023-06-05T20:29:17+08:00</lastmod>
       
       
       
@@ -72,10 +106,44 @@
   
   
     <url>
+      <loc>https://zqwang-cn.github.io/cpp-new-features/std-function-and-std-bind/</loc>
+      
+      
+        <lastmod>2023-06-05T20:57:03+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
       <loc>https://zqwang-cn.github.io/rust-study-notes/functions-and-closures/</loc>
       
       
         <lastmod>2023-03-19T00:40:01+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/cpp-new-features/type-deduction/</loc>
+      
+      
+        <lastmod>2023-06-06T21:10:22+08:00</lastmod>
       
       
       
@@ -106,10 +174,44 @@
   
   
     <url>
+      <loc>https://zqwang-cn.github.io/cpp-new-features/const-and-constexpr/</loc>
+      
+      
+        <lastmod>2023-06-07T01:08:48+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
       <loc>https://zqwang-cn.github.io/rust-study-notes/generics/</loc>
       
       
         <lastmod>2023-03-21T14:00:03+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/cpp-new-features/enumeration/</loc>
+      
+      
+        <lastmod>2023-06-07T23:54:06+08:00</lastmod>
       
       
       
@@ -140,10 +242,44 @@
   
   
     <url>
+      <loc>https://zqwang-cn.github.io/cpp-new-features/list-initialization/</loc>
+      
+      
+        <lastmod>2023-06-08T00:42:33+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
       <loc>https://zqwang-cn.github.io/rust-study-notes/std-lib-common-collections/</loc>
       
       
         <lastmod>2023-03-23T12:51:57+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/cpp-new-features/tuple-and-structured-binding/</loc>
+      
+      
+        <lastmod>2023-06-08T21:49:57+08:00</lastmod>
       
       
       
@@ -174,10 +310,44 @@
   
   
     <url>
+      <loc>https://zqwang-cn.github.io/cpp-new-features/new-features-in-class/</loc>
+      
+      
+        <lastmod>2023-06-08T23:06:07+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
       <loc>https://zqwang-cn.github.io/rust-study-notes/std-lib-concurrency/</loc>
       
       
         <lastmod>2023-03-25T23:12:30+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/cpp-new-features/optional-variant-any/</loc>
+      
+      
+        <lastmod>2023-06-09T00:37:27+08:00</lastmod>
       
       
       
@@ -208,10 +378,44 @@
   
   
     <url>
+      <loc>https://zqwang-cn.github.io/cpp-new-features/parameter-pack/</loc>
+      
+      
+        <lastmod>2023-06-09T20:58:23+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
       <loc>https://zqwang-cn.github.io/rust-study-notes/error-handling/</loc>
       
       
         <lastmod>2023-03-27T11:35:30+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/cpp-new-features/filesystem-lib/</loc>
+      
+      
+        <lastmod>2023-06-09T22:11:36+08:00</lastmod>
       
       
       
@@ -242,10 +446,44 @@
   
   
     <url>
+      <loc>https://zqwang-cn.github.io/cpp-new-features/datetime-lib/</loc>
+      
+      
+        <lastmod>2023-06-09T23:16:33+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
       <loc>https://zqwang-cn.github.io/rust-study-notes/patterns-and-matching/</loc>
       
       
         <lastmod>2023-03-29T21:42:31+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/cpp-new-features/thread-and-synchronization/</loc>
+      
+      
+        <lastmod>2023-06-10T11:47:09+08:00</lastmod>
       
       
       
@@ -348,6 +586,23 @@
       
       
         <lastmod>2023-04-04T13:26:25+08:00</lastmod>
+      
+      
+      
+      
+      
+      
+      
+      
+    </url>
+    
+  
+  
+    <url>
+      <loc>https://zqwang-cn.github.io/cpp-new-features/other-features/</loc>
+      
+      
+        <lastmod>2023-06-10T15:17:07+08:00</lastmod>
       
       
       

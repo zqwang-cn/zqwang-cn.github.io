@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+  <head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo 0.113.0">
+<meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
+
+
+<title>日期时间库 | Wang&#39;s blog</title>
+
+<meta name="author" content="zqwang">
+
+
+
+<meta name="robots" content="index follow">
+
+
+
+
+  
+    <link rel="canonical" href="https://zqwang-cn.github.io/cpp-new-features/datetime-lib/">
+  
+
+
+
+
+
+
+
+
+<meta property="og:site_name" content="Wang&#39;s blog">
+<meta property="og:title" content="日期时间库">
+
+  <meta property="og:url" content="https://zqwang-cn.github.io/cpp-new-features/datetime-lib/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:type" content="website">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="theme-color" content="#222">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://zqwang-cn.github.io/",
+      "inLanguage": "en",
+      "name": "Wang's blog",
+      "description": "Wang's blog",
+      "publisher": "zqwang"
+    }
+  </script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://zqwang-cn.github.io/css/main.min.c166fa5a48e8b326dc193e5c2ea65b6f96720911149d941bddb3b0b8eff62af3.css" integrity="sha256-wWb6WkjosybcGT5cLqZbb5ZyCREUnZQb3bOwuO/2KvM=" crossorigin="anonymous">
+
+
+
+<noscript>
+
+  
+  
+
+  
+    <meta name="theme-color" content="#1dbc91" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1f676b" media="(prefers-color-scheme: light)">
+  
+
+  
+  <link rel="stylesheet" href="https://zqwang-cn.github.io/css/noscript.min.3f3b95436b19eaeb9223fb12c0b86737d53ee0a47fdba271a886c244bc03975c.css" integrity="sha256-PzuVQ2sZ6uuSI/sSwLhnN9U&#43;4KR/26JxqIbCRLwDl1w=" crossorigin="anonymous">
+
+</noscript>
+
+
+
+<link rel="preload" href="/fonts/open-sans-v34-latin-700.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-italic.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-regular.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/oswald-v29-latin-700.woff2" as="font" crossorigin="anonymous">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="https://zqwang-cn.github.io/js/main.f1da21dfea83dc0c36cea0b202c14a97e00aedab567e32702eb120f5ab8d974b.js" integrity="sha256-8doh3&#43;qD3Aw2zqCyAsFKl&#43;AK7atWfjJwLrEg9auNl0s=" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body>
+
+    <header>
+      
+
+  <a href="/">Wang&#39;s blog</a>
+
+
+
+
+  
+    <nav aria-label="Main menu.">
+      <ul>
+        
+          <li>
+            <a class="btn" href="/">Home</a>
+          </li>
+        
+      </ul>
+    </nav>
+  
+
+
+    </header>
+
+    <div class="filler">
+      
+
+  <main>
+    <article>
+      <header>
+        
+        <h1>日期时间库</h1>
+
+        
+          <div class="terms">
+            <ul><li><a class="btn" href="/tags/c&#43;&#43;%E6%96%B0%E7%89%B9%E6%80%A7/">c&#43;&#43;新特性</a></li></ul>
+          </div>
+          <p>
+            
+              Published on <time datetime="2023-06-09">2023-06-09</time>
+            
+          </p>
+        
+        
+        
+        
+      </header>
+    
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<p>std::chrono是源于boost的C++新时间库，其中包含3个主要类型以及一些辅助函数。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="时间间隔"><a class="anchor" href="#时间间隔" title='Anchor for: 时间间隔.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 时间间隔</h2> 
+
+<p>类模板std::chrono::duration用于表示时间间隔。其定义如下：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span><span class="o">&lt;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">class</span> <span class="nc">Rep</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">class</span> <span class="nc">Period</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">ratio</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">duration</span><span class="p">;</span>
+</span></span></code></pre></div><p>其中，Rep为计次数的算术类型，可为整型、浮点型；Period为计次周期，为分数类型（std::ratio），单位为秒。例如，如果Period为std::ratio&lt;1, 1000&gt;，则表示计次周期为毫秒。每个duration对象包含一个Rep类型的次数，可用count()成员函数获取。次数×周期即为duration对象表示的时间间隔。常用的duration类型已经预定义：</p>
+<ul>
+<li>nanoseconds：duration&lt;至少64位的有符号整数类型, std::nano&gt;</li>
+<li>microseconds：duration&lt;至少55位的有符号整数类型, std::micro&gt;</li>
+<li>milliseconds：duration&lt;至少45位的有符号整数类型, std::milli&gt;</li>
+<li>seconds：duration&lt;至少35位的有符号整数类型, std::ratio&lt;1&gt;&gt;</li>
+<li>minutes：duration&lt;至少29位的有符号整数类型, std::ratio&lt;60&gt;&gt;</li>
+<li>hours：duration&lt;至少23位的有符号整数类型, std::ratio&lt;3600&gt;&gt;</li>
+</ul>
+<p>其中，std::nano为std::ratio&lt;1, 1000000000&gt;，std::micro为std::ratio&lt;1, 1000000&gt;，std::milli为std::ratio&lt;1, 1000&gt;。C++20还添加了days、weeks、months和years。</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 10秒
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">seconds</span> <span class="n">ten_seconds</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 5小时
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">hours</span> <span class="n">five_hours</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h3 id="时间间隔字面值"><a class="anchor" href="#时间间隔字面值" title='Anchor for: 时间间隔字面值.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 时间间隔字面值</h3> 
+
+<p>C++14中添加了一些字面值后缀操作符，可以方便地生成时间间隔字面值：</p>
+<ul>
+<li>h：小时</li>
+<li>min：分钟</li>
+<li>s：秒</li>
+<li>ms：毫秒</li>
+<li>us：微妙</li>
+<li>ns：纳秒</li>
+</ul>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono_literals</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">two_hours</span> <span class="o">=</span> <span class="mi">2</span><span class="n">h</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">auto</span> <span class="n">five_minutes</span> <span class="o">=</span> <span class="mi">5</span><span class="n">min</span><span class="p">;</span>
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h3 id="时间间隔转换"><a class="anchor" href="#时间间隔转换" title='Anchor for: 时间间隔转换.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 时间间隔转换</h3> 
+
+<p>不同单位的时间间隔之间可以相互转换，转换规则为：</p>
+<ul>
+<li>当整数时间间隔相互转换且源间隔单位可被目标间隔单位整除，或浮点时间间隔相互转换时，不会发生精度损失，可使用duration类的构造函数隐式转换</li>
+<li>浮点时间间隔转整数时间间隔时，如果浮点值为NaN，无穷或相对整数间隔单位来说过大时，会出现未定义行为</li>
+<li>其它情况（浮点时间间隔转整数时间间隔，或整数时间间隔相互转换但源间隔单位不能被目标间隔单位整除）下，会发生截断造成精度损失，情况与static_cast相同</li>
+</ul>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// high_resolution_clock使用最小时间单位，且为整数时间间隔
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">t1</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// ......
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">t2</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 整数时间间隔转换为浮点时间间隔，无需使用duration_cast
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">milli</span><span class="o">&gt;</span> <span class="n">fp_ms</span> <span class="o">=</span> <span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 整数时间间隔转换为更大的单位（最小单位-&gt;毫秒），需要使用duration_cast
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">int_ms</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration_cast</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="o">&gt;</span><span class="p">(</span><span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 整数时间间隔转换为更小的单位（毫秒-&gt;微秒），无需使用duration_cast
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration</span><span class="o">&lt;</span><span class="kt">long</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">micro</span><span class="o">&gt;</span> <span class="n">int_usec</span> <span class="o">=</span> <span class="n">int_ms</span><span class="p">;</span>
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h2 id="时间点"><a class="anchor" href="#时间点" title='Anchor for: 时间点.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 时间点</h2> 
+
+<p>类模板std::chrono::time_point表示时间中的一个点，其定义如下：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span><span class="o">&lt;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">class</span> <span class="nc">Clock</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">class</span> <span class="nc">Duration</span> <span class="o">=</span> <span class="k">typename</span> <span class="n">Clock</span><span class="o">::</span><span class="n">duration</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;</span> <span class="k">class</span> <span class="nc">time_point</span><span class="p">;</span>
+</span></span></code></pre></div><p>一个time_point对象表示从一个时钟Clock的纪元起始开始，经过一个类型为Duration的对象表示的时间间隔所到达的时间点。通过时钟的now()函数可以获得当前时间点，其它时间点一般通过计算得到。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="时钟"><a class="anchor" href="#时钟" title='Anchor for: 时钟.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 时钟</h2> 
+
+<p>chrono库中定义了3种时钟：</p>
+<ul>
+<li>system_clock：系统时钟。即操作系统上看到的时钟，可在任何时候被调节</li>
+<li>steady_clock：稳定（单调）时钟。随物理时间向前移动，不能被调整，适于计算时间间隔</li>
+<li>high_resolution_clock：拥有最小计次周期的时钟。在不同标准库的实现不一致，尽量不要使用</li>
+</ul>
+<p>每个时钟都包含一个时间间隔类型与时间点类型，同时包含一个纪元起始时间（一般使用Unix起始时间）。使用时钟的now()成员函数可以获得当前时间点，时间点相减可以获得时间间隔。</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 获取起始时间
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">start</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">steady_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// .......
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 获取结束时间
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">end</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">steady_clock</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 计算时间间隔
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">time_diff</span> <span class="o">=</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 将时间间隔转换为以毫秒为单位
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">auto</span> <span class="n">duration</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration_cast</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="o">&gt;</span><span class="p">(</span><span class="n">time_diff</span><span class="p">);</span>
+</span></span></code></pre></div>
+
+
+    </article>
+  </main>
+
+
+    </div>
+    
+    <footer>
+      
+
+
+  
+
+    
+
+    
+      
+      
+    
+    
+    <p>Generated with <a href="https://gohugo.io">Hugo</a> using the <a href="https://gitlab.com/rmaguiar/hugo-theme-color-your-world">Color Your World</a> theme.</p>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="req-js">
+  <button class="outline-dashed" title="Change to light/dark mode."><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="#1dbc91" title="Change accent color." aria-label="Change accent color."><datalist id="presets"><option value="#1f676b"><option value="#1dbc91"><option value="#225670"><option value="#dd587c"><option value="#902b37"><option value="#f3a530"><option value="#754e85"><option value="#7fc121"><option value="#a8314a"><option value="#ff7433"><option value="#3e6728"><option value="#c063bd"><option value="#805080"><option value="#9d629d"><option value="#a064a0"><option value="#7daa50"><option value="#284531"><option value="#285790"><option value="#F5A83D"><option value="#88aa33"><option value="#015660"><option value="#bf274e"><option value="#bf4242"><option value="#51b37c"></datalist>
+</div>
+
+
+
+  <noscript>
+    <p class="noscript">Unable to execute JavaScript. Some features were disabled.</p>
+  </noscript>
+
+
+
+    </footer>
+    
+    
+    
+
+    
+    
+
+  </body>
+</html>

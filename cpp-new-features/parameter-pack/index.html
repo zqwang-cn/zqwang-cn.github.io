@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+  <head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo 0.113.0">
+<meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
+
+
+<title>形参包 | Wang&#39;s blog</title>
+
+<meta name="author" content="zqwang">
+
+
+
+<meta name="robots" content="index follow">
+
+
+
+
+  
+    <link rel="canonical" href="https://zqwang-cn.github.io/cpp-new-features/parameter-pack/">
+  
+
+
+
+
+
+
+
+
+<meta property="og:site_name" content="Wang&#39;s blog">
+<meta property="og:title" content="形参包">
+
+  <meta property="og:url" content="https://zqwang-cn.github.io/cpp-new-features/parameter-pack/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:type" content="website">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="theme-color" content="#222">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://zqwang-cn.github.io/",
+      "inLanguage": "en",
+      "name": "Wang's blog",
+      "description": "Wang's blog",
+      "publisher": "zqwang"
+    }
+  </script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://zqwang-cn.github.io/css/main.min.c166fa5a48e8b326dc193e5c2ea65b6f96720911149d941bddb3b0b8eff62af3.css" integrity="sha256-wWb6WkjosybcGT5cLqZbb5ZyCREUnZQb3bOwuO/2KvM=" crossorigin="anonymous">
+
+
+
+<noscript>
+
+  
+  
+
+  
+    <meta name="theme-color" content="#1dbc91" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1f676b" media="(prefers-color-scheme: light)">
+  
+
+  
+  <link rel="stylesheet" href="https://zqwang-cn.github.io/css/noscript.min.3f3b95436b19eaeb9223fb12c0b86737d53ee0a47fdba271a886c244bc03975c.css" integrity="sha256-PzuVQ2sZ6uuSI/sSwLhnN9U&#43;4KR/26JxqIbCRLwDl1w=" crossorigin="anonymous">
+
+</noscript>
+
+
+
+<link rel="preload" href="/fonts/open-sans-v34-latin-700.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-italic.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-regular.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/oswald-v29-latin-700.woff2" as="font" crossorigin="anonymous">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="https://zqwang-cn.github.io/js/main.f1da21dfea83dc0c36cea0b202c14a97e00aedab567e32702eb120f5ab8d974b.js" integrity="sha256-8doh3&#43;qD3Aw2zqCyAsFKl&#43;AK7atWfjJwLrEg9auNl0s=" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body>
+
+    <header>
+      
+
+  <a href="/">Wang&#39;s blog</a>
+
+
+
+
+  
+    <nav aria-label="Main menu.">
+      <ul>
+        
+          <li>
+            <a class="btn" href="/">Home</a>
+          </li>
+        
+      </ul>
+    </nav>
+  
+
+
+    </header>
+
+    <div class="filler">
+      
+
+  <main>
+    <article>
+      <header>
+        
+        <h1>形参包</h1>
+
+        
+          <div class="terms">
+            <ul><li><a class="btn" href="/tags/c&#43;&#43;%E6%96%B0%E7%89%B9%E6%80%A7/">c&#43;&#43;新特性</a></li></ul>
+          </div>
+          <p>
+            
+              Published on <time datetime="2023-06-09">2023-06-09</time>
+            
+          </p>
+        
+        
+        
+        
+      </header>
+    
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<p>模板形参包是接受零个或多个模板实参（非类型、类型或模板）的模板形参。函数模板形参包是接受零个或多个函数实参的函数形参。至少有一个形参包的模板被称作变参模板。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="定义"><a class="anchor" href="#定义" title='Anchor for: 定义.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 定义</h2> 
+
+<p>变参类模板可用任意数量的模板实参实例化：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span><span class="err">... </span><span class="nc">Types</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">Tuple</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Tuple</span><span class="o">&lt;&gt;</span> <span class="n">t0</span><span class="p">;</span>           <span class="c1">// Types不包含实参
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Tuple</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">t1</span><span class="p">;</span>        <span class="c1">// Types包含一个实参：int
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Tuple</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">float</span><span class="o">&gt;</span> <span class="n">t2</span><span class="p">;</span> <span class="c1">// Types包含两个实参：int与float
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Tuple</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">error</span><span class="p">;</span>       <span class="c1">// 错误：0不是类型
+</span></span></span></code></pre></div><p>变参函数模板可用任意数量的函数实参调用（模板实参通过模板实参推导规则进行推导）：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span><span class="err">... </span><span class="nc">Types</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">f</span><span class="p">(</span><span class="n">Types</span><span class="p">...</span> <span class="n">args</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">f</span><span class="p">();</span>       <span class="c1">// args不包含实参
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>      <span class="c1">// args包含一个实参：int
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span> <span class="c1">// args包含两个实参：int与double
+</span></span></span></code></pre></div><p>在类模板中，模板形参包必须是模板形参列表的最后一个形参。在函数模板中，模板参数包可以在列表中稍早出现，只要其后的所有形参均可从函数实参推导或拥有默认实参即可：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 正确，Ts在结尾
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">U</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Ts</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">valid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 错误，Ts不在结尾
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span><span class="p">...</span> <span class="n">Ts</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">invalid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 正确，可以推导U
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span><span class="p">...</span> <span class="n">Ts</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="p">,</span> <span class="k">typename</span> <span class="o">=</span> <span class="kt">void</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">valid</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">Ts</span><span class="p">...)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 错误，Ts无法推导
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span><span class="p">...</span> <span class="n">Ts</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="p">,</span> <span class="k">typename</span> <span class="o">=</span> <span class="kt">void</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">invalid</span><span class="p">(</span><span class="n">Ts</span><span class="p">...,</span> <span class="n">U</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 推导U为double，Ts为{int, int, int}
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">valid</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h2 id="包展开"><a class="anchor" href="#包展开" title='Anchor for: 包展开.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 包展开</h2> 
+
+<p>在一个后面带有省略号的模式中，如果至少有一个形参包的名字出现了至少一次，它将被展开成零个或多个由逗号分隔的模式实例，其中形参包的名字按顺序被替换成包中的各个元素：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span><span class="err">... </span><span class="nc">Us</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">f</span><span class="p">(</span><span class="n">Us</span><span class="p">...</span> <span class="n">pargs</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span><span class="err">... </span><span class="nc">Ts</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">g</span><span class="p">(</span><span class="n">Ts</span><span class="p">...</span> <span class="n">args</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">f</span><span class="p">(</span><span class="o">&amp;</span><span class="n">args</span><span class="p">...);</span>        <span class="c1">// &#34;&amp;args...&#34;是包展开，&#34;&amp;args&#34;是其模式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">g</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="s">&#34;a&#34;</span><span class="p">);</span>         <span class="c1">// Ts... args展开为int E1, double E2, const char* E3
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                        <span class="c1">// &amp;args...展开为&amp;E1, &amp;E2, &amp;E3
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                        <span class="c1">// Us... pargs展开为int* E1, double* E2, const char** E3
+</span></span></span></code></pre></div><p>若两个形参包出现于同一模式中，则它们同时展开，而且它们必须具有相同长度：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span><span class="p">...</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">Tuple</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T1</span><span class="p">,</span> <span class="k">typename</span> <span class="n">T2</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">Pair</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span><span class="err">... </span><span class="nc">Args1</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">zip</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span><span class="err">... </span><span class="nc">Args2</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="nc">with</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">typedef</span> <span class="n">Tuple</span><span class="o">&lt;</span><span class="n">Pair</span><span class="o">&lt;</span><span class="n">Args1</span><span class="p">,</span> <span class="n">Args2</span><span class="o">&gt;</span><span class="p">...</span><span class="o">&gt;</span> <span class="n">type</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// Pair&lt;Args1, Args2&gt;...是包展开，Pair&lt;Args1, Args2&gt;是其模式
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="n">zip</span><span class="o">&lt;</span><span class="kt">short</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;::</span><span class="n">with</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">short</span><span class="p">,</span> <span class="kt">unsigned</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">T1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Pair&lt;Args1, Args2&gt;...展开为Pair&lt;short, unsigned short&gt;, Pair&lt;int, unsigned int&gt;
+</span></span></span><span class="line"><span class="cl"><span class="c1">// T1为Tuple&lt;Pair&lt;short, unsigned short&gt;, Pair&lt;int, unsigned&gt;&gt;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="n">zip</span><span class="o">&lt;</span><span class="kt">short</span><span class="o">&gt;::</span><span class="n">with</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">short</span><span class="p">,</span> <span class="kt">unsigned</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">T2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 错误，包展开中包含不同长度的形参包
+</span></span></span></code></pre></div><p>如果包展开内嵌于另一个包展开中，那么它所展开的是在最内层包展开出现的形参包，并且在外围（而非最内层）的包展开中必须提及其它形参包：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span><span class="err">... </span><span class="nc">Args</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">g</span><span class="p">(</span><span class="n">Args</span><span class="p">...</span> <span class="n">args</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">f</span><span class="p">(</span><span class="k">const_cast</span><span class="o">&lt;</span><span class="k">const</span> <span class="n">Args</span> <span class="o">*&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">args</span><span class="p">)...);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// const_cast&lt;const Args*&gt;(&amp;args)是模式，它同时展开两个包(Args and args)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">    <span class="n">f</span><span class="p">(</span><span class="n">h</span><span class="p">(</span><span class="n">args</span><span class="p">...)</span> <span class="o">+</span> <span class="n">args</span><span class="p">...);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 嵌套包展开
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 内层包展开是&#34;args...&#34;，它首先展开
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 外层包展开是h(E1, E2, E3) + args...，它被接着展开为h(E1,E2,E3) + E1, h(E1,E2,E3) + E2, h(E1,E2,E3) + E3
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h2 id="展开场所"><a class="anchor" href="#展开场所" title='Anchor for: 展开场所.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 展开场所</h2> 
+
+<p>取决于发生展开的场所，其所产生的逗号分隔列表可以是不同种类的列表：函数形参列表，成员初始化器列表，属性列表，等等。以下列出了所有允许的语境：</p>
+<ul>
+<li>函数实参列表</li>
+<li>有括号初始化器</li>
+<li>花括号包围的初始化器</li>
+<li>模板实参列表</li>
+<li>函数形参列表</li>
+<li>模板形参列表</li>
+<li>基类说明符与成员初始化器列表</li>
+<li>lambda捕获</li>
+<li>sizeof&hellip;运算符</li>
+<li>动态异常说明</li>
+<li>对齐说明符</li>
+<li>属性列表</li>
+<li>折叠表达式</li>
+<li>using声明</li>
+</ul>
+
+
+
+    </article>
+  </main>
+
+
+    </div>
+    
+    <footer>
+      
+
+
+  
+
+    
+
+    
+      
+      
+    
+    
+    <p>Generated with <a href="https://gohugo.io">Hugo</a> using the <a href="https://gitlab.com/rmaguiar/hugo-theme-color-your-world">Color Your World</a> theme.</p>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="req-js">
+  <button class="outline-dashed" title="Change to light/dark mode."><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="#1dbc91" title="Change accent color." aria-label="Change accent color."><datalist id="presets"><option value="#1f676b"><option value="#1dbc91"><option value="#225670"><option value="#dd587c"><option value="#902b37"><option value="#f3a530"><option value="#754e85"><option value="#7fc121"><option value="#a8314a"><option value="#ff7433"><option value="#3e6728"><option value="#c063bd"><option value="#805080"><option value="#9d629d"><option value="#a064a0"><option value="#7daa50"><option value="#284531"><option value="#285790"><option value="#F5A83D"><option value="#88aa33"><option value="#015660"><option value="#bf274e"><option value="#bf4242"><option value="#51b37c"></datalist>
+</div>
+
+
+
+  <noscript>
+    <p class="noscript">Unable to execute JavaScript. Some features were disabled.</p>
+  </noscript>
+
+
+
+    </footer>
+    
+    
+    
+
+    
+    
+
+  </body>
+</html>
