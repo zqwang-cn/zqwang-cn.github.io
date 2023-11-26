@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+  <head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo 0.120.4">
+<meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
+
+
+<title>基础 - 数据框架 | Wang&#39;s blog</title>
+
+<meta name="author" content="zqwang">
+
+
+
+<meta name="robots" content="index follow">
+
+
+
+
+  
+    <link rel="canonical" href="https://zqwang-cn.github.io/qlib-study-notes/data-framework/">
+  
+
+
+
+
+
+
+
+
+<meta property="og:site_name" content="Wang&#39;s blog">
+<meta property="og:title" content="基础 - 数据框架">
+
+  <meta property="og:url" content="https://zqwang-cn.github.io/qlib-study-notes/data-framework/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:type" content="website">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="theme-color" content="#222">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://zqwang-cn.github.io/",
+      "inLanguage": "en",
+      "name": "Wang's blog",
+      "description": "Wang's blog",
+      "publisher": "zqwang"
+    }
+  </script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://zqwang-cn.github.io/css/main.min.c166fa5a48e8b326dc193e5c2ea65b6f96720911149d941bddb3b0b8eff62af3.css" integrity="sha256-wWb6WkjosybcGT5cLqZbb5ZyCREUnZQb3bOwuO/2KvM=" crossorigin="anonymous">
+
+
+
+<noscript>
+
+  
+  
+
+  
+    <meta name="theme-color" content="#1dbc91" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1f676b" media="(prefers-color-scheme: light)">
+  
+
+  
+  <link rel="stylesheet" href="https://zqwang-cn.github.io/css/noscript.min.3f3b95436b19eaeb9223fb12c0b86737d53ee0a47fdba271a886c244bc03975c.css" integrity="sha256-PzuVQ2sZ6uuSI/sSwLhnN9U&#43;4KR/26JxqIbCRLwDl1w=" crossorigin="anonymous">
+
+</noscript>
+
+
+
+<link rel="preload" href="/fonts/open-sans-v34-latin-700.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-italic.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-regular.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/oswald-v29-latin-700.woff2" as="font" crossorigin="anonymous">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="https://zqwang-cn.github.io/js/main.f1da21dfea83dc0c36cea0b202c14a97e00aedab567e32702eb120f5ab8d974b.js" integrity="sha256-8doh3&#43;qD3Aw2zqCyAsFKl&#43;AK7atWfjJwLrEg9auNl0s=" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body>
+
+    <header>
+      
+
+  <a href="/">Wang&#39;s blog</a>
+
+
+
+
+  
+    <nav aria-label="Main menu.">
+      <ul>
+        
+          <li>
+            <a class="btn" href="/">Home</a>
+          </li>
+        
+      </ul>
+    </nav>
+  
+
+
+    </header>
+
+    <div class="filler">
+      
+
+  <main>
+    <article>
+      <header>
+        
+        <h1>基础 - 数据框架</h1>
+
+        
+          <div class="terms">
+            <ul><li><a class="btn" href="/tags/qlib/">Qlib</a></li></ul>
+          </div>
+          <p>
+            
+              Published on <time datetime="2023-11-22">2023-11-22</time>
+            
+          </p>
+        
+        
+        
+        
+      </header>
+    
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="简介"><a class="anchor" href="#简介" title='Anchor for: 简介.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 简介</h2> 
+
+<p>Qlib的数据框架提供了友好的API用于管理与检索数据，以及高性能的数据基础设施。它是专门为量化投资设计的，例如，用户可以轻松地建立公式化alpha。</p>
+<p>下面是使用Qlib数据工作流的一个典型的例子：</p>
+<ul>
+<li>下载基础数据并转换为Qlib格式（后缀名为.bin）</li>
+<li>使用Qlib表达式引擎建立一些基本特征，例如<code>Ref($close, 60) / $close</code>表示最近60个交易日的回报率。这一步骤通常实现在数据处理器中的数据加载器组件内</li>
+<li>如果用户需要更加复杂的数据处理（如数据归一化），数据处理器模块支持用户自定义处理器。处理器可以实现表达式引擎难以支持的复杂数据处理方法</li>
+<li>基于预处理的数据生成模型所需的数据集</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h2 id="数据预处理"><a class="anchor" href="#数据预处理" title='Anchor for: 数据预处理.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 数据预处理</h2> 
+
+
+
+
+
+
+
+
+
+
+  <h3 id="qlib格式数据"><a class="anchor" href="#qlib格式数据" title='Anchor for: Qlib格式数据.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> Qlib格式数据</h3> 
+
+<p>Qlib专门设计了一种数据结构用于处理财务数据，此类数据被存储于.bin文件中。</p>
+<p>Qlib提供了两个现成的<a href="https://github.com/microsoft/qlib/blob/main/qlib/contrib/data/handler.py">数据集</a>：</p>
+<div class="scroll" tabindex="0"> <table>
+<thead>
+<tr>
+<th>数据集</th>
+<th>美国市场</th>
+<th>中国市场</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Alpha360</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>Alpha158</td>
+<td>√</td>
+<td>√</td>
+</tr>
+</tbody>
+</table> </div>
+<p>同时Qlib也提供了一个<a href="https://github.com/microsoft/qlib/tree/main/examples/highfreq">高频数据集</a>。</p>
+
+
+
+
+
+
+
+
+
+  <h3 id="qlib格式数据集"><a class="anchor" href="#qlib格式数据集" title='Anchor for: Qlib格式数据集.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> Qlib格式数据集</h3> 
+
+<p>Qlib提供脚本<code>scripts/get_data.py</code>用于下载数据集。使用如下命令下载中国市场股票数据集：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 下载日线数据</span>
+</span></span><span class="line"><span class="cl">python scripts/get_data.py qlib_data --target_dir ~/.qlib/qlib_data/cn_data --region cn
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 下载分钟线数据</span>
+</span></span><span class="line"><span class="cl">python scripts/get_data.py qlib_data --target_dir ~/.qlib/qlib_data/qlib_cn_1min --region cn --interval 1min
+</span></span></code></pre></div><p>也可以下载美国市场股票数据集：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python scripts/get_data.py qlib_data --target_dir ~/.qlib/qlib_data/us_data --region us
+</span></span></code></pre></div><p>运行上述命令后，中国市场与美国市场股票数据集分别保存于<code>~/.qlib/qlib_data/cn_data</code>和<code>~/.qlib/qlib_data/us_data</code>目录中。</p>
+<p>Qlib也提供一个脚本<code>scripts/data_collector</code>帮助用户爬取最新数据并转换为Qlib格式。</p>
+
+
+
+
+
+
+
+
+
+  <h3 id="自动更新数据"><a class="anchor" href="#自动更新数据" title='Anchor for: 自动更新数据.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 自动更新数据</h3> 
+
+<p>强烈建议用户先手动更新数据一次，之后设置为自动更新：</p>
+<ul>
+<li>手动更新数据</li>
+</ul>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python scripts/data_collector/yahoo/collector.py update_data_to_bin --qlib_data_1d_dir &lt;user data dir&gt; --trading_date &lt;start date&gt; --end_date &lt;end date&gt;
+</span></span></code></pre></div><p>其中参数<code>trading_date</code>为交易开始日期，<code>end_date</code>为交易结束日期（不包含）。</p>
+<ul>
+<li>在每个交易日自动更新数据（Linux）</li>
+</ul>
+<p>执行命令<code>crontab -e</code>，之后添加定时任务：</p>
+<pre aria-label="Box containing code sample." tabindex=0><code>* * * * 1-5 python &lt;script path&gt; update_data_to_bin --qlib_data_1d_dir &lt;user data dir&gt;
+</code></pre><p>其中脚本路径<code>script path</code>为<code>scripts/data_collector/yahoo/collector.py</code>。</p>
+
+
+
+
+
+
+
+
+
+  <h3 id="将csv格式转换为qlib格式"><a class="anchor" href="#将csv格式转换为qlib格式" title='Anchor for: 将CSV格式转换为Qlib格式.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 将CSV格式转换为Qlib格式</h3> 
+
+<p>Qlib提供脚本<code>scripts/dump_bin.py</code>将CSV格式数据转换为.bin格式。假设CSV格式数据放在<code>~/.qlib/csv_data/my_data</code>目录下，则可以使用如下命令进行转换：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python scripts/dump_bin.py dump_all --csv_path  ~/.qlib/csv_data/my_data --qlib_dir ~/.qlib/qlib_data/my_data --include_fields open,close,high,low,volume,factor
+</span></span></code></pre></div><p>其中<code>–include_fields</code>参数指定的字段必须与CSV文件中的列名对应。</p>
+<p>查询该命令的全部参数：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python dump_bin.py dump_all --help
+</span></span></code></pre></div><p>CSV格式数据可以使用脚本<code>scripts/get_data.py</code>下载：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 下载日线数据</span>
+</span></span><span class="line"><span class="cl">python scripts/get_data.py download_data --file_name csv_data_cn.zip --target_dir ~/.qlib/csv_data/cn_data
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 下载分钟线数据</span>
+</span></span><span class="line"><span class="cl">python scripts/data_collector/yahoo/collector.py download_data --source_dir ~/.qlib/stock_data/source/cn_1min --region CN --start 2021-05-20 --end 2021-05-23 --delay 0.1 --interval 1min --limit_nums <span class="m">10</span>
+</span></span></code></pre></div><p>也可以使用自定义CSV格式数据，但是必须满足以下条件：</p>
+<ul>
+<li>文件名为某一标的名称，或者文件中包含一列表示标的名称，例如：</li>
+</ul>
+<p>文件名为SH600000.csv或AAPL.csv等（大小写不敏感），或者文件内容为:</p>
+<div class="scroll" tabindex="0"> <table>
+<thead>
+<tr>
+<th>symbol</th>
+<th>close</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SH600000</td>
+<td>120</td>
+</tr>
+</tbody>
+</table> </div>
+<p>注意在格式转换时需要指定该列名称：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python scripts/dump_bin.py dump_all ... --symbol_field_name symbol
+</span></span></code></pre></div><ul>
+<li>文件中必需包含一列表示日期，例如：</li>
+</ul>
+<div class="scroll" tabindex="0"> <table>
+<thead>
+<tr>
+<th>symbol</th>
+<th>date</th>
+<th>close</th>
+<th>open</th>
+<th>volume</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SH600000</td>
+<td>2020-11-01</td>
+<td>120</td>
+<td>121</td>
+<td>12300000</td>
+</tr>
+<tr>
+<td>SH600000</td>
+<td>2020-11-02</td>
+<td>123</td>
+<td>120</td>
+<td>12300000</td>
+</tr>
+</tbody>
+</table> </div>
+<p>注意在格式转换时需要指定该列名称：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python scripts/dump_bin.py dump_all ... --date_field_name date
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h3 id="股票池市场"><a class="anchor" href="#股票池市场" title='Anchor for: 股票池（市场）.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 股票池（市场）</h3> 
+
+<p>Qlib将股票池定义为股票列表与它们的日期范围。预定义的股票池（如csi300）可以使用如下方式导入：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python collector.py --index_name CSI300 --qlib_dir &lt;user qlib data dir&gt; --method parse_instruments
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h3 id="股票模式"><a class="anchor" href="#股票模式" title='Anchor for: 股票模式.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 股票模式</h3> 
+
+<p>目前Qlib中有两种股票模式：中国模式与美国模式，它们的不同设置如下：</p>
+<div class="scroll" tabindex="0"> <table>
+<thead>
+<tr>
+<th>模式</th>
+<th>交易单位</th>
+<th>涨跌阈值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中国</td>
+<td>100</td>
+<td>0.099</td>
+</tr>
+<tr>
+<td>美国</td>
+<td>1</td>
+<td>无</td>
+</tr>
+</tbody>
+</table> </div>
+<p>使用每种模式前均需要在代码中进行初始化：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 初始化中国模式</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.constant</span> <span class="kn">import</span> <span class="n">REG_CN</span>
+</span></span><span class="line"><span class="cl"><span class="n">qlib</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">provider_uri</span><span class="o">=</span><span class="s1">&#39;~/.qlib/qlib_data/cn_data&#39;</span><span class="p">,</span> <span class="n">region</span><span class="o">=</span><span class="n">REG_CN</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 初始化美国模式</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.config</span> <span class="kn">import</span> <span class="n">REG_US</span>
+</span></span><span class="line"><span class="cl"><span class="n">qlib</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">provider_uri</span><span class="o">=</span><span class="s1">&#39;~/.qlib/qlib_data/us_data&#39;</span><span class="p">,</span> <span class="n">region</span><span class="o">=</span><span class="n">REG_US</span><span class="p">)</span>
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h2 id="数据api"><a class="anchor" href="#数据api" title='Anchor for: 数据API.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 数据API</h2> 
+
+
+
+
+
+
+
+
+
+
+  <h3 id="数据检索"><a class="anchor" href="#数据检索" title='Anchor for: 数据检索.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 数据检索</h3> 
+
+<p>用户可以使用<code>qlib.data</code>的API进行数据检索，下面是一些基本的例子：</p>
+<p>载入指定时间范围与交易频率的交易日历：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">qlib.data</span> <span class="kn">import</span> <span class="n">D</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">D</span><span class="o">.</span><span class="n">calendar</span><span class="p">(</span><span class="n">start_time</span><span class="o">=</span><span class="s1">&#39;2010-01-01&#39;</span><span class="p">,</span> <span class="n">end_time</span><span class="o">=</span><span class="s1">&#39;2017-12-31&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;day&#39;</span><span class="p">)[:</span><span class="mi">2</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="n">Timestamp</span><span class="p">(</span><span class="s1">&#39;2010-01-04 00:00:00&#39;</span><span class="p">),</span> <span class="n">Timestamp</span><span class="p">(</span><span class="s1">&#39;2010-01-05 00:00:00&#39;</span><span class="p">)]</span>
+</span></span></code></pre></div><p>将市场名称解析为股票池配置：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">qlib.data</span> <span class="kn">import</span> <span class="n">D</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">D</span><span class="o">.</span><span class="n">instruments</span><span class="p">(</span><span class="n">market</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span><span class="s1">&#39;market&#39;</span><span class="p">:</span> <span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="s1">&#39;filter_pipe&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+</span></span></code></pre></div><p>载入指定股票池在指定时间范围内的所有标的：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">qlib.data</span> <span class="kn">import</span> <span class="n">D</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">instruments</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">instruments</span><span class="p">(</span><span class="n">market</span><span class="o">=</span><span class="s1">&#39;csi300&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">D</span><span class="o">.</span><span class="n">list_instruments</span><span class="p">(</span><span class="n">instruments</span><span class="o">=</span><span class="n">instruments</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="s1">&#39;2010-01-01&#39;</span><span class="p">,</span> <span class="n">end_time</span><span class="o">=</span><span class="s1">&#39;2017-12-31&#39;</span><span class="p">,</span> <span class="n">as_list</span><span class="o">=</span><span class="kc">True</span><span class="p">)[:</span><span class="mi">6</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="s1">&#39;SH600036&#39;</span><span class="p">,</span> <span class="s1">&#39;SH600110&#39;</span><span class="p">,</span> <span class="s1">&#39;SH600087&#39;</span><span class="p">,</span> <span class="s1">&#39;SH600900&#39;</span><span class="p">,</span> <span class="s1">&#39;SH600089&#39;</span><span class="p">,</span> <span class="s1">&#39;SZ000912&#39;</span><span class="p">]</span>
+</span></span></code></pre></div><p>载入一个市场的标的并根据名称进行过滤：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">qlib.data</span> <span class="kn">import</span> <span class="n">D</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">qlib.data.filter</span> <span class="kn">import</span> <span class="n">NameDFilter</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">nameDFilter</span> <span class="o">=</span> <span class="n">NameDFilter</span><span class="p">(</span><span class="n">name_rule_re</span><span class="o">=</span><span class="s1">&#39;SH[0-9]</span><span class="si">{4}</span><span class="s1">55&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">instruments</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">instruments</span><span class="p">(</span><span class="n">market</span><span class="o">=</span><span class="s1">&#39;csi300&#39;</span><span class="p">,</span> <span class="n">filter_pipe</span><span class="o">=</span><span class="p">[</span><span class="n">nameDFilter</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">D</span><span class="o">.</span><span class="n">list_instruments</span><span class="p">(</span><span class="n">instruments</span><span class="o">=</span><span class="n">instruments</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="s1">&#39;2015-01-01&#39;</span><span class="p">,</span> <span class="n">end_time</span><span class="o">=</span><span class="s1">&#39;2016-02-15&#39;</span><span class="p">,</span> <span class="n">as_list</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="s1">&#39;SH600655&#39;</span><span class="p">,</span> <span class="s1">&#39;SH601555&#39;</span><span class="p">]</span>
+</span></span></code></pre></div><p>载入一个市场的标的并根据表达式进行过滤：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">qlib.data</span> <span class="kn">import</span> <span class="n">D</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">qlib.data.filter</span> <span class="kn">import</span> <span class="n">ExpressionDFilter</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">expressionDFilter</span> <span class="o">=</span> <span class="n">ExpressionDFilter</span><span class="p">(</span><span class="n">rule_expression</span><span class="o">=</span><span class="s1">&#39;$close&gt;2000&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">instruments</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">instruments</span><span class="p">(</span><span class="n">market</span><span class="o">=</span><span class="s1">&#39;csi300&#39;</span><span class="p">,</span> <span class="n">filter_pipe</span><span class="o">=</span><span class="p">[</span><span class="n">expressionDFilter</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">D</span><span class="o">.</span><span class="n">list_instruments</span><span class="p">(</span><span class="n">instruments</span><span class="o">=</span><span class="n">instruments</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="s1">&#39;2015-01-01&#39;</span><span class="p">,</span> <span class="n">end_time</span><span class="o">=</span><span class="s1">&#39;2016-02-15&#39;</span><span class="p">,</span> <span class="n">as_list</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">[</span><span class="s1">&#39;SZ000651&#39;</span><span class="p">,</span> <span class="s1">&#39;SZ000002&#39;</span><span class="p">,</span> <span class="s1">&#39;SH600655&#39;</span><span class="p">,</span> <span class="s1">&#39;SH600570&#39;</span><span class="p">]</span>
+</span></span></code></pre></div><p>载入指定标的在指定时间范围内的特征：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">qlib.data</span> <span class="kn">import</span> <span class="n">D</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">instruments</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;SH600000&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;$close&#39;</span><span class="p">,</span> <span class="s1">&#39;$volume&#39;</span><span class="p">,</span> <span class="s1">&#39;Ref($close, 1)&#39;</span><span class="p">,</span> <span class="s1">&#39;Mean($close, 3)&#39;</span><span class="p">,</span> <span class="s1">&#39;$high-$low&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">D</span><span class="o">.</span><span class="n">features</span><span class="p">(</span><span class="n">instruments</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="s1">&#39;2010-01-01&#39;</span><span class="p">,</span> <span class="n">end_time</span><span class="o">=</span><span class="s1">&#39;2017-12-31&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;day&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="s1">&#39;                           $close     $volume  Ref($close, 1)  Mean($close, 3)  $high-$low</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="n">instrument</span>  <span class="n">datetime</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="n">SH600000</span>    <span class="mi">2010</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">04</span>  <span class="mf">86.778313</span>  <span class="mf">16162960.0</span>       <span class="mf">88.825928</span>        <span class="mf">88.061483</span>    <span class="mf">2.907631</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>             <span class="mi">2010</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">05</span>  <span class="mf">87.433578</span>  <span class="mf">28117442.0</span>       <span class="mf">86.778313</span>        <span class="mf">87.679273</span>    <span class="mf">3.235252</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>             <span class="mi">2010</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">06</span>  <span class="mf">85.713585</span>  <span class="mf">23632884.0</span>       <span class="mf">87.433578</span>        <span class="mf">86.641825</span>    <span class="mf">1.720009</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>             <span class="mi">2010</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">07</span>  <span class="mf">83.788803</span>  <span class="mf">20813402.0</span>       <span class="mf">85.713585</span>        <span class="mf">85.645322</span>    <span class="mf">3.030487</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>             <span class="mi">2010</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">08</span>  <span class="mf">84.730675</span>  <span class="mf">16044853.0</span>       <span class="mf">83.788803</span>        <span class="mf">84.744354</span>    <span class="mf">2.047623</span><span class="s1">&#39;</span>
+</span></span></code></pre></div><p>载入指定股票池在指定时间范围内的特征：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">qlib.data</span> <span class="kn">import</span> <span class="n">D</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">qlib.data.filter</span> <span class="kn">import</span> <span class="n">NameDFilter</span><span class="p">,</span> <span class="n">ExpressionDFilter</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">nameDFilter</span> <span class="o">=</span> <span class="n">NameDFilter</span><span class="p">(</span><span class="n">name_rule_re</span><span class="o">=</span><span class="s1">&#39;SH[0-9]</span><span class="si">{4}</span><span class="s1">55&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">expressionDFilter</span> <span class="o">=</span> <span class="n">ExpressionDFilter</span><span class="p">(</span><span class="n">rule_expression</span><span class="o">=</span><span class="s1">&#39;$close&gt;Ref($close,1)&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">instruments</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">instruments</span><span class="p">(</span><span class="n">market</span><span class="o">=</span><span class="s1">&#39;csi300&#39;</span><span class="p">,</span> <span class="n">filter_pipe</span><span class="o">=</span><span class="p">[</span><span class="n">nameDFilter</span><span class="p">,</span> <span class="n">expressionDFilter</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;$close&#39;</span><span class="p">,</span> <span class="s1">&#39;$volume&#39;</span><span class="p">,</span> <span class="s1">&#39;Ref($close, 1)&#39;</span><span class="p">,</span> <span class="s1">&#39;Mean($close, 3)&#39;</span><span class="p">,</span> <span class="s1">&#39;$high-$low&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">D</span><span class="o">.</span><span class="n">features</span><span class="p">(</span><span class="n">instruments</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="s1">&#39;2010-01-01&#39;</span><span class="p">,</span> <span class="n">end_time</span><span class="o">=</span><span class="s1">&#39;2017-12-31&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;day&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="s1">&#39;                              $close        $volume  Ref($close, 1)  Mean($close, 3)  $high-$low</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="n">instrument</span>  <span class="n">datetime</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span> <span class="n">SH600655</span>    <span class="mi">2010</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">04</span>  <span class="mf">2699.567383</span>  <span class="mf">158193.328125</span>     <span class="mf">2619.070312</span>      <span class="mf">2626.097738</span>  <span class="mf">124.580566</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>             <span class="mi">2010</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">08</span>  <span class="mf">2612.359619</span>   <span class="mf">77501.406250</span>     <span class="mf">2584.567627</span>      <span class="mf">2623.220133</span>   <span class="mf">83.373047</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>             <span class="mi">2010</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">11</span>  <span class="mf">2712.982422</span>  <span class="mf">160852.390625</span>     <span class="mf">2612.359619</span>      <span class="mf">2636.636556</span>  <span class="mf">146.621582</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>             <span class="mi">2010</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">12</span>  <span class="mf">2788.688232</span>  <span class="mf">164587.937500</span>     <span class="mf">2712.982422</span>      <span class="mf">2704.676758</span>  <span class="mf">128.413818</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>             <span class="mi">2010</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">13</span>  <span class="mf">2790.604004</span>  <span class="mf">145460.453125</span>     <span class="mf">2788.688232</span>      <span class="mf">2764.091553</span>  <span class="mf">128.413818</span><span class="s1">&#39;</span>
+</span></span></code></pre></div><p>在构建复杂表达式时，使用字符串在一行内实现整个表达式是比较困难的，例如：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">qlib.data</span> <span class="kn">import</span> <span class="n">D</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">features</span><span class="p">([</span><span class="s2">&#34;sh600519&#34;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&#34;(($high / $close) + ($open / $close)) * (($high / $close) + ($open / $close)) / (($high / $close) + ($open / $close))&#34;</span><span class="p">],</span> <span class="n">start_time</span><span class="o">=</span><span class="s2">&#34;20200101&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><p>此时可以不使用字符串，而使用代码实现表达式，下面是与上面例子等价的实现：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">qlib.data.ops</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">f1</span> <span class="o">=</span> <span class="n">Feature</span><span class="p">(</span><span class="s2">&#34;high&#34;</span><span class="p">)</span> <span class="o">/</span> <span class="n">Feature</span><span class="p">(</span><span class="s2">&#34;close&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">f2</span> <span class="o">=</span> <span class="n">Feature</span><span class="p">(</span><span class="s2">&#34;open&#34;</span><span class="p">)</span> <span class="o">/</span> <span class="n">Feature</span><span class="p">(</span><span class="s2">&#34;close&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">f3</span> <span class="o">=</span> <span class="n">f1</span> <span class="o">+</span> <span class="n">f2</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">f4</span> <span class="o">=</span> <span class="n">f3</span> <span class="o">*</span> <span class="n">f3</span> <span class="o">/</span> <span class="n">f3</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">features</span><span class="p">([</span><span class="s2">&#34;sh600519&#34;</span><span class="p">],</span> <span class="p">[</span><span class="n">f4</span><span class="p">],</span> <span class="n">start_time</span><span class="o">=</span><span class="s2">&#34;20200101&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h3 id="特征-feature"><a class="anchor" href="#特征-feature" title='Anchor for: 特征 Feature.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 特征 Feature</h3> 
+
+<p>Qlib提供<code>Feature</code>与<code>ExpressionOps</code>以获取数据特征。</p>
+<ul>
+<li>Feature：从数据源加载数据时，用户可以直接获取特征， 如：<code>$high</code>、<code>$low</code>、<code>$open</code>、<code>$close</code>等。它们需要与转换数据格式时的<code>–include_fields</code>参数对应</li>
+<li>ExpressionOps：使用<code>Operator</code>构建特征，支持用户自定义</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h3 id="过滤器-filter"><a class="anchor" href="#过滤器-filter" title='Anchor for: 过滤器 Filter.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 过滤器 Filter</h3> 
+
+<p>Qlib提供<code>NameDFilter</code>与<code>ExpressionDFilter</code>用于过滤标的：</p>
+<ul>
+<li>NameDFilter：根据名称对标的进行过滤，需要一个名称的正则表达式</li>
+<li>ExpressionDFilter：根据表达式对标的进行过滤，需要一个表达式规则
+<ul>
+<li>基础特征过滤器：<code>$close/$open&gt;5</code></li>
+<li>横截面特征过滤器：<code>$rank($close)&lt;10</code></li>
+<li>时序特征过滤器：<code>$Ref($close, 3)&gt;100</code></li>
+</ul>
+</li>
+</ul>
+<p>下面是在工作流的配置文件中使用过滤器的例子：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">filter</span><span class="p">:</span><span class="w"> </span><span class="cp">&amp;filter</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">filter_type</span><span class="p">:</span><span class="w"> </span><span class="l">ExpressionDFilter</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">rule_expression</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Ref($close, -2) / Ref($close, -1) &gt; 1&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">filter_start_time</span><span class="p">:</span><span class="w"> </span><span class="ld">2010-01-01</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">filter_end_time</span><span class="p">:</span><span class="w"> </span><span class="ld">2010-01-07</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">keep</span><span class="p">:</span><span class="w"> </span><span class="kc">False</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">data_handler_config</span><span class="p">:</span><span class="w"> </span><span class="cp">&amp;data_handler_config</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">start_time</span><span class="p">:</span><span class="w"> </span><span class="ld">2010-01-01</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">end_time</span><span class="p">:</span><span class="w"> </span><span class="ld">2021-01-22</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">fit_start_time</span><span class="p">:</span><span class="w"> </span><span class="ld">2010-01-01</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">fit_end_time</span><span class="p">:</span><span class="w"> </span><span class="ld">2015-12-31</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">instruments</span><span class="p">:</span><span class="w"> </span><span class="cp">*market</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">filter_pipe</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="cp">*filter]</span><span class="w">
+</span></span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h2 id="数据加载器-data-loader"><a class="anchor" href="#数据加载器-data-loader" title='Anchor for: 数据加载器 Data Loader.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 数据加载器 Data Loader</h2> 
+
+<p>数据加载器用于从数据源加载原始数据，它会被数据处理器模块载入并使用。Qlib提供了数据加载器的基类<code>DataLoader</code>，并实现了以下数据加载器类：</p>
+<ul>
+<li>QlibDataLoader：用于从Qlib数据源加载原始数据</li>
+<li>StaticDataLoader：用于从文件等数据源加载原始数据</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h2 id="数据处理器-data-handler"><a class="anchor" href="#数据处理器-data-handler" title='Anchor for: 数据处理器 Data Handler.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 数据处理器 Data Handler</h2> 
+
+<p>数据处理器模块用于处理被多数模型使用的通用数据处理方法，用户可以通过<code>qrun</code>在自动工作流中使用数据处理器。</p>
+
+
+
+
+
+
+
+
+
+  <h3 id="可学习数据处理器-datahandlerlp"><a class="anchor" href="#可学习数据处理器-datahandlerlp" title='Anchor for: 可学习数据处理器 DataHandlerLP.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 可学习数据处理器 DataHandlerLP</h3> 
+
+<p>Qlib提供了可学习数据处理器类<code>DataHandlerLP</code>，该类包含多个可以学习参数（如zscore归一化参数）的处理器<code>Processor</code>。当新数据到来时，已训练的处理器就可以处理新数据，从而使高效地处理实时数据成为可能。</p>
+
+
+
+
+
+
+
+
+
+  <h3 id="处理器-processor"><a class="anchor" href="#处理器-processor" title='Anchor for: 处理器 Processor.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 处理器 Processor</h3> 
+
+<p>处理器模块的作用是进行数据处理，它被设计为是可训练的。Qlib提供以下处理器：</p>
+<ul>
+<li>DropnaProcessor：丢弃N/A特征</li>
+<li>DropnaLabel：丢弃N/A标签</li>
+<li>TanhProcess：使用tanh处理噪声数据</li>
+<li>ProcessInf：使用平均值替换无穷值</li>
+<li>Fillna：用0或给定数值填充N/A值</li>
+<li>MinMaxNorm：最大值-最小值归一化</li>
+<li>ZscoreNorm：zscore归一化</li>
+<li>RobustZScoreNorm：稳健zscore归一化</li>
+<li>CSZScoreNorm：横截面zscore归一化</li>
+<li>CSRankNorm：横截面rank归一化</li>
+<li>CSZFillna：横截面N/A值填充</li>
+</ul>
+<p>用户可以通过继承基类<code>Processor</code>以建立自己的处理器。</p>
+
+
+
+
+
+
+
+
+
+  <h3 id="例子"><a class="anchor" href="#例子" title='Anchor for: 例子.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 例子</h3> 
+
+<p>Qlib实现了一个数据处理器<code>Alpha158</code>，下面的例子展示了如何将其作为独立模块运行：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">qlib</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.contrib.data.handler</span> <span class="kn">import</span> <span class="n">Alpha158</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">data_handler_config</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;start_time&#34;</span><span class="p">:</span> <span class="s2">&#34;2008-01-01&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;end_time&#34;</span><span class="p">:</span> <span class="s2">&#34;2020-08-01&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;fit_start_time&#34;</span><span class="p">:</span> <span class="s2">&#34;2008-01-01&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;fit_end_time&#34;</span><span class="p">:</span> <span class="s2">&#34;2014-12-31&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;instruments&#34;</span><span class="p">:</span> <span class="s2">&#34;csi300&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">qlib</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">h</span> <span class="o">=</span> <span class="n">Alpha158</span><span class="p">(</span><span class="o">**</span><span class="n">data_handler_config</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 获取数据所有列</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">get_cols</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 获取所有标签</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">col_set</span><span class="o">=</span><span class="s2">&#34;label&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 获取所有特征</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">col_set</span><span class="o">=</span><span class="s2">&#34;feature&#34;</span><span class="p">))</span>
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h2 id="数据集-dataset"><a class="anchor" href="#数据集-dataset" title='Anchor for: 数据集 Dataset.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 数据集 Dataset</h2> 
+
+<p>数据集模块的作用是为模型训练与推理准备数据。设计该模块的动机是想要为不同的模型处理适合自己的数据提供最大的灵活性。该模块使每个模型可以使用独立的方式处理数据，例如，<code>GBDT</code>等模型可以在包含nan或None的数据上正常运行，但是<code>MLP</code>等神经网络模型不能在此类数据上正常运行。</p>
+<p>如果用户的模型需要使用特殊的方式处理数据，可以继承<code>Dataset</code>类以实现自己的数据集类。如果数据处理方式并不特殊，可以直接使用预置的<code>DatasetH</code>类，它是带有数据处理器的数据集。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="缓存-cache"><a class="anchor" href="#缓存-cache" title='Anchor for: 缓存 Cache.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 缓存 Cache</h2> 
+
+<p>缓存是一个可选模块，它通过将常用的数据储存在缓存中以提高数据读取速度。Qlib提供了以下缓存类：</p>
+
+
+
+
+
+
+
+
+
+  <h3 id="全局内存缓存-memcache"><a class="anchor" href="#全局内存缓存-memcache" title='Anchor for: 全局内存缓存 Memcache.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 全局内存缓存 Memcache</h3> 
+
+<p>该类由三个<code>MemCacheUnit</code>实例组成，分别用于缓存日期、标的与特征。该全局变量在<code>cache.py</code>中被定义为<code>H</code>，用户可以使用<code>H['c']</code>、<code>H['i']</code>与<code>H['f']</code>来获取/设置缓存。</p>
+
+
+
+
+
+
+
+
+
+  <h3 id="表达式缓存-expressioncache"><a class="anchor" href="#表达式缓存-expressioncache" title='Anchor for: 表达式缓存 ExpressionCache.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 表达式缓存 ExpressionCache</h3> 
+
+<p>该类用于缓存表达式（如<code>Mean($close, 5)</code>），用户可以通过如下步骤继承该基类以实现自己的表达式缓存机制：</p>
+<ul>
+<li>重写<code>self._uri</code>方法以定义如何生成缓存文件路径</li>
+<li>重写<code>self._expression</code>方法以定义哪些数据会被缓存以及如何缓存</li>
+</ul>
+<p>目前Qlib实现了<code>DiskExpressionCache</code>类，它将表达式数据存储在硬盘上。</p>
+
+
+
+
+
+
+
+
+
+  <h3 id="数据集缓存-datasetcache"><a class="anchor" href="#数据集缓存-datasetcache" title='Anchor for: 数据集缓存 DatasetCache.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 数据集缓存 DatasetCache</h3> 
+
+<p>该类用于缓存数据集，用户可以通过如下步骤继承该基类以实现自己的数据集缓存机制：</p>
+<ul>
+<li>重写<code>self._uri</code>方法以定义如何生成缓存文件路径</li>
+<li>重写<code>self._dataset</code>方法以定义哪些数据会被缓存以及如何缓存</li>
+</ul>
+<p>目前Qlib实现了<code>DiskDatasetCache</code>类，它将数据集数据存储在硬盘上。</p>
+
+
+
+    </article>
+  </main>
+
+
+    </div>
+    
+    <footer>
+      
+
+
+  
+
+    
+
+    
+      
+      
+    
+    
+    &lt;p&gt;Generated with &lt;a href=&#34;https://gohugo.io&#34;&gt;Hugo&lt;/a&gt; using the &lt;a href=&#34;https://gitlab.com/rmaguiar/hugo-theme-color-your-world&#34;&gt;Color Your World&lt;/a&gt; theme.&lt;/p&gt;
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="req-js">
+  <button class="outline-dashed" title="Change to light/dark mode."><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="#1dbc91" title="Change accent color." aria-label="Change accent color."><datalist id="presets"><option value="#1f676b"><option value="#1dbc91"><option value="#225670"><option value="#dd587c"><option value="#902b37"><option value="#f3a530"><option value="#754e85"><option value="#7fc121"><option value="#a8314a"><option value="#ff7433"><option value="#3e6728"><option value="#c063bd"><option value="#805080"><option value="#9d629d"><option value="#a064a0"><option value="#7daa50"><option value="#284531"><option value="#285790"><option value="#F5A83D"><option value="#88aa33"><option value="#015660"><option value="#bf274e"><option value="#bf4242"><option value="#51b37c"></datalist>
+</div>
+
+
+
+  <noscript>
+    <p class="noscript">Unable to execute JavaScript. Some features were disabled.</p>
+  </noscript>
+
+
+
+    </footer>
+    
+    
+    
+
+    
+    
+
+  </body>
+</html>

@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+  <head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo 0.120.4">
+<meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
+
+
+<title>基础 - 投资组合策略 | Wang&#39;s blog</title>
+
+<meta name="author" content="zqwang">
+
+
+
+<meta name="robots" content="index follow">
+
+
+
+
+  
+    <link rel="canonical" href="https://zqwang-cn.github.io/qlib-study-notes/portfolio-strategy/">
+  
+
+
+
+
+
+
+
+
+<meta property="og:site_name" content="Wang&#39;s blog">
+<meta property="og:title" content="基础 - 投资组合策略">
+
+  <meta property="og:url" content="https://zqwang-cn.github.io/qlib-study-notes/portfolio-strategy/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:type" content="website">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="theme-color" content="#222">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://zqwang-cn.github.io/",
+      "inLanguage": "en",
+      "name": "Wang's blog",
+      "description": "Wang's blog",
+      "publisher": "zqwang"
+    }
+  </script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://zqwang-cn.github.io/css/main.min.c166fa5a48e8b326dc193e5c2ea65b6f96720911149d941bddb3b0b8eff62af3.css" integrity="sha256-wWb6WkjosybcGT5cLqZbb5ZyCREUnZQb3bOwuO/2KvM=" crossorigin="anonymous">
+
+
+
+<noscript>
+
+  
+  
+
+  
+    <meta name="theme-color" content="#1dbc91" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1f676b" media="(prefers-color-scheme: light)">
+  
+
+  
+  <link rel="stylesheet" href="https://zqwang-cn.github.io/css/noscript.min.3f3b95436b19eaeb9223fb12c0b86737d53ee0a47fdba271a886c244bc03975c.css" integrity="sha256-PzuVQ2sZ6uuSI/sSwLhnN9U&#43;4KR/26JxqIbCRLwDl1w=" crossorigin="anonymous">
+
+</noscript>
+
+
+
+<link rel="preload" href="/fonts/open-sans-v34-latin-700.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-italic.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-regular.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/oswald-v29-latin-700.woff2" as="font" crossorigin="anonymous">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="https://zqwang-cn.github.io/js/main.f1da21dfea83dc0c36cea0b202c14a97e00aedab567e32702eb120f5ab8d974b.js" integrity="sha256-8doh3&#43;qD3Aw2zqCyAsFKl&#43;AK7atWfjJwLrEg9auNl0s=" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body>
+
+    <header>
+      
+
+  <a href="/">Wang&#39;s blog</a>
+
+
+
+
+  
+    <nav aria-label="Main menu.">
+      <ul>
+        
+          <li>
+            <a class="btn" href="/">Home</a>
+          </li>
+        
+      </ul>
+    </nav>
+  
+
+
+    </header>
+
+    <div class="filler">
+      
+
+  <main>
+    <article>
+      <header>
+        
+        <h1>基础 - 投资组合策略</h1>
+
+        
+          <div class="terms">
+            <ul><li><a class="btn" href="/tags/qlib/">Qlib</a></li></ul>
+          </div>
+          <p>
+            
+              Published on <time datetime="2023-11-23">2023-11-23</time>
+            
+          </p>
+        
+        
+        
+        
+      </header>
+    
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="简介"><a class="anchor" href="#简介" title='Anchor for: 简介.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 简介</h2> 
+
+<p>投资组合策略可以根据模型的预测分数生成投资组合。Qlib提供了一些已实现的投资组合策略，同时也支持用户根据需要进行自定义。在确定了模型（预测信号）与策略后，运行回测可以检查它们的性能。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="基类"><a class="anchor" href="#基类" title='Anchor for: 基类.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 基类</h2> 
+
+
+
+
+
+
+
+
+
+
+  <h3 id="basestrategy"><a class="anchor" href="#basestrategy" title='Anchor for: BaseStrategy.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> BaseStrategy</h3> 
+
+<p>此类是所有策略类的基类，用户可以继承此类并实现其接口以添加自定义策略。其接口有：</p>
+<ul>
+<li>generate_trade_decision：一个关键接口，用于在每个交易周期生成交易决策。其调用频率取决于执行器，但是实际交易频率可以由用户代码控制</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h3 id="weightstrategybase"><a class="anchor" href="#weightstrategybase" title='Anchor for: WeightStrategyBase.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> WeightStrategyBase</h3> 
+
+<p>此类只专注于目标仓位，并基于仓位自动生成订单。其接口有：</p>
+<ul>
+<li>generate_target_weight_position
+<ul>
+<li>根据当前仓位与交易日期生成目标仓位（不考虑现金）</li>
+<li>返回目标仓位（所有资产的百分比）</li>
+</ul>
+</li>
+</ul>
+<p>该类按照如下方式实现了<code>generate_order_list</code>接口：</p>
+<ul>
+<li>调用<code>generate_target_weight_position</code>方法生成目标仓位</li>
+<li>根据目标仓位生成股票的目标数量</li>
+<li>根据股票的目标数量生成订单</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h2 id="已实现的策略"><a class="anchor" href="#已实现的策略" title='Anchor for: 已实现的策略.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 已实现的策略</h2> 
+
+
+
+
+
+
+
+
+
+
+  <h3 id="topkdropoutstrategy"><a class="anchor" href="#topkdropoutstrategy" title='Anchor for: TopkDropoutStrategy.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> TopkDropoutStrategy</h3> 
+
+<p>该类按照如下方式实现了<code>generate_order_list</code>接口：</p>
+<ul>
+<li>执行<code>Topk-Drop</code>算法计算每支股票的目标数量</li>
+<li>根据股票的目标数量生成订单</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h3 id="enhancedindexingstrategy"><a class="anchor" href="#enhancedindexingstrategy" title='Anchor for: EnhancedIndexingStrategy.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> EnhancedIndexingStrategy</h3> 
+
+<p>该策略将主动管理与被动管理相结合，目标是在控制风险敞口的同时取得超出基准指数的收益。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="例子"><a class="anchor" href="#例子" title='Anchor for: 例子.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 例子</h2> 
+
+
+
+
+
+
+
+
+
+
+  <h3 id="预测分数"><a class="anchor" href="#预测分数" title='Anchor for: 预测分数.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 预测分数</h3> 
+
+<p>预测分数是一个pandas的DataFrame对象，它的索引是<code>&lt;datetime(pd.Timestamp), instrument(str)&gt;</code>且必须包含分数列。一个例子如下：</p>
+<pre aria-label="Box containing code sample." tabindex=0><code>  datetime instrument     score
+2019-01-04   SH600000 -0.505488
+2019-01-04   SZ002531 -0.320391
+2019-01-04   SZ000999  0.583808
+2019-01-04   SZ300569  0.819628
+2019-01-04   SZ001696 -0.137140
+             ...            ...
+2019-04-30   SZ000996 -1.027618
+2019-04-30   SH603127  0.225677
+2019-04-30   SH603126  0.462443
+2019-04-30   SH603133 -0.302460
+2019-04-30   SZ300760 -0.126383
+</code></pre><p>注意预测分数不一定是收益率，不同模型有不同的定义。</p>
+
+
+
+
+
+
+
+
+
+  <h3 id="运行回测"><a class="anchor" href="#运行回测" title='Anchor for: 运行回测.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 运行回测</h3> 
+
+<ul>
+<li>大多数情况下，用户可以使用<code>backtest_daily</code>回测他们的投资组合策略：</li>
+</ul>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">qlib</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.utils.time</span> <span class="kn">import</span> <span class="n">Freq</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.utils</span> <span class="kn">import</span> <span class="n">flatten_dict</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.contrib.evaluate</span> <span class="kn">import</span> <span class="n">backtest_daily</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.contrib.evaluate</span> <span class="kn">import</span> <span class="n">risk_analysis</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.contrib.strategy</span> <span class="kn">import</span> <span class="n">TopkDropoutStrategy</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 初始化</span>
+</span></span><span class="line"><span class="cl"><span class="n">qlib</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">provider_uri</span><span class="o">=&lt;</span><span class="n">qlib</span> <span class="n">data</span> <span class="nb">dir</span><span class="o">&gt;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">CSI300_BENCH</span> <span class="o">=</span> <span class="s2">&#34;SH000300&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">STRATEGY_CONFIG</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;topk&#34;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;n_drop&#34;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># pred_score, pd.Series</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;signal&#34;</span><span class="p">:</span> <span class="n">pred_score</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">strategy_obj</span> <span class="o">=</span> <span class="n">TopkDropoutStrategy</span><span class="p">(</span><span class="o">**</span><span class="n">STRATEGY_CONFIG</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">report_normal</span><span class="p">,</span> <span class="n">positions_normal</span> <span class="o">=</span> <span class="n">backtest_daily</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">start_time</span><span class="o">=</span><span class="s2">&#34;2017-01-01&#34;</span><span class="p">,</span> <span class="n">end_time</span><span class="o">=</span><span class="s2">&#34;2020-08-01&#34;</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="n">strategy_obj</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">analysis</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 默认频率为天</span>
+</span></span><span class="line"><span class="cl"><span class="n">analysis</span><span class="p">[</span><span class="s2">&#34;excess_return_without_cost&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">risk_analysis</span><span class="p">(</span><span class="n">report_normal</span><span class="p">[</span><span class="s2">&#34;return&#34;</span><span class="p">]</span> <span class="o">-</span> <span class="n">report_normal</span><span class="p">[</span><span class="s2">&#34;bench&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">analysis</span><span class="p">[</span><span class="s2">&#34;excess_return_with_cost&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">risk_analysis</span><span class="p">(</span><span class="n">report_normal</span><span class="p">[</span><span class="s2">&#34;return&#34;</span><span class="p">]</span> <span class="o">-</span> <span class="n">report_normal</span><span class="p">[</span><span class="s2">&#34;bench&#34;</span><span class="p">]</span> <span class="o">-</span> <span class="n">report_normal</span><span class="p">[</span><span class="s2">&#34;cost&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">analysis_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">analysis</span><span class="p">)</span>  <span class="c1"># 类型: pd.DataFrame</span>
+</span></span><span class="line"><span class="cl"><span class="n">pprint</span><span class="p">(</span><span class="n">analysis_df</span><span class="p">)</span>
+</span></span></code></pre></div><ul>
+<li>如果用户需要更加精细地控制策略，可以参考下面的例子：</li>
+</ul>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">qlib</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.utils.time</span> <span class="kn">import</span> <span class="n">Freq</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.utils</span> <span class="kn">import</span> <span class="n">flatten_dict</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.backtest</span> <span class="kn">import</span> <span class="n">backtest</span><span class="p">,</span> <span class="n">executor</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.contrib.evaluate</span> <span class="kn">import</span> <span class="n">risk_analysis</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.contrib.strategy</span> <span class="kn">import</span> <span class="n">TopkDropoutStrategy</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 初始化qlib</span>
+</span></span><span class="line"><span class="cl"><span class="n">qlib</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">provider_uri</span><span class="o">=&lt;</span><span class="n">qlib</span> <span class="n">data</span> <span class="nb">dir</span><span class="o">&gt;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">CSI300_BENCH</span> <span class="o">=</span> <span class="s2">&#34;SH000300&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># `benchmark`用于计算策略的超额收益率</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 其数据格式与普通指标相同</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 例如，可以使用如下代码查询其数据：</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># `D.features([&#34;SH000300&#34;], [&#34;$close&#34;], start_time=&#39;2010-01-01&#39;, end_time=&#39;2017-12-31&#39;, freq=&#39;day&#39;)`</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 与之不同，`market`代表一组股票(例如csi300)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 例如，可以使用如下代码查询一个股票市场的所有数据：</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ` D.features(D.instruments(market=&#39;csi300&#39;), [&#34;$close&#34;], start_time=&#39;2010-01-01&#39;, end_time=&#39;2017-12-31&#39;, freq=&#39;day&#39;)`</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">FREQ</span> <span class="o">=</span> <span class="s2">&#34;day&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">STRATEGY_CONFIG</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;topk&#34;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;n_drop&#34;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># pred_score, pd.Series</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;signal&#34;</span><span class="p">:</span> <span class="n">pred_score</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">EXECUTOR_CONFIG</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;time_per_step&#34;</span><span class="p">:</span> <span class="s2">&#34;day&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;generate_portfolio_metrics&#34;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">backtest_config</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;start_time&#34;</span><span class="p">:</span> <span class="s2">&#34;2017-01-01&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;end_time&#34;</span><span class="p">:</span> <span class="s2">&#34;2020-08-01&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;account&#34;</span><span class="p">:</span> <span class="mi">100000000</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;benchmark&#34;</span><span class="p">:</span> <span class="n">CSI300_BENCH</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;exchange_kwargs&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;freq&#34;</span><span class="p">:</span> <span class="n">FREQ</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;limit_threshold&#34;</span><span class="p">:</span> <span class="mf">0.095</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;deal_price&#34;</span><span class="p">:</span> <span class="s2">&#34;close&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;open_cost&#34;</span><span class="p">:</span> <span class="mf">0.0005</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;close_cost&#34;</span><span class="p">:</span> <span class="mf">0.0015</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;min_cost&#34;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 策略对象</span>
+</span></span><span class="line"><span class="cl"><span class="n">strategy_obj</span> <span class="o">=</span> <span class="n">TopkDropoutStrategy</span><span class="p">(</span><span class="o">**</span><span class="n">STRATEGY_CONFIG</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 执行器对象</span>
+</span></span><span class="line"><span class="cl"><span class="n">executor_obj</span> <span class="o">=</span> <span class="n">executor</span><span class="o">.</span><span class="n">SimulatorExecutor</span><span class="p">(</span><span class="o">**</span><span class="n">EXECUTOR_CONFIG</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 回测</span>
+</span></span><span class="line"><span class="cl"><span class="n">portfolio_metric_dict</span><span class="p">,</span> <span class="n">indicator_dict</span> <span class="o">=</span> <span class="n">backtest</span><span class="p">(</span><span class="n">executor</span><span class="o">=</span><span class="n">executor_obj</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="n">strategy_obj</span><span class="p">,</span> <span class="o">**</span><span class="n">backtest_config</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">analysis_freq</span> <span class="o">=</span> <span class="s2">&#34;</span><span class="si">{0}{1}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">Freq</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">FREQ</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 回测信息</span>
+</span></span><span class="line"><span class="cl"><span class="n">report_normal</span><span class="p">,</span> <span class="n">positions_normal</span> <span class="o">=</span> <span class="n">portfolio_metric_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">analysis_freq</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 分析</span>
+</span></span><span class="line"><span class="cl"><span class="n">analysis</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">analysis</span><span class="p">[</span><span class="s2">&#34;excess_return_without_cost&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">risk_analysis</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">report_normal</span><span class="p">[</span><span class="s2">&#34;return&#34;</span><span class="p">]</span> <span class="o">-</span> <span class="n">report_normal</span><span class="p">[</span><span class="s2">&#34;bench&#34;</span><span class="p">],</span> <span class="n">freq</span><span class="o">=</span><span class="n">analysis_freq</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">analysis</span><span class="p">[</span><span class="s2">&#34;excess_return_with_cost&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">risk_analysis</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">report_normal</span><span class="p">[</span><span class="s2">&#34;return&#34;</span><span class="p">]</span> <span class="o">-</span> <span class="n">report_normal</span><span class="p">[</span><span class="s2">&#34;bench&#34;</span><span class="p">]</span> <span class="o">-</span> <span class="n">report_normal</span><span class="p">[</span><span class="s2">&#34;cost&#34;</span><span class="p">],</span> <span class="n">freq</span><span class="o">=</span><span class="n">analysis_freq</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">analysis_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">analysis</span><span class="p">)</span>  <span class="c1"># type: pd.DataFrame</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 记录指标</span>
+</span></span><span class="line"><span class="cl"><span class="n">analysis_dict</span> <span class="o">=</span> <span class="n">flatten_dict</span><span class="p">(</span><span class="n">analysis_df</span><span class="p">[</span><span class="s2">&#34;risk&#34;</span><span class="p">]</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 打印结果</span>
+</span></span><span class="line"><span class="cl"><span class="n">pprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;The following are analysis results of benchmark return(</span><span class="si">{</span><span class="n">analysis_freq</span><span class="si">}</span><span class="s2">).&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">pprint</span><span class="p">(</span><span class="n">risk_analysis</span><span class="p">(</span><span class="n">report_normal</span><span class="p">[</span><span class="s2">&#34;bench&#34;</span><span class="p">],</span> <span class="n">freq</span><span class="o">=</span><span class="n">analysis_freq</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">pprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;The following are analysis results of the excess return without cost(</span><span class="si">{</span><span class="n">analysis_freq</span><span class="si">}</span><span class="s2">).&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">pprint</span><span class="p">(</span><span class="n">analysis</span><span class="p">[</span><span class="s2">&#34;excess_return_without_cost&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">pprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;The following are analysis results of the excess return with cost(</span><span class="si">{</span><span class="n">analysis_freq</span><span class="si">}</span><span class="s2">).&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">pprint</span><span class="p">(</span><span class="n">analysis</span><span class="p">[</span><span class="s2">&#34;excess_return_with_cost&#34;</span><span class="p">])</span>
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h3 id="结果"><a class="anchor" href="#结果" title='Anchor for: 结果.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 结果</h3> 
+
+<p>回测结果形式如下：</p>
+<pre aria-label="Box containing code sample." tabindex=0><code>                                                  risk
+excess_return_without_cost mean               0.000605
+                           std                0.005481
+                           annualized_return  0.152373
+                           information_ratio  1.751319
+                           max_drawdown      -0.059055
+excess_return_with_cost    mean               0.000410
+                           std                0.005478
+                           annualized_return  0.103265
+                           information_ratio  1.187411
+                           max_drawdown      -0.075024
+</code></pre><p>字段说明：</p>
+<ul>
+<li>excess_return_without_cost：不考虑成本时的超额收益率
+<ul>
+<li>mean：均值</li>
+<li>std：方差</li>
+<li>annualized_return：年化收益率</li>
+<li>information_ratio：信息比率</li>
+<li>max_drawdown：最大回撤</li>
+</ul>
+</li>
+<li>excess_return_with_cost：考虑成本时的超额收益率
+<ul>
+<li>mean：均值</li>
+<li>std：方差</li>
+<li>annualized_return：年化收益率</li>
+<li>information_ratio：信息比率</li>
+<li>max_drawdown：最大回撤</li>
+</ul>
+</li>
+</ul>
+
+
+
+    </article>
+  </main>
+
+
+    </div>
+    
+    <footer>
+      
+
+
+  
+
+    
+
+    
+      
+      
+    
+    
+    &lt;p&gt;Generated with &lt;a href=&#34;https://gohugo.io&#34;&gt;Hugo&lt;/a&gt; using the &lt;a href=&#34;https://gitlab.com/rmaguiar/hugo-theme-color-your-world&#34;&gt;Color Your World&lt;/a&gt; theme.&lt;/p&gt;
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="req-js">
+  <button class="outline-dashed" title="Change to light/dark mode."><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="#1dbc91" title="Change accent color." aria-label="Change accent color."><datalist id="presets"><option value="#1f676b"><option value="#1dbc91"><option value="#225670"><option value="#dd587c"><option value="#902b37"><option value="#f3a530"><option value="#754e85"><option value="#7fc121"><option value="#a8314a"><option value="#ff7433"><option value="#3e6728"><option value="#c063bd"><option value="#805080"><option value="#9d629d"><option value="#a064a0"><option value="#7daa50"><option value="#284531"><option value="#285790"><option value="#F5A83D"><option value="#88aa33"><option value="#015660"><option value="#bf274e"><option value="#bf4242"><option value="#51b37c"></datalist>
+</div>
+
+
+
+  <noscript>
+    <p class="noscript">Unable to execute JavaScript. Some features were disabled.</p>
+  </noscript>
+
+
+
+    </footer>
+    
+    
+    
+
+    
+    
+
+  </body>
+</html>

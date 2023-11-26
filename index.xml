@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2023, zqwang; All rights reserved.</copyright>
-    <lastBuildDate>Sat, 10 Jun 2023 15:17:07 +0800</lastBuildDate><atom:link href="https://zqwang-cn.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 23 Nov 2023 16:01:57 +0800</lastBuildDate><atom:link href="https://zqwang-cn.github.io/index.xml" rel="self" type="application/rss+xml" />
       <item>
         <title>智能指针</title>
         <link>https://zqwang-cn.github.io/cpp-new-features/smart-pointers/</link>
@@ -34,6 +34,29 @@ template &amp;lt;typename T&amp;gt; class unique_ptr { public: // 普通构造�
 // 将字面值绑定至变量 let an_integer = 1u32; // 将另一变量绑定至此变量 let copied_integer = an_integer; 可变性 基本上所有的语言中，变量默认都是可变的。但是在Rust中，为了达到最大的安全性，变量默认为不可变的，如需使用可变变量，需要使用mut显示声明。
 // 声明不可变变量 let immutable_binding = 1; // 错误，不可修改不可变变量 immutable_binding += 1 // 声明可变变量 let mut mutable_binding = 1; // 修改可变变量 mutable_binding += 1; 作用域 每个变量有其作用域，它被限制为只在其所在代码块中有效。
 fn main() { // 此变量在整个main函数内有效 let long_lived_binding = 1; // 此代码块的作用域小于main函数 { // 此变量只在当前代码块中有效 let short_lived_binding = 2; // 正确 println!(&amp;#34;inner short: {}&amp;#34;, short_lived_binding); } // 代码块结束 // 错误，超出作用域，无法使用此变量 println!</description>
+      </item>
+    
+      <item>
+        <title>简介</title>
+        <link>https://zqwang-cn.github.io/qlib-study-notes/introduction/</link>
+        <pubDate>Tue, 07 Mar 2023 21:42:20 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/qlib-study-notes/introduction/</guid>
+        <description> 简介 Qlib是一个面向人工智能的量化研究平台，主要用于进行基于人工智能(机器学习/深度学习/强化学习)算法的量化策略的研究。
+使用Qlib，用户可以简单地测试他们的想法并建立更好的量化投资策略。
+框架 Qlib是一个由以上模块构成的平台。这些模块被设计为松耦合，每个模块可以单独使用。
+框架主要分为4层：
+基础设施层：提供量化研究的底层支持 学习框架层：用于训练可训练模型，支持监督学习与强化学习两类 工作流层：覆盖量化研究的整个工作流 接口层：为用户提供友好的接口 </description>
+      </item>
+    
+      <item>
+        <title>快速开始</title>
+        <link>https://zqwang-cn.github.io/qlib-study-notes/quickstart/</link>
+        <pubDate>Tue, 21 Nov 2023 15:19:34 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/qlib-study-notes/quickstart/</guid>
+        <description>安装 使用pip安装最新的稳定版本： pip install pyqlib 如需使用最新的开发版本，可以从源码安装： # 安装依赖 pip install numpy pip install --upgrade cython # 下载源码并安装 git clone https://github.com/microsoft/qlib.git &amp;amp;&amp;amp; cd qlib pip install . 数据准备 Qlib提供了一个获取股票数据的脚本。该数据是通过爬虫从雅虎财经网站上获取的，质量较低。如需使用高质量数据，需要用户自行准备。
+通过python模块获取数据 # 获取日线数据 python -m qlib.run.get_data qlib_data --target_dir ~/.qlib/qlib_data/cn_data --region cn # 获取分钟线数据 python -m qlib.run.get_data qlib_data --target_dir ~/.qlib/qlib_data/cn_data_1min --region cn --interval 1min 通过代码获取数据 # 获取日线数据 python scripts/get_data.py qlib_data --target_dir ~/.qlib/qlib_data/cn_data --region cn # 获取分钟线数据 python scripts/get_data.py qlib_data --target_dir ~/.qlib/qlib_data/cn_data_1min --region cn --interval 1min 自动量化研究工作流 Qlib提供了一个工具程序qrun，可以根据配置文件自动运行整个工作流（包括建立数据集、训练模型、回测与评估），并得到图形报表分析。</description>
       </item>
     
       <item>
@@ -68,6 +91,19 @@ fn create_box() { // 在函数中申请堆上资源 let _box1 = Box::new(3i32); 
       </item>
     
       <item>
+        <title>基础 - 工作流</title>
+        <link>https://zqwang-cn.github.io/qlib-study-notes/workflow/</link>
+        <pubDate>Wed, 22 Nov 2023 10:08:34 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/qlib-study-notes/workflow/</guid>
+        <description>简介 Qlib中设计了很多模块/组件，在进行实验时需要将多个组件组成一个工作流。组成工作流的方式有两种：
+使用python代码将组件组合成工作流（例子) 使用Qlib提供的qrun程序，它可以根据配置文件自动运行整个工作流 一个完整的qrun工作流包括以下步骤：
+数据 加载 处理 切片 模型 训练与推理 保存与加载 评估 预测信号分析 回测 Qlib还有一套完整的记录系统用于记录训练、推理与评估阶段的所有信息与结果。
+完整例子 下面是qrun的一个典型的配置文件，定义了量化研究的典型工作流：
+qlib_init: provider_uri: &amp;#34;~/.qlib/qlib_data/cn_data&amp;#34; region: cn market: &amp;amp;market csi300 benchmark: &amp;amp;benchmark SH000300 data_handler_config: &amp;amp;data_handler_config start_time: 2008-01-01 end_time: 2020-08-01 fit_start_time: 2008-01-01 fit_end_time: 2014-12-31 instruments: *market port_analysis_config: &amp;amp;port_analysis_config strategy: class: TopkDropoutStrategy module_path: qlib.contrib.strategy.strategy kwargs: topk: 50 n_drop: 5 signal: &amp;lt;PRED&amp;gt; backtest: limit_threshold: 0.095 account: 100000000 benchmark: *benchmark deal_price: close open_cost: 0.0005 close_cost: 0.0015 min_cost: 5 task: model: class: LGBModel module_path: qlib.</description>
+      </item>
+    
+      <item>
         <title>函数对象与lambda表达式</title>
         <link>https://zqwang-cn.github.io/cpp-new-features/function-object-and-lambda-expression/</link>
         <pubDate>Mon, 05 Jun 2023 20:29:17 +0800</pubDate>
@@ -87,6 +123,25 @@ int main() { auto plus = [](int a, int b) { return a + b; }; int n = plus(11, 22
         <guid>https://zqwang-cn.github.io/rust-study-notes/control-flow/</guid>
         <description>分支语句（if-else） 分支语句if-else的用法基本与其它语言相同。
 // 单独使用if，使用if-else，或者使用if-else if-else等均可 if n &amp;lt; 0 { print!(&amp;#34;{} is negative&amp;#34;, n); } else if n &amp;gt; 0 { print!(&amp;#34;{} is positive&amp;#34;, n); } else { print!(&amp;#34;{} is zero&amp;#34;, n); } // if-else语句是表达式，可以作为值使用，但是所有分支的返回值类型必须相同 let big_n = if n &amp;lt; 10 &amp;amp;&amp;amp; n &amp;gt; -10 { println!(&amp;#34;, and is a small number, increase ten-fold&amp;#34;); 10 * n } else { println!(&amp;#34;, and is a big number, halve the number&amp;#34;); n / 2 }; 循环语句 无限循环（loop） 无限循环语句，只能使用break或return退出。</description>
+      </item>
+    
+      <item>
+        <title>基础 - 数据框架</title>
+        <link>https://zqwang-cn.github.io/qlib-study-notes/data-framework/</link>
+        <pubDate>Wed, 22 Nov 2023 11:48:12 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/qlib-study-notes/data-framework/</guid>
+        <description>简介 Qlib的数据框架提供了友好的API用于管理与检索数据，以及高性能的数据基础设施。它是专门为量化投资设计的，例如，用户可以轻松地建立公式化alpha。
+下面是使用Qlib数据工作流的一个典型的例子：
+下载基础数据并转换为Qlib格式（后缀名为.bin） 使用Qlib表达式引擎建立一些基本特征，例如Ref($close, 60) / $close表示最近60个交易日的回报率。这一步骤通常实现在数据处理器中的数据加载器组件内 如果用户需要更加复杂的数据处理（如数据归一化），数据处理器模块支持用户自定义处理器。处理器可以实现表达式引擎难以支持的复杂数据处理方法 基于预处理的数据生成模型所需的数据集 数据预处理 Qlib格式数据 Qlib专门设计了一种数据结构用于处理财务数据，此类数据被存储于.bin文件中。
+Qlib提供了两个现成的数据集：
+数据集 美国市场 中国市场 Alpha360 √ √ Alpha158 √ √ 同时Qlib也提供了一个高频数据集。
+Qlib格式数据集 Qlib提供脚本scripts/get_data.py用于下载数据集。使用如下命令下载中国市场股票数据集：
+# 下载日线数据 python scripts/get_data.py qlib_data --target_dir ~/.qlib/qlib_data/cn_data --region cn # 下载分钟线数据 python scripts/get_data.py qlib_data --target_dir ~/.qlib/qlib_data/qlib_cn_1min --region cn --interval 1min 也可以下载美国市场股票数据集：
+python scripts/get_data.py qlib_data --target_dir ~/.qlib/qlib_data/us_data --region us 运行上述命令后，中国市场与美国市场股票数据集分别保存于~/.qlib/qlib_data/cn_data和~/.qlib/qlib_data/us_data目录中。
+Qlib也提供一个脚本scripts/data_collector帮助用户爬取最新数据并转换为Qlib格式。
+自动更新数据 强烈建议用户先手动更新数据一次，之后设置为自动更新：
+手动更新数据 python scripts/data_collector/yahoo/collector.py update_data_to_bin --qlib_data_1d_dir &amp;lt;user data dir&amp;gt; --trading_date &amp;lt;start date&amp;gt; --end_date &amp;lt;end date&amp;gt; 其中参数trading_date为交易开始日期，end_date为交易结束日期（不包含）。</description>
       </item>
     
       <item>
@@ -116,6 +171,17 @@ fn do_twice(f: fn(i32) -&amp;gt; i32, arg: i32) -&amp;gt; i32 { f(arg) + f(arg) 
       </item>
     
       <item>
+        <title>基础 - 模型</title>
+        <link>https://zqwang-cn.github.io/qlib-study-notes/model/</link>
+        <pubDate>Thu, 23 Nov 2023 09:43:29 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/qlib-study-notes/model/</guid>
+        <description>简介 模型用于计算股票的预测分数。Qlib提供了基类Model，所有模型都必须继承它；另外还提供了基类ModelFT，包含了用于微调的方法。
+例子 Qlib的模型库中包含了LightGBM、MLP、LSTM等模型，它们被视为基线模型。下面的例子展示了如何将LightGBM作为独立模块使用：
+from qlib.contrib.model.gbdt import LGBModel from qlib.contrib.data.handler import Alpha158 from qlib.utils import init_instance_by_config, flatten_dict from qlib.workflow import R from qlib.workflow.record_temp import SignalRecord, PortAnaRecord market = &amp;#34;csi300&amp;#34; benchmark = &amp;#34;SH000300&amp;#34; data_handler_config = { &amp;#34;start_time&amp;#34;: &amp;#34;2008-01-01&amp;#34;, &amp;#34;end_time&amp;#34;: &amp;#34;2020-08-01&amp;#34;, &amp;#34;fit_start_time&amp;#34;: &amp;#34;2008-01-01&amp;#34;, &amp;#34;fit_end_time&amp;#34;: &amp;#34;2014-12-31&amp;#34;, &amp;#34;instruments&amp;#34;: market, } task = { &amp;#34;model&amp;#34;: { &amp;#34;class&amp;#34;: &amp;#34;LGBModel&amp;#34;, &amp;#34;module_path&amp;#34;: &amp;#34;qlib.contrib.model.gbdt&amp;#34;, &amp;#34;kwargs&amp;#34;: { &amp;#34;loss&amp;#34;: &amp;#34;mse&amp;#34;, &amp;#34;colsample_bytree&amp;#34;: 0.8879, &amp;#34;learning_rate&amp;#34;: 0.0421, &amp;#34;subsample&amp;#34;: 0.8789, &amp;#34;lambda_l1&amp;#34;: 205.6999, &amp;#34;lambda_l2&amp;#34;: 580.9768, &amp;#34;max_depth&amp;#34;: 8, &amp;#34;num_leaves&amp;#34;: 210, &amp;#34;num_threads&amp;#34;: 20, }, }, &amp;#34;dataset&amp;#34;: { &amp;#34;class&amp;#34;: &amp;#34;DatasetH&amp;#34;, &amp;#34;module_path&amp;#34;: &amp;#34;qlib.</description>
+      </item>
+    
+      <item>
         <title>类型推导</title>
         <link>https://zqwang-cn.github.io/cpp-new-features/type-deduction/</link>
         <pubDate>Tue, 06 Jun 2023 21:10:22 +0800</pubDate>
@@ -137,6 +203,23 @@ auto 变量名 初始化器; 基本用法 // 通用初始化语法 auto a{42}; /
       </item>
     
       <item>
+        <title>基础 - 投资组合策略</title>
+        <link>https://zqwang-cn.github.io/qlib-study-notes/portfolio-strategy/</link>
+        <pubDate>Thu, 23 Nov 2023 10:39:32 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/qlib-study-notes/portfolio-strategy/</guid>
+        <description>简介 投资组合策略可以根据模型的预测分数生成投资组合。Qlib提供了一些已实现的投资组合策略，同时也支持用户根据需要进行自定义。在确定了模型（预测信号）与策略后，运行回测可以检查它们的性能。
+基类 BaseStrategy 此类是所有策略类的基类，用户可以继承此类并实现其接口以添加自定义策略。其接口有：
+generate_trade_decision：一个关键接口，用于在每个交易周期生成交易决策。其调用频率取决于执行器，但是实际交易频率可以由用户代码控制 WeightStrategyBase 此类只专注于目标仓位，并基于仓位自动生成订单。其接口有：
+generate_target_weight_position 根据当前仓位与交易日期生成目标仓位（不考虑现金） 返回目标仓位（所有资产的百分比） 该类按照如下方式实现了generate_order_list接口：
+调用generate_target_weight_position方法生成目标仓位 根据目标仓位生成股票的目标数量 根据股票的目标数量生成订单 已实现的策略 TopkDropoutStrategy 该类按照如下方式实现了generate_order_list接口：
+执行Topk-Drop算法计算每支股票的目标数量 根据股票的目标数量生成订单 EnhancedIndexingStrategy 该策略将主动管理与被动管理相结合，目标是在控制风险敞口的同时取得超出基准指数的收益。
+例子 预测分数 预测分数是一个pandas的DataFrame对象，它的索引是&amp;lt;datetime(pd.Timestamp), instrument(str)&amp;gt;且必须包含分数列。一个例子如下：
+datetime instrument score 2019-01-04 SH600000 -0.505488 2019-01-04 SZ002531 -0.320391 2019-01-04 SZ000999 0.583808 2019-01-04 SZ300569 0.819628 2019-01-04 SZ001696 -0.137140 ... ... 2019-04-30 SZ000996 -1.027618 2019-04-30 SH603127 0.225677 2019-04-30 SH603126 0.462443 2019-04-30 SH603133 -0.302460 2019-04-30 SZ300760 -0.126383 注意预测分数不一定是收益率，不同模型有不同的定义。
+运行回测 大多数情况下，用户可以使用backtest_daily回测他们的投资组合策略： from pprint import pprint import qlib import pandas as pd from qlib.</description>
+      </item>
+    
+      <item>
         <title>const与constexpr</title>
         <link>https://zqwang-cn.github.io/cpp-new-features/const-and-constexpr/</link>
         <pubDate>Wed, 07 Jun 2023 01:08:48 +0800</pubDate>
@@ -154,6 +237,24 @@ auto 变量名 初始化器; 基本用法 // 通用初始化语法 auto a{42}; /
         <guid>https://zqwang-cn.github.io/rust-study-notes/generics/</guid>
         <description>泛型是用于编写功能确定，类型待定的代码模板的机制，可以有效减少代码冗余。类似于C++中的模板。
 在函数中使用 // 定义一个使用泛型的函数 fn foo&amp;lt;T&amp;gt;(arg: T) { ... } // 编译器自动识别T为i32 foo(1); // 编译器自动识别T为&amp;amp;str foo(&amp;#34;string&amp;#34;); // 手动设置T为i32 foo::&amp;lt;i32&amp;gt;(1); 在结构体中使用 // 定义一个使用泛型的结构体 struct Point&amp;lt;T&amp;gt; { x: T, y: T, } // 自动识别T为i32 let integer = Point { x: 5, y: 10 }; // 自动识别T为f64 let float = Point { x: 1.0, y: 4.0 }; // 错误，x与y必须具有相同的类型 let wont_work = Point { x: 5, y: 4.0 }; // 手动设置T为u8 let uint8 = Point::&amp;lt;u8&amp;gt; { x: 1, y: 2 }; 在枚举中使用 std库中的Option与Result是非常常用的使用了泛型的枚举结构。</description>
+      </item>
+    
+      <item>
+        <title>基础 - 实验管理系统</title>
+        <link>https://zqwang-cn.github.io/qlib-study-notes/experiment-management/</link>
+        <pubDate>Thu, 23 Nov 2023 14:44:47 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/qlib-study-notes/experiment-management/</guid>
+        <description>简介 Qlib包含一个实验管理系统，名为QlibRecorder，它可以帮助用户高效地管理实验与分析结果。该系统有三个组件：
+实验管理器：用于管理实验 实验：每个实例代表一个实验 记录器：每个实例负责记录一次实验运行 该系统定义了一系列接口，还提供了一个具体的实现MLflowExpManager，该实现基于机器学习平台MLFlow。如果用户使用了该实现，则可以使用命令mlflow ui来可视化与检查实验结果。
+QlibRecorder QlibRecorder为用户提供了一套高级API来使用实验管理系统，该接口被封装为R，用户可以直接使用R与系统交互。导入R的代码如下：
+from qlib.workflow import R QlibRecorder还包括一些公用API用来在工作流中管理实验与记录器。
+实验管理器 ExpManager ExpManager模块负责管理不同的实验，大部分API与QlibRecorder相同，其中最重要的API是get_exp方法。
+实验 Experiment Experiment类负责处理与一个实验相关的所有操作，其中包括开始、结束实验等基本方法，以及与记录器相关的方法，如get_recorder和list_recorders。
+Qlib提供了一个默认的实验，在某些特定情况下，如用户调用log_metrics或get_exp等API时，该实验被自动创建并使用。如果使用默认实验，则会产生相关的日志信息。用户可以在配置文件中或初始化时修改默认实验的名称。
+记录器 Recorder Recorder类负责在一次实验运行中帮助用户方便地跟踪实验结果以及生成的其它信息。
+记录模板 RecordTemp RecordTemp类用于按照指定格式生成实验结果。Qlib提供了三个记录模板类：
+SignalRecord：生成模型的预测结果 SigAnaRecord：生成模型的IC/ICIR/Rank IC/Rank ICIR from qlib.contrib.eva.alpha import calc_ic, calc_long_short_return ic, ric = calc_ic(pred.iloc[:, 0], label.iloc[:, 0]) long_short_r, long_avg_r = calc_long_short_return(pred.iloc[:, 0], label.iloc[:, 0]) PortAnaRecord：生成回测结果 from qlib.contrib.strategy.strategy import TopkDropoutStrategy from qlib.contrib.evaluate import ( backtest as normal_backtest, risk_analysis, ) # 回测 STRATEGY_CONFIG = { &amp;#34;topk&amp;#34;: 50, &amp;#34;n_drop&amp;#34;: 5, } BACKTEST_CONFIG = { &amp;#34;limit_threshold&amp;#34;: 0.</description>
       </item>
     
       <item>
@@ -182,6 +283,17 @@ enum { a, b, c = 0, d = a + 2 }; 使用无作用域枚举可能产生以下问�
 定义特性 // 定义一个特性，无需实现 pub trait Summary { fn summarize(&amp;amp;self) -&amp;gt; String; } // 定义特性时可以提供默认实现 pub trait Summary { fn summarize(&amp;amp;self) -&amp;gt; String { String::from(&amp;#34;(Read more...)&amp;#34;) } } 实现特性 特性必须为某个类型实现，可以认为是为这个类型添加了相应的方法。
 impl Summary for NewsArticle { fn summarize(&amp;amp;self) -&amp;gt; String { format!(&amp;#34;{}, by {} ({})&amp;#34;, self.headline, self.author, self.location) } } 使用impl Trait impl Trait是一个语法糖，它相当于在泛型函数中使用泛型范围（trait bound）。可以将impl Trait作为函数的输入参数或者返回值，使代码更简洁易读，但是需要注意此时的函数是静态泛型函数，并不能动态接收或返回不同的类型。
 作为输入参数 // 使用impl Trait作为输入参数 pub fn notify(item: &amp;amp;impl Summary) { println!(&amp;#34;Breaking news! {}&amp;#34;, item.summarize()); } // 使用+表示参数需要实现多个特性 pub fn notify(item: &amp;amp;(impl Summary + Display)) {} 作为返回值 // 使用impl Trait作为返回值 fn returns_summarizable() -&amp;gt; impl Summary {} 使用dyn返回实现特性的动态类型 Rust编译器必须知道函数返回值占用空间的大小，但是对于同样一个特性，不同的实现类型占用空间不同，因此不能直接将特性作为返回值。但是，可以通过返回一个Box指向一个实现特性的变量来解决这一问题。由于Box大小确定，因此这是可行的。由于Rust要求在堆上分配内存时必须显示说明，因此这种情况下需要使用dyn关键字。</description>
+      </item>
+    
+      <item>
+        <title>基础 - 图形分析</title>
+        <link>https://zqwang-cn.github.io/qlib-study-notes/analysis/</link>
+        <pubDate>Thu, 23 Nov 2023 16:01:57 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/qlib-study-notes/analysis/</guid>
+        <description> 简介 本模块用于展示日内交易的图形报表，从而帮助用户从视觉上评估与分析投资组合。下面是一些可用报表：
+analysis_position：仓位分析 report_graph：回测报表 score_ic_graph：分数IC报表 cumulative_return_graph：累积回报率报表 risk_analysis_graph：风险分析报表 rank_label_graph：排名标签报表 analysis_model：模型分析 model_performance_graph：模型性能报表 所有图形报表 使用如下代码获取所有支持的报表：
+&amp;gt;&amp;gt; import qlib.contrib.report as qcr &amp;gt;&amp;gt; print(qcr.GRAPH_NAME_LIST) [&amp;#39;analysis_position.report_graph&amp;#39;, &amp;#39;analysis_position.score_ic_graph&amp;#39;, &amp;#39;analysis_position.cumulative_return_graph&amp;#39;, &amp;#39;analysis_position.risk_analysis_graph&amp;#39;, &amp;#39;analysis_position.rank_label_graph&amp;#39;, &amp;#39;analysis_model.model_performance_graph&amp;#39;] </description>
       </item>
     
       <item>

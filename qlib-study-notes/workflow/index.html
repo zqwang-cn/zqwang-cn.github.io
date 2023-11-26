@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+  <head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo 0.120.4">
+<meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
+
+
+<title>基础 - 工作流 | Wang&#39;s blog</title>
+
+<meta name="author" content="zqwang">
+
+
+
+<meta name="robots" content="index follow">
+
+
+
+
+  
+    <link rel="canonical" href="https://zqwang-cn.github.io/qlib-study-notes/workflow/">
+  
+
+
+
+
+
+
+
+
+<meta property="og:site_name" content="Wang&#39;s blog">
+<meta property="og:title" content="基础 - 工作流">
+
+  <meta property="og:url" content="https://zqwang-cn.github.io/qlib-study-notes/workflow/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:type" content="website">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="theme-color" content="#222">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://zqwang-cn.github.io/",
+      "inLanguage": "en",
+      "name": "Wang's blog",
+      "description": "Wang's blog",
+      "publisher": "zqwang"
+    }
+  </script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://zqwang-cn.github.io/css/main.min.c166fa5a48e8b326dc193e5c2ea65b6f96720911149d941bddb3b0b8eff62af3.css" integrity="sha256-wWb6WkjosybcGT5cLqZbb5ZyCREUnZQb3bOwuO/2KvM=" crossorigin="anonymous">
+
+
+
+<noscript>
+
+  
+  
+
+  
+    <meta name="theme-color" content="#1dbc91" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1f676b" media="(prefers-color-scheme: light)">
+  
+
+  
+  <link rel="stylesheet" href="https://zqwang-cn.github.io/css/noscript.min.3f3b95436b19eaeb9223fb12c0b86737d53ee0a47fdba271a886c244bc03975c.css" integrity="sha256-PzuVQ2sZ6uuSI/sSwLhnN9U&#43;4KR/26JxqIbCRLwDl1w=" crossorigin="anonymous">
+
+</noscript>
+
+
+
+<link rel="preload" href="/fonts/open-sans-v34-latin-700.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-italic.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-regular.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/oswald-v29-latin-700.woff2" as="font" crossorigin="anonymous">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="https://zqwang-cn.github.io/js/main.f1da21dfea83dc0c36cea0b202c14a97e00aedab567e32702eb120f5ab8d974b.js" integrity="sha256-8doh3&#43;qD3Aw2zqCyAsFKl&#43;AK7atWfjJwLrEg9auNl0s=" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body>
+
+    <header>
+      
+
+  <a href="/">Wang&#39;s blog</a>
+
+
+
+
+  
+    <nav aria-label="Main menu.">
+      <ul>
+        
+          <li>
+            <a class="btn" href="/">Home</a>
+          </li>
+        
+      </ul>
+    </nav>
+  
+
+
+    </header>
+
+    <div class="filler">
+      
+
+  <main>
+    <article>
+      <header>
+        
+        <h1>基础 - 工作流</h1>
+
+        
+          <div class="terms">
+            <ul><li><a class="btn" href="/tags/qlib/">Qlib</a></li></ul>
+          </div>
+          <p>
+            
+              Published on <time datetime="2023-11-22">2023-11-22</time>
+            
+          </p>
+        
+        
+        
+        
+      </header>
+    
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="简介"><a class="anchor" href="#简介" title='Anchor for: 简介.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 简介</h2> 
+
+<p>Qlib中设计了很多模块/组件，在进行实验时需要将多个组件组成一个工作流。组成工作流的方式有两种：</p>
+<ul>
+<li>使用python代码将组件组合成工作流（<a href="https://github.com/microsoft/qlib/blob/main/examples/workflow_by_code.py">例子</a>)</li>
+<li>使用Qlib提供的<code>qrun</code>程序，它可以根据配置文件自动运行整个工作流</li>
+</ul>
+<p>一个完整的<code>qrun</code>工作流包括以下步骤：</p>
+<ul>
+<li>数据
+<ul>
+<li>加载</li>
+<li>处理</li>
+<li>切片</li>
+</ul>
+</li>
+<li>模型
+<ul>
+<li>训练与推理</li>
+<li>保存与加载</li>
+</ul>
+</li>
+<li>评估
+<ul>
+<li>预测信号分析</li>
+<li>回测</li>
+</ul>
+</li>
+</ul>
+<p>Qlib还有一套完整的记录系统用于记录训练、推理与评估阶段的所有信息与结果。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="完整例子"><a class="anchor" href="#完整例子" title='Anchor for: 完整例子.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 完整例子</h2> 
+
+<p>下面是<code>qrun</code>的一个典型的配置文件，定义了量化研究的典型工作流：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">qlib_init</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">provider_uri</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;~/.qlib/qlib_data/cn_data&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="l">cn</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">market</span><span class="p">:</span><span class="w"> </span><span class="cp">&amp;market</span><span class="w"> </span><span class="l">csi300</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">benchmark</span><span class="p">:</span><span class="w"> </span><span class="cp">&amp;benchmark</span><span class="w"> </span><span class="l">SH000300</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">data_handler_config</span><span class="p">:</span><span class="w"> </span><span class="cp">&amp;data_handler_config</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">start_time</span><span class="p">:</span><span class="w"> </span><span class="ld">2008-01-01</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">end_time</span><span class="p">:</span><span class="w"> </span><span class="ld">2020-08-01</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">fit_start_time</span><span class="p">:</span><span class="w"> </span><span class="ld">2008-01-01</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">fit_end_time</span><span class="p">:</span><span class="w"> </span><span class="ld">2014-12-31</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">instruments</span><span class="p">:</span><span class="w"> </span><span class="cp">*market</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">port_analysis_config</span><span class="p">:</span><span class="w"> </span><span class="cp">&amp;port_analysis_config</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">strategy</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">TopkDropoutStrategy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.contrib.strategy.strategy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">kwargs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">topk</span><span class="p">:</span><span class="w"> </span><span class="m">50</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">n_drop</span><span class="p">:</span><span class="w"> </span><span class="m">5</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">signal</span><span class="p">:</span><span class="w"> </span><span class="l">&lt;PRED&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">backtest</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">limit_threshold</span><span class="p">:</span><span class="w"> </span><span class="m">0.095</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">account</span><span class="p">:</span><span class="w"> </span><span class="m">100000000</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">benchmark</span><span class="p">:</span><span class="w"> </span><span class="cp">*benchmark</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">deal_price</span><span class="p">:</span><span class="w"> </span><span class="l">close</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">open_cost</span><span class="p">:</span><span class="w"> </span><span class="m">0.0005</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">close_cost</span><span class="p">:</span><span class="w"> </span><span class="m">0.0015</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">min_cost</span><span class="p">:</span><span class="w"> </span><span class="m">5</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">task</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">LGBModel</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.contrib.model.gbdt</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">kwargs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">loss</span><span class="p">:</span><span class="w"> </span><span class="l">mse</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">colsample_bytree</span><span class="p">:</span><span class="w"> </span><span class="m">0.8879</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">learning_rate</span><span class="p">:</span><span class="w"> </span><span class="m">0.0421</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">subsample</span><span class="p">:</span><span class="w"> </span><span class="m">0.8789</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">lambda_l1</span><span class="p">:</span><span class="w"> </span><span class="m">205.6999</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">lambda_l2</span><span class="p">:</span><span class="w"> </span><span class="m">580.9768</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">max_depth</span><span class="p">:</span><span class="w"> </span><span class="m">8</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">num_leaves</span><span class="p">:</span><span class="w"> </span><span class="m">210</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">num_threads</span><span class="p">:</span><span class="w"> </span><span class="m">20</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">dataset</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">DatasetH</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.data.dataset</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">kwargs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">handler</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">Alpha158</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.contrib.data.handler</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="nt">kwargs</span><span class="p">:</span><span class="w"> </span><span class="cp">*data_handler_config</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">segments</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="nt">train</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="ld">2008-01-01</span><span class="p">,</span><span class="w"> </span><span class="ld">2014-12-31</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="nt">valid</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="ld">2015-01-01</span><span class="p">,</span><span class="w"> </span><span class="ld">2016-12-31</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="nt">test</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="ld">2017-01-01</span><span class="p">,</span><span class="w"> </span><span class="ld">2020-08-01</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">record</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>- <span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">SignalRecord</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.workflow.record_temp</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">kwargs</span><span class="p">:</span><span class="w"> </span>{}<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>- <span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">PortAnaRecord</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.workflow.record_temp</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">kwargs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">              </span><span class="nt">config</span><span class="p">:</span><span class="w"> </span><span class="cp">*port_analysis_config</span><span class="w">
+</span></span></span></code></pre></div><p>将该配置保存为configuration.yaml文件后，可以使用如下命令运行工作流：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">qrun configuration.yaml
+</span></span></code></pre></div><p>如需使用debug模式运行，使用如下命令：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python -m pdb qlib/workflow/cli.py configuration.yaml
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h2 id="配置文件说明"><a class="anchor" href="#配置文件说明" title='Anchor for: 配置文件说明.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 配置文件说明</h2> 
+
+<p>配置文件的设计逻辑非常简单：它预定义了固定的工作流，并通过配置文件定义如何初始化每个组件。配置中通常包括类名与初始化参数，可以转换为等价的python代码。例如，下面的配置与代码是等价的：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">model</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">LGBModel</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.contrib.model.gbdt</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">kwargs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">loss</span><span class="p">:</span><span class="w"> </span><span class="l">mse</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">colsample_bytree</span><span class="p">:</span><span class="w"> </span><span class="m">0.8879</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">learning_rate</span><span class="p">:</span><span class="w"> </span><span class="m">0.0421</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">subsample</span><span class="p">:</span><span class="w"> </span><span class="m">0.8789</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">lambda_l1</span><span class="p">:</span><span class="w"> </span><span class="m">205.6999</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">lambda_l2</span><span class="p">:</span><span class="w"> </span><span class="m">580.9768</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">max_depth</span><span class="p">:</span><span class="w"> </span><span class="m">8</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">num_leaves</span><span class="p">:</span><span class="w"> </span><span class="m">210</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">num_threads</span><span class="p">:</span><span class="w"> </span><span class="m">20</span><span class="w">
+</span></span></span></code></pre></div><div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.contrib.model.gbdt</span> <span class="kn">import</span> <span class="n">LGBModel</span>
+</span></span><span class="line"><span class="cl"><span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;loss&#34;</span><span class="p">:</span> <span class="s2">&#34;mse&#34;</span> <span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;colsample_bytree&#34;</span><span class="p">:</span> <span class="mf">0.8879</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;learning_rate&#34;</span><span class="p">:</span> <span class="mf">0.0421</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;subsample&#34;</span><span class="p">:</span> <span class="mf">0.8789</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;lambda_l1&#34;</span><span class="p">:</span> <span class="mf">205.6999</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;lambda_l2&#34;</span><span class="p">:</span> <span class="mf">580.9768</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;max_depth&#34;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;num_leaves&#34;</span><span class="p">:</span> <span class="mi">210</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;num_threads&#34;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">LGBModel</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h3 id="初始化部分"><a class="anchor" href="#初始化部分" title='Anchor for: 初始化部分.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 初始化部分</h3> 
+
+<p>配置文件中首先需要包含一些基本参数用于初始化Qlib：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">provider_uri</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;~/.qlib/qlib_data/cn_data&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="l">cn</span><span class="w">
+</span></span></span></code></pre></div><p>字段含义：</p>
+<ul>
+<li>provider_uri：数据地址。例如可以为使用<code>get_data.py</code>下载的数据路径</li>
+<li>region：可为<code>us</code>或<code>cn</code>，表示使用美国股票模式还是中国股票模式</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h3 id="任务部分"><a class="anchor" href="#任务部分" title='Anchor for: 任务部分.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 任务部分</h3> 
+
+<p>此部分对应一个任务，包含模型、数据集、记录三个子部分。</p>
+
+
+
+
+
+
+
+
+
+  <h4 id="模型部分"><a class="anchor" href="#模型部分" title='Anchor for: 模型部分.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 模型部分</h4> 
+
+<p>此部分定义了用于训练和推理的模型参数：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">model</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">LGBModel</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.contrib.model.gbdt</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">kwargs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">loss</span><span class="p">:</span><span class="w"> </span><span class="l">mse</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">colsample_bytree</span><span class="p">:</span><span class="w"> </span><span class="m">0.8879</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">learning_rate</span><span class="p">:</span><span class="w"> </span><span class="m">0.0421</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">subsample</span><span class="p">:</span><span class="w"> </span><span class="m">0.8789</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">lambda_l1</span><span class="p">:</span><span class="w"> </span><span class="m">205.6999</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">lambda_l2</span><span class="p">:</span><span class="w"> </span><span class="m">580.9768</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">max_depth</span><span class="p">:</span><span class="w"> </span><span class="m">8</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">num_leaves</span><span class="p">:</span><span class="w"> </span><span class="m">210</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">num_threads</span><span class="p">:</span><span class="w"> </span><span class="m">20</span><span class="w">
+</span></span></span></code></pre></div><p>字段含义：</p>
+<ul>
+<li>class：模型类名</li>
+<li>module_path：模型类在Qlib库中的路径</li>
+<li>kwargs：模型的关键词参数。具体内容与模型的实现有关</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h4 id="数据集部分"><a class="anchor" href="#数据集部分" title='Anchor for: 数据集部分.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 数据集部分</h4> 
+
+<p>此部分定义数据集模块与数据处理器模块的参数。</p>
+<p>数据处理器模块的关键词参数：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">data_handler_config</span><span class="p">:</span><span class="w"> </span><span class="cp">&amp;data_handler_config</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">start_time</span><span class="p">:</span><span class="w"> </span><span class="ld">2008-01-01</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">end_time</span><span class="p">:</span><span class="w"> </span><span class="ld">2020-08-01</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">fit_start_time</span><span class="p">:</span><span class="w"> </span><span class="ld">2008-01-01</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">fit_end_time</span><span class="p">:</span><span class="w"> </span><span class="ld">2014-12-31</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">instruments</span><span class="p">:</span><span class="w"> </span><span class="cp">*market</span><span class="w">
+</span></span></span></code></pre></div><p>数据集模块负责进行训练与测试阶段的数据预处理与切片：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">dataset</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">DatasetH</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.data.dataset</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">kwargs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">handler</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">Alpha158</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.contrib.data.handler</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">kwargs</span><span class="p">:</span><span class="w"> </span><span class="cp">*data_handler_config</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">segments</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">train</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="ld">2008-01-01</span><span class="p">,</span><span class="w"> </span><span class="ld">2014-12-31</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">valid</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="ld">2015-01-01</span><span class="p">,</span><span class="w"> </span><span class="ld">2016-12-31</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">test</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="ld">2017-01-01</span><span class="p">,</span><span class="w"> </span><span class="ld">2020-08-01</span><span class="p">]</span><span class="w">
+</span></span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h4 id="记录部分"><a class="anchor" href="#记录部分" title='Anchor for: 记录部分.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 记录部分</h4> 
+
+<p>此部分定义记录模块的参数，该模块负责使用标准格式记录训练的过程与结果（信息系数与回测结果等）。</p>
+<p>下面是回测及策略的配置：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">port_analysis_config</span><span class="p">:</span><span class="w"> </span><span class="cp">&amp;port_analysis_config</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">strategy</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">TopkDropoutStrategy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.contrib.strategy.strategy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">kwargs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">topk</span><span class="p">:</span><span class="w"> </span><span class="m">50</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">n_drop</span><span class="p">:</span><span class="w"> </span><span class="m">5</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">signal</span><span class="p">:</span><span class="w"> </span><span class="l">&lt;PRED&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">backtest</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">limit_threshold</span><span class="p">:</span><span class="w"> </span><span class="m">0.095</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">account</span><span class="p">:</span><span class="w"> </span><span class="m">100000000</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">benchmark</span><span class="p">:</span><span class="w"> </span><span class="cp">*benchmark</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">deal_price</span><span class="p">:</span><span class="w"> </span><span class="l">close</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">open_cost</span><span class="p">:</span><span class="w"> </span><span class="m">0.0005</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">close_cost</span><span class="p">:</span><span class="w"> </span><span class="m">0.0015</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">min_cost</span><span class="p">:</span><span class="w"> </span><span class="m">5</span><span class="w">
+</span></span></span></code></pre></div><p>下面是不同记录模板如<code>SignalRecord</code>和<code>PortAnaRecord</code>的配置细节：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">record</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">SignalRecord</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.workflow.record_temp</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">kwargs</span><span class="p">:</span><span class="w"> </span>{}<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">PortAnaRecord</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.workflow.record_temp</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">kwargs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">config</span><span class="p">:</span><span class="w"> </span><span class="cp">*port_analysis_config</span><span class="w">
+</span></span></span></code></pre></div>
+
+
+    </article>
+  </main>
+
+
+    </div>
+    
+    <footer>
+      
+
+
+  
+
+    
+
+    
+      
+      
+    
+    
+    &lt;p&gt;Generated with &lt;a href=&#34;https://gohugo.io&#34;&gt;Hugo&lt;/a&gt; using the &lt;a href=&#34;https://gitlab.com/rmaguiar/hugo-theme-color-your-world&#34;&gt;Color Your World&lt;/a&gt; theme.&lt;/p&gt;
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="req-js">
+  <button class="outline-dashed" title="Change to light/dark mode."><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="#1dbc91" title="Change accent color." aria-label="Change accent color."><datalist id="presets"><option value="#1f676b"><option value="#1dbc91"><option value="#225670"><option value="#dd587c"><option value="#902b37"><option value="#f3a530"><option value="#754e85"><option value="#7fc121"><option value="#a8314a"><option value="#ff7433"><option value="#3e6728"><option value="#c063bd"><option value="#805080"><option value="#9d629d"><option value="#a064a0"><option value="#7daa50"><option value="#284531"><option value="#285790"><option value="#F5A83D"><option value="#88aa33"><option value="#015660"><option value="#bf274e"><option value="#bf4242"><option value="#51b37c"></datalist>
+</div>
+
+
+
+  <noscript>
+    <p class="noscript">Unable to execute JavaScript. Some features were disabled.</p>
+  </noscript>
+
+
+
+    </footer>
+    
+    
+    
+
+    
+    
+
+  </body>
+</html>

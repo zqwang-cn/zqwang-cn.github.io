@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+  <head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo 0.120.4">
+<meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
+
+
+<title>基础 - 实验管理系统 | Wang&#39;s blog</title>
+
+<meta name="author" content="zqwang">
+
+
+
+<meta name="robots" content="index follow">
+
+
+
+
+  
+    <link rel="canonical" href="https://zqwang-cn.github.io/qlib-study-notes/experiment-management/">
+  
+
+
+
+
+
+
+
+
+<meta property="og:site_name" content="Wang&#39;s blog">
+<meta property="og:title" content="基础 - 实验管理系统">
+
+  <meta property="og:url" content="https://zqwang-cn.github.io/qlib-study-notes/experiment-management/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:type" content="website">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="theme-color" content="#222">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://zqwang-cn.github.io/",
+      "inLanguage": "en",
+      "name": "Wang's blog",
+      "description": "Wang's blog",
+      "publisher": "zqwang"
+    }
+  </script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://zqwang-cn.github.io/css/main.min.c166fa5a48e8b326dc193e5c2ea65b6f96720911149d941bddb3b0b8eff62af3.css" integrity="sha256-wWb6WkjosybcGT5cLqZbb5ZyCREUnZQb3bOwuO/2KvM=" crossorigin="anonymous">
+
+
+
+<noscript>
+
+  
+  
+
+  
+    <meta name="theme-color" content="#1dbc91" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1f676b" media="(prefers-color-scheme: light)">
+  
+
+  
+  <link rel="stylesheet" href="https://zqwang-cn.github.io/css/noscript.min.3f3b95436b19eaeb9223fb12c0b86737d53ee0a47fdba271a886c244bc03975c.css" integrity="sha256-PzuVQ2sZ6uuSI/sSwLhnN9U&#43;4KR/26JxqIbCRLwDl1w=" crossorigin="anonymous">
+
+</noscript>
+
+
+
+<link rel="preload" href="/fonts/open-sans-v34-latin-700.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-italic.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-regular.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/oswald-v29-latin-700.woff2" as="font" crossorigin="anonymous">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="https://zqwang-cn.github.io/js/main.f1da21dfea83dc0c36cea0b202c14a97e00aedab567e32702eb120f5ab8d974b.js" integrity="sha256-8doh3&#43;qD3Aw2zqCyAsFKl&#43;AK7atWfjJwLrEg9auNl0s=" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body>
+
+    <header>
+      
+
+  <a href="/">Wang&#39;s blog</a>
+
+
+
+
+  
+    <nav aria-label="Main menu.">
+      <ul>
+        
+          <li>
+            <a class="btn" href="/">Home</a>
+          </li>
+        
+      </ul>
+    </nav>
+  
+
+
+    </header>
+
+    <div class="filler">
+      
+
+  <main>
+    <article>
+      <header>
+        
+        <h1>基础 - 实验管理系统</h1>
+
+        
+          <div class="terms">
+            <ul><li><a class="btn" href="/tags/qlib/">Qlib</a></li></ul>
+          </div>
+          <p>
+            
+              Published on <time datetime="2023-11-23">2023-11-23</time>
+            
+          </p>
+        
+        
+        
+        
+      </header>
+    
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="简介"><a class="anchor" href="#简介" title='Anchor for: 简介.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 简介</h2> 
+
+<p>Qlib包含一个实验管理系统，名为<code>QlibRecorder</code>，它可以帮助用户高效地管理实验与分析结果。该系统有三个组件：</p>
+<ul>
+<li>实验管理器：用于管理实验</li>
+<li>实验：每个实例代表一个实验</li>
+<li>记录器：每个实例负责记录一次实验运行</li>
+</ul>
+<p>该系统定义了一系列接口，还提供了一个具体的实现<code>MLflowExpManager</code>，该实现基于机器学习平台<a href="https://mlflow.org/">MLFlow</a>。如果用户使用了该实现，则可以使用命令<code>mlflow ui</code>来可视化与检查实验结果。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="qlibrecorder"><a class="anchor" href="#qlibrecorder" title='Anchor for: QlibRecorder.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> QlibRecorder</h2> 
+
+<p><code>QlibRecorder</code>为用户提供了一套高级API来使用实验管理系统，该接口被封装为<code>R</code>，用户可以直接使用<code>R</code>与系统交互。导入<code>R</code>的代码如下：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.workflow</span> <span class="kn">import</span> <span class="n">R</span>
+</span></span></code></pre></div><p><code>QlibRecorder</code>还包括一些公用API用来在工作流中管理实验与记录器。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="实验管理器-expmanager"><a class="anchor" href="#实验管理器-expmanager" title='Anchor for: 实验管理器 ExpManager.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 实验管理器 ExpManager</h2> 
+
+<p><code>ExpManager</code>模块负责管理不同的实验，大部分API与<code>QlibRecorder</code>相同，其中最重要的API是<code>get_exp</code>方法。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="实验-experiment"><a class="anchor" href="#实验-experiment" title='Anchor for: 实验 Experiment.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 实验 Experiment</h2> 
+
+<p><code>Experiment</code>类负责处理与一个实验相关的所有操作，其中包括开始、结束实验等基本方法，以及与记录器相关的方法，如<code>get_recorder</code>和<code>list_recorders</code>。</p>
+<p>Qlib提供了一个默认的实验，在某些特定情况下，如用户调用<code>log_metrics</code>或<code>get_exp</code>等API时，该实验被自动创建并使用。如果使用默认实验，则会产生相关的日志信息。用户可以在配置文件中或初始化时修改默认实验的名称。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="记录器-recorder"><a class="anchor" href="#记录器-recorder" title='Anchor for: 记录器 Recorder.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 记录器 Recorder</h2> 
+
+<p><code>Recorder</code>类负责在一次实验运行中帮助用户方便地跟踪实验结果以及生成的其它信息。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="记录模板-recordtemp"><a class="anchor" href="#记录模板-recordtemp" title='Anchor for: 记录模板 RecordTemp.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 记录模板 RecordTemp</h2> 
+
+<p><code>RecordTemp</code>类用于按照指定格式生成实验结果。Qlib提供了三个记录模板类：</p>
+<ul>
+<li>SignalRecord：生成模型的预测结果</li>
+<li>SigAnaRecord：生成模型的IC/ICIR/Rank IC/Rank ICIR</li>
+</ul>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.contrib.eva.alpha</span> <span class="kn">import</span> <span class="n">calc_ic</span><span class="p">,</span> <span class="n">calc_long_short_return</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">ic</span><span class="p">,</span> <span class="n">ric</span> <span class="o">=</span> <span class="n">calc_ic</span><span class="p">(</span><span class="n">pred</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">long_short_r</span><span class="p">,</span> <span class="n">long_avg_r</span> <span class="o">=</span> <span class="n">calc_long_short_return</span><span class="p">(</span><span class="n">pred</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+</span></span></code></pre></div><ul>
+<li>PortAnaRecord：生成回测结果</li>
+</ul>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.contrib.strategy.strategy</span> <span class="kn">import</span> <span class="n">TopkDropoutStrategy</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.contrib.evaluate</span> <span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">backtest</span> <span class="k">as</span> <span class="n">normal_backtest</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">risk_analysis</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 回测</span>
+</span></span><span class="line"><span class="cl"><span class="n">STRATEGY_CONFIG</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;topk&#34;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;n_drop&#34;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">BACKTEST_CONFIG</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;limit_threshold&#34;</span><span class="p">:</span> <span class="mf">0.095</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;account&#34;</span><span class="p">:</span> <span class="mi">100000000</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;benchmark&#34;</span><span class="p">:</span> <span class="n">BENCHMARK</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;deal_price&#34;</span><span class="p">:</span> <span class="s2">&#34;close&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;open_cost&#34;</span><span class="p">:</span> <span class="mf">0.0005</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;close_cost&#34;</span><span class="p">:</span> <span class="mf">0.0015</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;min_cost&#34;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">strategy</span> <span class="o">=</span> <span class="n">TopkDropoutStrategy</span><span class="p">(</span><span class="o">**</span><span class="n">STRATEGY_CONFIG</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">report_normal</span><span class="p">,</span> <span class="n">positions_normal</span> <span class="o">=</span> <span class="n">normal_backtest</span><span class="p">(</span><span class="n">pred_score</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="n">strategy</span><span class="p">,</span> <span class="o">**</span><span class="n">BACKTEST_CONFIG</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 分析</span>
+</span></span><span class="line"><span class="cl"><span class="n">analysis</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">analysis</span><span class="p">[</span><span class="s2">&#34;excess_return_without_cost&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">risk_analysis</span><span class="p">(</span><span class="n">report_normal</span><span class="p">[</span><span class="s2">&#34;return&#34;</span><span class="p">]</span> <span class="o">-</span> <span class="n">report_normal</span><span class="p">[</span><span class="s2">&#34;bench&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">analysis</span><span class="p">[</span><span class="s2">&#34;excess_return_with_cost&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">risk_analysis</span><span class="p">(</span><span class="n">report_normal</span><span class="p">[</span><span class="s2">&#34;return&#34;</span><span class="p">]</span> <span class="o">-</span> <span class="n">report_normal</span><span class="p">[</span><span class="s2">&#34;bench&#34;</span><span class="p">]</span> <span class="o">-</span> <span class="n">report_normal</span><span class="p">[</span><span class="s2">&#34;cost&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">analysis_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">analysis</span><span class="p">)</span>  <span class="c1"># 类型: pd.DataFrame</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">analysis_df</span><span class="p">)</span>
+</span></span></code></pre></div>
+
+
+    </article>
+  </main>
+
+
+    </div>
+    
+    <footer>
+      
+
+
+  
+
+    
+
+    
+      
+      
+    
+    
+    &lt;p&gt;Generated with &lt;a href=&#34;https://gohugo.io&#34;&gt;Hugo&lt;/a&gt; using the &lt;a href=&#34;https://gitlab.com/rmaguiar/hugo-theme-color-your-world&#34;&gt;Color Your World&lt;/a&gt; theme.&lt;/p&gt;
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="req-js">
+  <button class="outline-dashed" title="Change to light/dark mode."><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="#1dbc91" title="Change accent color." aria-label="Change accent color."><datalist id="presets"><option value="#1f676b"><option value="#1dbc91"><option value="#225670"><option value="#dd587c"><option value="#902b37"><option value="#f3a530"><option value="#754e85"><option value="#7fc121"><option value="#a8314a"><option value="#ff7433"><option value="#3e6728"><option value="#c063bd"><option value="#805080"><option value="#9d629d"><option value="#a064a0"><option value="#7daa50"><option value="#284531"><option value="#285790"><option value="#F5A83D"><option value="#88aa33"><option value="#015660"><option value="#bf274e"><option value="#bf4242"><option value="#51b37c"></datalist>
+</div>
+
+
+
+  <noscript>
+    <p class="noscript">Unable to execute JavaScript. Some features were disabled.</p>
+  </noscript>
+
+
+
+    </footer>
+    
+    
+    
+
+    
+    
+
+  </body>
+</html>

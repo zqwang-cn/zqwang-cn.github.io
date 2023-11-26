@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+  <head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo 0.120.4">
+<meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
+
+
+<title>基础 - 模型 | Wang&#39;s blog</title>
+
+<meta name="author" content="zqwang">
+
+
+
+<meta name="robots" content="index follow">
+
+
+
+
+  
+    <link rel="canonical" href="https://zqwang-cn.github.io/qlib-study-notes/model/">
+  
+
+
+
+
+
+
+
+
+<meta property="og:site_name" content="Wang&#39;s blog">
+<meta property="og:title" content="基础 - 模型">
+
+  <meta property="og:url" content="https://zqwang-cn.github.io/qlib-study-notes/model/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:type" content="website">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="theme-color" content="#222">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://zqwang-cn.github.io/",
+      "inLanguage": "en",
+      "name": "Wang's blog",
+      "description": "Wang's blog",
+      "publisher": "zqwang"
+    }
+  </script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://zqwang-cn.github.io/css/main.min.c166fa5a48e8b326dc193e5c2ea65b6f96720911149d941bddb3b0b8eff62af3.css" integrity="sha256-wWb6WkjosybcGT5cLqZbb5ZyCREUnZQb3bOwuO/2KvM=" crossorigin="anonymous">
+
+
+
+<noscript>
+
+  
+  
+
+  
+    <meta name="theme-color" content="#1dbc91" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1f676b" media="(prefers-color-scheme: light)">
+  
+
+  
+  <link rel="stylesheet" href="https://zqwang-cn.github.io/css/noscript.min.3f3b95436b19eaeb9223fb12c0b86737d53ee0a47fdba271a886c244bc03975c.css" integrity="sha256-PzuVQ2sZ6uuSI/sSwLhnN9U&#43;4KR/26JxqIbCRLwDl1w=" crossorigin="anonymous">
+
+</noscript>
+
+
+
+<link rel="preload" href="/fonts/open-sans-v34-latin-700.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-italic.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-regular.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/oswald-v29-latin-700.woff2" as="font" crossorigin="anonymous">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="https://zqwang-cn.github.io/js/main.f1da21dfea83dc0c36cea0b202c14a97e00aedab567e32702eb120f5ab8d974b.js" integrity="sha256-8doh3&#43;qD3Aw2zqCyAsFKl&#43;AK7atWfjJwLrEg9auNl0s=" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body>
+
+    <header>
+      
+
+  <a href="/">Wang&#39;s blog</a>
+
+
+
+
+  
+    <nav aria-label="Main menu.">
+      <ul>
+        
+          <li>
+            <a class="btn" href="/">Home</a>
+          </li>
+        
+      </ul>
+    </nav>
+  
+
+
+    </header>
+
+    <div class="filler">
+      
+
+  <main>
+    <article>
+      <header>
+        
+        <h1>基础 - 模型</h1>
+
+        
+          <div class="terms">
+            <ul><li><a class="btn" href="/tags/qlib/">Qlib</a></li></ul>
+          </div>
+          <p>
+            
+              Published on <time datetime="2023-11-23">2023-11-23</time>
+            
+          </p>
+        
+        
+        
+        
+      </header>
+    
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="简介"><a class="anchor" href="#简介" title='Anchor for: 简介.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 简介</h2> 
+
+<p>模型用于计算股票的预测分数。Qlib提供了基类<code>Model</code>，所有模型都必须继承它；另外还提供了基类<code>ModelFT</code>，包含了用于微调的方法。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="例子"><a class="anchor" href="#例子" title='Anchor for: 例子.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 例子</h2> 
+
+<p>Qlib的模型库中包含了<code>LightGBM</code>、<code>MLP</code>、<code>LSTM</code>等模型，它们被视为基线模型。下面的例子展示了如何将<code>LightGBM</code>作为独立模块使用：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.contrib.model.gbdt</span> <span class="kn">import</span> <span class="n">LGBModel</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.contrib.data.handler</span> <span class="kn">import</span> <span class="n">Alpha158</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.utils</span> <span class="kn">import</span> <span class="n">init_instance_by_config</span><span class="p">,</span> <span class="n">flatten_dict</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.workflow</span> <span class="kn">import</span> <span class="n">R</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.workflow.record_temp</span> <span class="kn">import</span> <span class="n">SignalRecord</span><span class="p">,</span> <span class="n">PortAnaRecord</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">market</span> <span class="o">=</span> <span class="s2">&#34;csi300&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">benchmark</span> <span class="o">=</span> <span class="s2">&#34;SH000300&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">data_handler_config</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;start_time&#34;</span><span class="p">:</span> <span class="s2">&#34;2008-01-01&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;end_time&#34;</span><span class="p">:</span> <span class="s2">&#34;2020-08-01&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;fit_start_time&#34;</span><span class="p">:</span> <span class="s2">&#34;2008-01-01&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;fit_end_time&#34;</span><span class="p">:</span> <span class="s2">&#34;2014-12-31&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;instruments&#34;</span><span class="p">:</span> <span class="n">market</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">task</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;model&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;class&#34;</span><span class="p">:</span> <span class="s2">&#34;LGBModel&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;module_path&#34;</span><span class="p">:</span> <span class="s2">&#34;qlib.contrib.model.gbdt&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;kwargs&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;loss&#34;</span><span class="p">:</span> <span class="s2">&#34;mse&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;colsample_bytree&#34;</span><span class="p">:</span> <span class="mf">0.8879</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;learning_rate&#34;</span><span class="p">:</span> <span class="mf">0.0421</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;subsample&#34;</span><span class="p">:</span> <span class="mf">0.8789</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;lambda_l1&#34;</span><span class="p">:</span> <span class="mf">205.6999</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;lambda_l2&#34;</span><span class="p">:</span> <span class="mf">580.9768</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;max_depth&#34;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;num_leaves&#34;</span><span class="p">:</span> <span class="mi">210</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;num_threads&#34;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;dataset&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;class&#34;</span><span class="p">:</span> <span class="s2">&#34;DatasetH&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;module_path&#34;</span><span class="p">:</span> <span class="s2">&#34;qlib.data.dataset&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;kwargs&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;handler&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;class&#34;</span><span class="p">:</span> <span class="s2">&#34;Alpha158&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;module_path&#34;</span><span class="p">:</span> <span class="s2">&#34;qlib.contrib.data.handler&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;kwargs&#34;</span><span class="p">:</span> <span class="n">data_handler_config</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;segments&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;train&#34;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&#34;2008-01-01&#34;</span><span class="p">,</span> <span class="s2">&#34;2014-12-31&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;valid&#34;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&#34;2015-01-01&#34;</span><span class="p">,</span> <span class="s2">&#34;2016-12-31&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;test&#34;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&#34;2017-01-01&#34;</span><span class="p">,</span> <span class="s2">&#34;2020-08-01&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 初始化模型</span>
+</span></span><span class="line"><span class="cl"><span class="n">model</span> <span class="o">=</span> <span class="n">init_instance_by_config</span><span class="p">(</span><span class="n">task</span><span class="p">[</span><span class="s2">&#34;model&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="n">dataset</span> <span class="o">=</span> <span class="n">init_instance_by_config</span><span class="p">(</span><span class="n">task</span><span class="p">[</span><span class="s2">&#34;dataset&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 开始实验</span>
+</span></span><span class="line"><span class="cl"><span class="k">with</span> <span class="n">R</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">experiment_name</span><span class="o">=</span><span class="s2">&#34;workflow&#34;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 训练</span>
+</span></span><span class="line"><span class="cl">    <span class="n">R</span><span class="o">.</span><span class="n">log_params</span><span class="p">(</span><span class="o">**</span><span class="n">flatten_dict</span><span class="p">(</span><span class="n">task</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 预测</span>
+</span></span><span class="line"><span class="cl">    <span class="n">recorder</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">get_recorder</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sr</span> <span class="o">=</span> <span class="n">SignalRecord</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">recorder</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sr</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>
+</span></span></code></pre></div><p>严格来说，模型的预测分数的意义依赖于用户对标签的设计。在默认情况下，通常是模型对股票的排序，分数越高的股票收益越高。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="自定义模型"><a class="anchor" href="#自定义模型" title='Anchor for: 自定义模型.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 自定义模型</h2> 
+
+<p>通过以下步骤，用户可以编写自定义模型：</p>
+<ul>
+<li>编写一个自定义模型类，它应该继承<code>Model</code>类</li>
+<li>编写一个配置文件描述该模型的路径与参数</li>
+<li>测试自定义模型</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h3 id="编写模型类"><a class="anchor" href="#编写模型类" title='Anchor for: 编写模型类.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 编写模型类</h3> 
+
+<p>自定义模型类需要继承<code>Model</code>并重写它的方法：</p>
+<ul>
+<li>重写<code>__init__</code>方法
+<ul>
+<li>Qlib将初始化参数传给<code>__init__</code>方法</li>
+<li>配置文件中的参数必须与<code>__init__</code>方法中定义的参数一致</li>
+</ul>
+</li>
+</ul>
+<p>例子如下，对应的配置文件中需要包含<code>loss</code>等参数：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;mse&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">loss</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;mse&#39;</span><span class="p">,</span> <span class="s1">&#39;binary&#39;</span><span class="p">}:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">_scorer</span> <span class="o">=</span> <span class="n">mean_squared_error</span> <span class="k">if</span> <span class="n">loss</span> <span class="o">==</span> <span class="s1">&#39;mse&#39;</span> <span class="k">else</span> <span class="n">roc_auc_score</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">_params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">objective</span><span class="o">=</span><span class="n">loss</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span></code></pre></div><ul>
+<li>重写<code>fit</code>方法
+<ul>
+<li>Qlib调用<code>fit</code>方法训练模型</li>
+<li>参数必须包含训练数据集<code>dataset</code></li>
+<li>可以包含一些带有默认值的可选参数</li>
+</ul>
+</li>
+</ul>
+<p>例子如下，其中<code>num_boost_round = 1000</code>是可选参数：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">DatasetH</span><span class="p">,</span> <span class="n">num_boost_round</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 为lgb训练与评估准备数据</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_train</span><span class="p">,</span> <span class="n">df_valid</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="s2">&#34;train&#34;</span><span class="p">,</span> <span class="s2">&#34;valid&#34;</span><span class="p">],</span> <span class="n">col_set</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;feature&#34;</span><span class="p">,</span> <span class="s2">&#34;label&#34;</span><span class="p">],</span> <span class="n">data_key</span><span class="o">=</span><span class="n">DataHandlerLP</span><span class="o">.</span><span class="n">DK_L</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s2">&#34;feature&#34;</span><span class="p">],</span> <span class="n">df_train</span><span class="p">[</span><span class="s2">&#34;label&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x_valid</span><span class="p">,</span> <span class="n">y_valid</span> <span class="o">=</span> <span class="n">df_valid</span><span class="p">[</span><span class="s2">&#34;feature&#34;</span><span class="p">],</span> <span class="n">df_valid</span><span class="p">[</span><span class="s2">&#34;label&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Lightgbm需要1D数组作为标签</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">y_train</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">y_train</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">y_train</span><span class="p">,</span> <span class="n">y_valid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">values</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">y_valid</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;LightGBM doesn&#39;t support multi-label training&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">dtrain</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">x_train</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">y_train</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dvalid</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">x_valid</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">y_valid</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># 训练模型</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">train</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dtrain</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">num_boost_round</span><span class="o">=</span><span class="n">num_boost_round</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">valid_sets</span><span class="o">=</span><span class="p">[</span><span class="n">dtrain</span><span class="p">,</span> <span class="n">dvalid</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="n">valid_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;train&#34;</span><span class="p">,</span> <span class="s2">&#34;valid&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="n">early_stopping_rounds</span><span class="o">=</span><span class="n">early_stopping_rounds</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">verbose_eval</span><span class="o">=</span><span class="n">verbose_eval</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">evals_result</span><span class="o">=</span><span class="n">evals_result</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="o">**</span><span class="n">kwargs</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span></code></pre></div><ul>
+<li>重写<code>predict</code>方法
+<ul>
+<li>参数必须包含测试数据集<code>dataset</code></li>
+<li>返回预测分数</li>
+</ul>
+</li>
+</ul>
+<p>例子如下：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">DatasetH</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">-&gt;</span> <span class="n">pandas</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;model is not fitted yet!&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x_test</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="s2">&#34;test&#34;</span><span class="p">,</span> <span class="n">col_set</span><span class="o">=</span><span class="s2">&#34;feature&#34;</span><span class="p">,</span> <span class="n">data_key</span><span class="o">=</span><span class="n">DataHandlerLP</span><span class="o">.</span><span class="n">DK_I</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="o">.</span><span class="n">values</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">x_test</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</span></span></code></pre></div><ul>
+<li>重写<code>finetune</code>方法（可选）
+<ul>
+<li>需要使用此方法时，应当继承<code>ModelFT</code>类</li>
+<li>参数必须包含数据集<code>dataset</code></li>
+</ul>
+</li>
+</ul>
+<p>例子如下：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">finetune</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">:</span> <span class="n">DatasetH</span><span class="p">,</span> <span class="n">num_boost_round</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">verbose_eval</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 基于现有模型，通过训练更多轮次来进行微调</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dtrain</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_data</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">train</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dtrain</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">num_boost_round</span><span class="o">=</span><span class="n">num_boost_round</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">init_model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">valid_sets</span><span class="o">=</span><span class="p">[</span><span class="n">dtrain</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="n">valid_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;train&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="n">verbose_eval</span><span class="o">=</span><span class="n">verbose_eval</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h3 id="编写配置文件"><a class="anchor" href="#编写配置文件" title='Anchor for: 编写配置文件.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 编写配置文件</h3> 
+
+<p>为了在自动工作流中使用自定义模型，用户需要修改配置文件中的模型部分。对于上面的自定义模型，配置文件如下：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">model</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">LGBModel</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.contrib.model.gbdt</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">args</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">loss</span><span class="p">:</span><span class="w"> </span><span class="l">mse</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">colsample_bytree</span><span class="p">:</span><span class="w"> </span><span class="m">0.8879</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">learning_rate</span><span class="p">:</span><span class="w"> </span><span class="m">0.0421</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">subsample</span><span class="p">:</span><span class="w"> </span><span class="m">0.8789</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">lambda_l1</span><span class="p">:</span><span class="w"> </span><span class="m">205.6999</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">lambda_l2</span><span class="p">:</span><span class="w"> </span><span class="m">580.9768</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">max_depth</span><span class="p">:</span><span class="w"> </span><span class="m">8</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">num_leaves</span><span class="p">:</span><span class="w"> </span><span class="m">210</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">num_threads</span><span class="p">:</span><span class="w"> </span><span class="m">20</span><span class="w">
+</span></span></span></code></pre></div><p>用户可以在<code>examples/benchmarks</code>目录下找到所有基线模型的配置文件。</p>
+
+
+
+
+
+
+
+
+
+  <h3 id="测试"><a class="anchor" href="#测试" title='Anchor for: 测试.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 测试</h3> 
+
+<p>可以使用如下命令测试一个模型：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> examples
+</span></span><span class="line"><span class="cl">qrun benchmarks/LightGBM/workflow_config_lightgbm.yaml
+</span></span></code></pre></div><p>也可以将模型作为一个独立模块进行测试，一个例子在<code>examples/workflow_by_code.ipynb</code>中。</p>
+
+
+
+    </article>
+  </main>
+
+
+    </div>
+    
+    <footer>
+      
+
+
+  
+
+    
+
+    
+      
+      
+    
+    
+    &lt;p&gt;Generated with &lt;a href=&#34;https://gohugo.io&#34;&gt;Hugo&lt;/a&gt; using the &lt;a href=&#34;https://gitlab.com/rmaguiar/hugo-theme-color-your-world&#34;&gt;Color Your World&lt;/a&gt; theme.&lt;/p&gt;
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="req-js">
+  <button class="outline-dashed" title="Change to light/dark mode."><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="#1dbc91" title="Change accent color." aria-label="Change accent color."><datalist id="presets"><option value="#1f676b"><option value="#1dbc91"><option value="#225670"><option value="#dd587c"><option value="#902b37"><option value="#f3a530"><option value="#754e85"><option value="#7fc121"><option value="#a8314a"><option value="#ff7433"><option value="#3e6728"><option value="#c063bd"><option value="#805080"><option value="#9d629d"><option value="#a064a0"><option value="#7daa50"><option value="#284531"><option value="#285790"><option value="#F5A83D"><option value="#88aa33"><option value="#015660"><option value="#bf274e"><option value="#bf4242"><option value="#51b37c"></datalist>
+</div>
+
+
+
+  <noscript>
+    <p class="noscript">Unable to execute JavaScript. Some features were disabled.</p>
+  </noscript>
+
+
+
+    </footer>
+    
+    
+    
+
+    
+    
+
+  </body>
+</html>
