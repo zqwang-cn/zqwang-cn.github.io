@@ -7,16 +7,20 @@
 <meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
 
 
-<title>Tag: &#34;其他&#34;, page 2 of 2 | Wang&#39;s blog</title>
+<title>进阶 - 嵌套决策执行框架 | Wang&#39;s blog</title>
 
 <meta name="author" content="zqwang">
-<meta name="description" content="Posts under the &#34;其他&#34; tag.">
+
 
 
 <meta name="robots" content="index follow">
 
 
 
+
+  
+    <link rel="canonical" href="https://zqwang-cn.github.io/qlib-study-notes/nested-decision-execution/">
+  
 
 
 
@@ -26,9 +30,9 @@
 
 
 <meta property="og:site_name" content="Wang&#39;s blog">
-<meta property="og:title" content="Tag: &#34;其他&#34;">
-<meta property="og:description" content="Posts under the &#34;其他&#34; tag.">
-  <meta property="og:url" content="https://zqwang-cn.github.io/tags/%E5%85%B6%E4%BB%96/">
+<meta property="og:title" content="进阶 - 嵌套决策执行框架">
+
+  <meta property="og:url" content="https://zqwang-cn.github.io/qlib-study-notes/nested-decision-execution/">
 
 
 
@@ -54,8 +58,6 @@
 
 
 
-
-  <link rel="alternate" type="application/rss+xml" href="https://zqwang-cn.github.io/tags/%E5%85%B6%E4%BB%96/index.xml" title="Wang&#39;s blog">
 
 
 
@@ -165,192 +167,169 @@
 
     <div class="filler">
       
-  
-  
 
-  
-  
-
-  <main class="list">
-
-    
-    
-    
-    <h1>Tag: &#34;其他&#34;</h1>
-    
-    
-
-      
-
-<ul class="posts">
-  
-  
-    
-    
-    
-      
-    
-
-    <li>
-      <a class="btn" href="/posts/bgslibrary-introduction/" title="BGSLibrary背景提取库介绍 (2020-11-11)">
-        <p>BGSLibrary背景提取库介绍</p>
+  <main>
+    <article>
+      <header>
+        
+        <h1>进阶 - 嵌套决策执行框架</h1>
 
         
-          <time datetime="2020-11-11">2020-11-11</time>
-        
-      </a>
-    </li>
-  
-  
-    
-    
-    
-      
-    
-
-    <li>
-      <a class="btn" href="/posts/install-rtmp-server-and-push-stream-using-python/" title="架设RTMP流媒体服务器并使用python进行推流 (2020-09-09)">
-        <p>架设RTMP流媒体服务器并使用python进行推流</p>
-
-        
-          <time datetime="2020-09-09">2020-09-09</time>
-        
-      </a>
-    </li>
-  
-</ul>
-
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <nav aria-label="Pagination navigation.">
-    <ul class="pagination">
-      
-      
-      
-      <li>
-        <a class="btn" href="/tags/%E5%85%B6%E4%BB%96/" aria-label="Go to first page.">
-          <svg aria-hidden="true">
-            <use transform="rotate(180) translate(-18 -18)" xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#angle-double-right"/>
-          </svg>
-        </a>
-      </li>
-      
-
-      
-      
-      <li>
-        <a class="btn" href="/tags/%E5%85%B6%E4%BB%96/" aria-label="Go to previous page.">
-          <svg transform="rotate(180)" aria-hidden="true">
-            <use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#angle-right"/>
-          </svg>
-        </a>
-      </li>
-      
-    
-      
-      
-      
+          <div class="terms">
+            <ul><li><a class="btn" href="/tags/qlib/">Qlib</a></li></ul>
+          </div>
+          <p>
+            
+              Published on <time datetime="2023-11-23">2023-11-23</time>
+            
+          </p>
         
         
         
         
+      </header>
+    
+      
+      
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="简介"><a class="anchor" href="#简介" title='Anchor for: 简介.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 简介</h2> 
+
+<p>日间交易（如投资组合管理）与日内交易（如订单执行）是量化投资的两个热门主题，它们通常被分开研究。为了获得二者的联合交易性能，它们必须进行交互并且一起进行回测。为了支持这种多层次联合回测策略，需要一种对应的框架，但是目前没有公开可用的高频交易框架考虑这种情况，这使得此类回测并不准确。</p>
+<p>除了回测，不同层次策略的优化也不是独立的，而是相互影响的。例如，最好的投资组合管理策略可能随着订单执行性能的变化而变化（随着订单执行策略的改进，高换手率的投资组合可能成为更好的选择）。为了达到整体最优性能，不同层次策略之间的交互是需要考虑的。</p>
+<p>为了解决以上问题，需要建立一个能够在多个层次上进行交易的新框架。因此，Qlib设计了一个能够考虑策略间互动的嵌套决策执行框架。</p>
+<p>
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+    
+    
+    
+      
+      
+        <img
           
-
-        
-
-        
-        
-          <li >
-          
-            <a class="btn" href="/tags/%E5%85%B6%E4%BB%96/" aria-label="Go to page 1." >1</a>
-          
-          </li>
-        
-
+          loading="lazy"
+          src="https://qlib.readthedocs.io/en/latest/_images/framework.svg"
+          alt="架构图"
+        />
       
-      
-        
-        
-        
-        
+    
+    
+  
+  
 
-          
-
-        
-
-        
-        
-          <li class="current">
-          
-            <p>2</p>
-          
-          </li>
-        
-
-      
-
-      
-      
-
-      
-      
-
-    </ul>
-  </nav>
+</p>
+<p>上图中黄色部分为此框架。每个层次均包含交易代理（Trading Agent）与执行环境（Execution Env）。交易代理有自己的数据处理模块（Information Extractor）、预测模块（Forecast Model）和决策生成器（Decision Generator）。交易算法基于预测模块输出的预测信号，通过决策生成器生成决策，之后决策被送至执行环境，执行环境返回执行结果。</p>
+<p>交易算法、决策内容与执行环境的频率可以由用户自定义，并且执行环境可以与内部更细粒度的交易算法与执行环境进行嵌套（即图中的子工作流）。例如，日间交易的订单可以通过订单拆分转换为日内的更细粒度的决策。嵌套决策执行框架的灵活性使得用户可以容易地探索结合不同层次交易策略的效果，并且打破交易算法不同层次之间的优化壁垒。</p>
 
 
 
-      
-  <hr>
-  <h2>Tags</h2>
-  
-  <ul class="terms">
-  
-    <li><a class="btn" href="/tags/c&#43;&#43;/" title="c&#43;&#43; (2)">c&#43;&#43;<span>2</span></a></li>
-  
-    <li><a class="btn" href="/tags/c&#43;&#43;%E6%96%B0%E7%89%B9%E6%80%A7/" title="c&#43;&#43;新特性 (16)">c&#43;&#43;新特性<span>16</span></a></li>
-  
-    <li><a class="btn" href="/tags/qlib/" title="Qlib (17)">Qlib<span>17</span></a></li>
-  
-    <li><a class="btn" href="/tags/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="rust学习笔记 (20)">rust学习笔记<span>20</span></a></li>
-  
-    <li><a class="btn" href="/tags/%E5%85%B6%E4%BB%96/" title="其他 (7)">其他<span>7</span></a></li>
-  
-    <li><a class="btn" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" title="深度学习 (1)">深度学习<span>1</span></a></li>
-  
-    <li><a class="btn" href="/tags/%E7%AC%94%E8%AE%B0/" title="笔记 (2)">笔记<span>2</span></a></li>
-  
-    <li><a class="btn" href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="论文阅读 (1)">论文阅读<span>1</span></a></li>
-  
+
+
+
+
+
+
+  <h2 id="例子"><a class="anchor" href="#例子" title='Anchor for: 例子.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 例子</h2> 
+
+<p>一个使用嵌套决策执行框架的高频交易例子在<a href="https://github.com/microsoft/qlib/blob/main/examples/nested_decision_execution/workflow.py">这里</a>。</p>
+<p>Qlib中其它有关高频交易的工作：</p>
+<ul>
+<li><a href="https://github.com/microsoft/qlib/tree/main/examples/highfreq#benchmarks-performance-predicting-the-price-trend-in-high-frequency-data">使用高频数据进行预测</a></li>
+<li>从没有固定频率的高频数据中提取特征的<a href="https://github.com/microsoft/qlib/blob/main/examples/orderbook_data/">例子</a></li>
+<li>一篇高频交易的<a href="https://github.com/microsoft/qlib/tree/high-freq-execution#high-frequency-execution">论文</a></li>
 </ul>
 
 
 
-
-    
-
+    </article>
   </main>
-  
+
 
     </div>
     

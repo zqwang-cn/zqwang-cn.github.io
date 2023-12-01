@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+  <head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo 0.120.4">
+<meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
+
+
+<title>其它 - 建立公式化alpha | Wang&#39;s blog</title>
+
+<meta name="author" content="zqwang">
+
+
+
+<meta name="robots" content="index follow">
+
+
+
+
+  
+    <link rel="canonical" href="https://zqwang-cn.github.io/qlib-study-notes/formulaic-alpha/">
+  
+
+
+
+
+
+
+
+
+<meta property="og:site_name" content="Wang&#39;s blog">
+<meta property="og:title" content="其它 - 建立公式化alpha">
+
+  <meta property="og:url" content="https://zqwang-cn.github.io/qlib-study-notes/formulaic-alpha/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:type" content="website">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="theme-color" content="#222">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://zqwang-cn.github.io/",
+      "inLanguage": "en",
+      "name": "Wang's blog",
+      "description": "Wang's blog",
+      "publisher": "zqwang"
+    }
+  </script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://zqwang-cn.github.io/css/main.min.c166fa5a48e8b326dc193e5c2ea65b6f96720911149d941bddb3b0b8eff62af3.css" integrity="sha256-wWb6WkjosybcGT5cLqZbb5ZyCREUnZQb3bOwuO/2KvM=" crossorigin="anonymous">
+
+
+
+<noscript>
+
+  
+  
+
+  
+    <meta name="theme-color" content="#1dbc91" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1f676b" media="(prefers-color-scheme: light)">
+  
+
+  
+  <link rel="stylesheet" href="https://zqwang-cn.github.io/css/noscript.min.3f3b95436b19eaeb9223fb12c0b86737d53ee0a47fdba271a886c244bc03975c.css" integrity="sha256-PzuVQ2sZ6uuSI/sSwLhnN9U&#43;4KR/26JxqIbCRLwDl1w=" crossorigin="anonymous">
+
+</noscript>
+
+
+
+<link rel="preload" href="/fonts/open-sans-v34-latin-700.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-italic.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-regular.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/oswald-v29-latin-700.woff2" as="font" crossorigin="anonymous">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="https://zqwang-cn.github.io/js/main.f1da21dfea83dc0c36cea0b202c14a97e00aedab567e32702eb120f5ab8d974b.js" integrity="sha256-8doh3&#43;qD3Aw2zqCyAsFKl&#43;AK7atWfjJwLrEg9auNl0s=" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body>
+
+    <header>
+      
+
+  <a href="/">Wang&#39;s blog</a>
+
+
+
+
+  
+    <nav aria-label="Main menu.">
+      <ul>
+        
+          <li>
+            <a class="btn" href="/">Home</a>
+          </li>
+        
+      </ul>
+    </nav>
+  
+
+
+    </header>
+
+    <div class="filler">
+      
+
+  <main>
+    <article>
+      <header>
+        
+        <h1>其它 - 建立公式化alpha</h1>
+
+        
+          <div class="terms">
+            <ul><li><a class="btn" href="/tags/qlib/">Qlib</a></li></ul>
+          </div>
+          <p>
+            
+              Published on <time datetime="2023-11-27">2023-11-27</time>
+            
+          </p>
+        
+        
+        
+        
+      </header>
+    
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="简介"><a class="anchor" href="#简介" title='Anchor for: 简介.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 简介</h2> 
+
+<p>在量化交易实践中，设计能够解释并预测未来资产回报率的新因子对于策略的盈利能力是至关重要的。这些因子通常称为alpha因子或简称为alpha。公式化alpha，顾名思义，是指能够表示为公式或数学表达式的alpha。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="例子"><a class="anchor" href="#例子" title='Anchor for: 例子.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 例子</h2> 
+
+<p>在Qlib中，用户可以方便地建立公式化alpha。例如，用户可以使用数据处理器建立<code>MACD</code>这一常用公式化alpha：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="kn">from</span> <span class="nn">qlib.data.dataset.loader</span> <span class="kn">import</span> <span class="n">QlibDataLoader</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">MACD_EXP</span> <span class="o">=</span> <span class="s1">&#39;(EMA($close, 12) - EMA($close, 26))/$close - EMA((EMA($close, 12) - EMA($close, 26))/$close, 9)/$close&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="n">MACD_EXP</span><span class="p">]</span> <span class="c1"># MACD</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;MACD&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Ref($close, -2)/Ref($close, -1) - 1&#39;</span><span class="p">]</span> <span class="c1"># 标签</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">label_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;LABEL&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">data_loader_config</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="o">..</span>     <span class="s2">&#34;feature&#34;</span><span class="p">:</span> <span class="p">(</span><span class="n">fields</span><span class="p">,</span> <span class="n">names</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl"><span class="o">..</span>     <span class="s2">&#34;label&#34;</span><span class="p">:</span> <span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">label_names</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">..</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">data_loader</span> <span class="o">=</span> <span class="n">QlibDataLoader</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">data_loader_config</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="n">df</span> <span class="o">=</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">instruments</span><span class="o">=</span><span class="s1">&#39;csi300&#39;</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="s1">&#39;2010-01-01&#39;</span><span class="p">,</span> <span class="n">end_time</span><span class="o">=</span><span class="s1">&#39;2017-12-31&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">feature</span>     <span class="n">label</span>
+</span></span><span class="line"><span class="cl">                           <span class="n">MACD</span>     <span class="n">LABEL</span>
+</span></span><span class="line"><span class="cl"><span class="n">datetime</span>   <span class="n">instrument</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2010</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">04</span> <span class="n">SH600000</span>   <span class="o">-</span><span class="mf">0.011547</span> <span class="o">-</span><span class="mf">0.019672</span>
+</span></span><span class="line"><span class="cl">           <span class="n">SH600004</span>    <span class="mf">0.002745</span> <span class="o">-</span><span class="mf">0.014721</span>
+</span></span><span class="line"><span class="cl">           <span class="n">SH600006</span>    <span class="mf">0.010133</span>  <span class="mf">0.002911</span>
+</span></span><span class="line"><span class="cl">           <span class="n">SH600008</span>   <span class="o">-</span><span class="mf">0.001113</span>  <span class="mf">0.009818</span>
+</span></span><span class="line"><span class="cl">           <span class="n">SH600009</span>    <span class="mf">0.025878</span> <span class="o">-</span><span class="mf">0.017758</span>
+</span></span><span class="line"><span class="cl"><span class="o">...</span>                         <span class="o">...</span>       <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="mi">2017</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">29</span> <span class="n">SZ300124</span>    <span class="mf">0.007306</span> <span class="o">-</span><span class="mf">0.005074</span>
+</span></span><span class="line"><span class="cl">           <span class="n">SZ300136</span>   <span class="o">-</span><span class="mf">0.013492</span>  <span class="mf">0.056352</span>
+</span></span><span class="line"><span class="cl">           <span class="n">SZ300144</span>   <span class="o">-</span><span class="mf">0.000966</span>  <span class="mf">0.011853</span>
+</span></span><span class="line"><span class="cl">           <span class="n">SZ300251</span>    <span class="mf">0.004383</span>  <span class="mf">0.021739</span>
+</span></span><span class="line"><span class="cl">           <span class="n">SZ300315</span>   <span class="o">-</span><span class="mf">0.030557</span>  <span class="mf">0.012455</span>
+</span></span></code></pre></div>
+
+
+    </article>
+  </main>
+
+
+    </div>
+    
+    <footer>
+      
+
+
+  
+
+    
+
+    
+      
+      
+    
+    
+    &lt;p&gt;Generated with &lt;a href=&#34;https://gohugo.io&#34;&gt;Hugo&lt;/a&gt; using the &lt;a href=&#34;https://gitlab.com/rmaguiar/hugo-theme-color-your-world&#34;&gt;Color Your World&lt;/a&gt; theme.&lt;/p&gt;
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="req-js">
+  <button class="outline-dashed" title="Change to light/dark mode."><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="#1dbc91" title="Change accent color." aria-label="Change accent color."><datalist id="presets"><option value="#1f676b"><option value="#1dbc91"><option value="#225670"><option value="#dd587c"><option value="#902b37"><option value="#f3a530"><option value="#754e85"><option value="#7fc121"><option value="#a8314a"><option value="#ff7433"><option value="#3e6728"><option value="#c063bd"><option value="#805080"><option value="#9d629d"><option value="#a064a0"><option value="#7daa50"><option value="#284531"><option value="#285790"><option value="#F5A83D"><option value="#88aa33"><option value="#015660"><option value="#bf274e"><option value="#bf4242"><option value="#51b37c"></datalist>
+</div>
+
+
+
+  <noscript>
+    <p class="noscript">Unable to execute JavaScript. Some features were disabled.</p>
+  </noscript>
+
+
+
+    </footer>
+    
+    
+    
+
+    
+    
+
+  </body>
+</html>

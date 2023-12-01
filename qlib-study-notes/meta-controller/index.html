@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+  <head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo 0.120.4">
+<meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
+
+
+<title>进阶 - 元学习 | Wang&#39;s blog</title>
+
+<meta name="author" content="zqwang">
+
+
+
+<meta name="robots" content="index follow">
+
+
+
+
+  
+    <link rel="canonical" href="https://zqwang-cn.github.io/qlib-study-notes/meta-controller/">
+  
+
+
+
+
+
+
+
+
+<meta property="og:site_name" content="Wang&#39;s blog">
+<meta property="og:title" content="进阶 - 元学习">
+
+  <meta property="og:url" content="https://zqwang-cn.github.io/qlib-study-notes/meta-controller/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:type" content="website">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="theme-color" content="#222">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://zqwang-cn.github.io/",
+      "inLanguage": "en",
+      "name": "Wang's blog",
+      "description": "Wang's blog",
+      "publisher": "zqwang"
+    }
+  </script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://zqwang-cn.github.io/css/main.min.c166fa5a48e8b326dc193e5c2ea65b6f96720911149d941bddb3b0b8eff62af3.css" integrity="sha256-wWb6WkjosybcGT5cLqZbb5ZyCREUnZQb3bOwuO/2KvM=" crossorigin="anonymous">
+
+
+
+<noscript>
+
+  
+  
+
+  
+    <meta name="theme-color" content="#1dbc91" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1f676b" media="(prefers-color-scheme: light)">
+  
+
+  
+  <link rel="stylesheet" href="https://zqwang-cn.github.io/css/noscript.min.3f3b95436b19eaeb9223fb12c0b86737d53ee0a47fdba271a886c244bc03975c.css" integrity="sha256-PzuVQ2sZ6uuSI/sSwLhnN9U&#43;4KR/26JxqIbCRLwDl1w=" crossorigin="anonymous">
+
+</noscript>
+
+
+
+<link rel="preload" href="/fonts/open-sans-v34-latin-700.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-italic.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-regular.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/oswald-v29-latin-700.woff2" as="font" crossorigin="anonymous">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="https://zqwang-cn.github.io/js/main.f1da21dfea83dc0c36cea0b202c14a97e00aedab567e32702eb120f5ab8d974b.js" integrity="sha256-8doh3&#43;qD3Aw2zqCyAsFKl&#43;AK7atWfjJwLrEg9auNl0s=" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body>
+
+    <header>
+      
+
+  <a href="/">Wang&#39;s blog</a>
+
+
+
+
+  
+    <nav aria-label="Main menu.">
+      <ul>
+        
+          <li>
+            <a class="btn" href="/">Home</a>
+          </li>
+        
+      </ul>
+    </nav>
+  
+
+
+    </header>
+
+    <div class="filler">
+      
+
+  <main>
+    <article>
+      <header>
+        
+        <h1>进阶 - 元学习</h1>
+
+        
+          <div class="terms">
+            <ul><li><a class="btn" href="/tags/qlib/">Qlib</a></li></ul>
+          </div>
+          <p>
+            
+              Published on <time datetime="2023-11-23">2023-11-23</time>
+            
+          </p>
+        
+        
+        
+        
+      </header>
+    
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="简介"><a class="anchor" href="#简介" title='Anchor for: 简介.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 简介</h2> 
+
+<p>普通的机器学习算法从训练数据中学习出规律，之后用来对新的数据进行预测。元学习，意为“学习如何学习”，也是一个机器学习算法，不过它学习的目标不是某一个具体任务，而是学习任务本身。Qlib提供了元控制器模块用于进行元学习，该模块可以从一系列预测任务中学习出规律，用于指导之后的预测任务。用户可以基于元控制器模块实现自己的元模型。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="元任务"><a class="anchor" href="#元任务" title='Anchor for: 元任务.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 元任务</h2> 
+
+<p>元任务实例是元学习框架的基本元素，它保存有元模型能够使用的数据。多个元任务实例可以使用相同的由元数据集控制的数据处理器。用户应当使用<code>prepare_task_data</code>函数获取能够直接输入元模型的数据。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="元数据集"><a class="anchor" href="#元数据集" title='Anchor for: 元数据集.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 元数据集</h2> 
+
+<p>元数据集控制元信息的生成过程，它负责为训练元模型提供数据。用户应当使用<code>prepare_tasks</code>函数获取一个元任务实例列表。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="元模型"><a class="anchor" href="#元模型" title='Anchor for: 元模型.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 元模型</h2> 
+
+
+
+
+
+
+
+
+
+
+  <h3 id="通用元模型"><a class="anchor" href="#通用元模型" title='Anchor for: 通用元模型.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 通用元模型</h3> 
+
+<p>元模型实例是控制工作流的部分。元模型的使用方式是：</p>
+<ul>
+<li>通过<code>fit</code>函数训练元模型</li>
+<li>通过<code>inference</code>函数给出有用的信息以指导工作流</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h3 id="元任务模型"><a class="anchor" href="#元任务模型" title='Anchor for: 元任务模型.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 元任务模型</h3> 
+
+<p>此类元模型可以直接与任务定义交互，它们通过修改基础任务的定义对其进行指导。可以使用<code>prepare_tasks</code>函数获取修改后的基础任务定义。</p>
+
+
+
+
+
+
+
+
+
+  <h3 id="元指导模型"><a class="anchor" href="#元指导模型" title='Anchor for: 元指导模型.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 元指导模型</h3> 
+
+<p>此类元模型参与基础模型的训练过程，它们通过在基础模型训练时进行指导以提高其性能。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="例子"><a class="anchor" href="#例子" title='Anchor for: 例子.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 例子</h2> 
+
+<p>Qlib提供了元模型的一个实现：<code>DDG-DA</code>，它可以适应市场的变化。<code>DDG-DA</code>包含以下4个步骤：</p>
+<ul>
+<li>计算元信息并封装进元任务实例，所有元任务构成一个元数据集实例</li>
+<li>使用元数据集中的训练数据训练<code>DDG-DA</code></li>
+<li>推理<code>DDG-DA</code>以获取指导信息</li>
+<li>在基础模型上应用指导信息以提高其性能</li>
+</ul>
+<p>该<a href="https://github.com/microsoft/qlib/tree/main/examples/benchmarks_dynamic/DDG-DA">例子</a>可以在文件<code>examples/benchmarks_dynamic/DDG-DA/workflow.py</code>中找到。</p>
+
+
+
+    </article>
+  </main>
+
+
+    </div>
+    
+    <footer>
+      
+
+
+  
+
+    
+
+    
+      
+      
+    
+    
+    &lt;p&gt;Generated with &lt;a href=&#34;https://gohugo.io&#34;&gt;Hugo&lt;/a&gt; using the &lt;a href=&#34;https://gitlab.com/rmaguiar/hugo-theme-color-your-world&#34;&gt;Color Your World&lt;/a&gt; theme.&lt;/p&gt;
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="req-js">
+  <button class="outline-dashed" title="Change to light/dark mode."><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="#1dbc91" title="Change accent color." aria-label="Change accent color."><datalist id="presets"><option value="#1f676b"><option value="#1dbc91"><option value="#225670"><option value="#dd587c"><option value="#902b37"><option value="#f3a530"><option value="#754e85"><option value="#7fc121"><option value="#a8314a"><option value="#ff7433"><option value="#3e6728"><option value="#c063bd"><option value="#805080"><option value="#9d629d"><option value="#a064a0"><option value="#7daa50"><option value="#284531"><option value="#285790"><option value="#F5A83D"><option value="#88aa33"><option value="#015660"><option value="#bf274e"><option value="#bf4242"><option value="#51b37c"></datalist>
+</div>
+
+
+
+  <noscript>
+    <p class="noscript">Unable to execute JavaScript. Some features were disabled.</p>
+  </noscript>
+
+
+
+    </footer>
+    
+    
+    
+
+    
+    
+
+  </body>
+</html>

@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+  <head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo 0.120.4">
+<meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
+
+
+<title>进阶 - 强化学习 | Wang&#39;s blog</title>
+
+<meta name="author" content="zqwang">
+
+
+
+<meta name="robots" content="index follow">
+
+
+
+
+  
+    <link rel="canonical" href="https://zqwang-cn.github.io/qlib-study-notes/reinforcement-learning/">
+  
+
+
+
+
+
+
+
+
+<meta property="og:site_name" content="Wang&#39;s blog">
+<meta property="og:title" content="进阶 - 强化学习">
+
+  <meta property="og:url" content="https://zqwang-cn.github.io/qlib-study-notes/reinforcement-learning/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:type" content="website">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="theme-color" content="#222">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://zqwang-cn.github.io/",
+      "inLanguage": "en",
+      "name": "Wang's blog",
+      "description": "Wang's blog",
+      "publisher": "zqwang"
+    }
+  </script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://zqwang-cn.github.io/css/main.min.c166fa5a48e8b326dc193e5c2ea65b6f96720911149d941bddb3b0b8eff62af3.css" integrity="sha256-wWb6WkjosybcGT5cLqZbb5ZyCREUnZQb3bOwuO/2KvM=" crossorigin="anonymous">
+
+
+
+<noscript>
+
+  
+  
+
+  
+    <meta name="theme-color" content="#1dbc91" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1f676b" media="(prefers-color-scheme: light)">
+  
+
+  
+  <link rel="stylesheet" href="https://zqwang-cn.github.io/css/noscript.min.3f3b95436b19eaeb9223fb12c0b86737d53ee0a47fdba271a886c244bc03975c.css" integrity="sha256-PzuVQ2sZ6uuSI/sSwLhnN9U&#43;4KR/26JxqIbCRLwDl1w=" crossorigin="anonymous">
+
+</noscript>
+
+
+
+<link rel="preload" href="/fonts/open-sans-v34-latin-700.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-italic.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-regular.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/oswald-v29-latin-700.woff2" as="font" crossorigin="anonymous">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="https://zqwang-cn.github.io/js/main.f1da21dfea83dc0c36cea0b202c14a97e00aedab567e32702eb120f5ab8d974b.js" integrity="sha256-8doh3&#43;qD3Aw2zqCyAsFKl&#43;AK7atWfjJwLrEg9auNl0s=" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body>
+
+    <header>
+      
+
+  <a href="/">Wang&#39;s blog</a>
+
+
+
+
+  
+    <nav aria-label="Main menu.">
+      <ul>
+        
+          <li>
+            <a class="btn" href="/">Home</a>
+          </li>
+        
+      </ul>
+    </nav>
+  
+
+
+    </header>
+
+    <div class="filler">
+      
+
+  <main>
+    <article>
+      <header>
+        
+        <h1>进阶 - 强化学习</h1>
+
+        
+          <div class="terms">
+            <ul><li><a class="btn" href="/tags/qlib/">Qlib</a></li></ul>
+          </div>
+          <p>
+            
+              Published on <time datetime="2023-11-24">2023-11-24</time>
+            
+          </p>
+        
+        
+        
+        
+      </header>
+    
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="简介"><a class="anchor" href="#简介" title='Anchor for: 简介.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 简介</h2> 
+
+<p>与监督学习（如分类或回归）不同，强化学习是另一种重要的机器学习范式，它尝试在马尔可夫决策过程等假设下通过直接与环境互动来最大化累积奖励。此处不介绍强化学习本身的内容，只介绍Qlib中与之相关的内容。Qlib提供了一个强化学习工具箱QlibRL，它是一个针对量化投资的强化学习平台。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="量化交易中的使用场景"><a class="anchor" href="#量化交易中的使用场景" title='Anchor for: 量化交易中的使用场景.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 量化交易中的使用场景</h2> 
+
+<p>在投资的场景中，投资者通过买卖操作来管理他们的仓位，以努力优化投资回报率。投资者在每次做出买卖决策之前，都会小心地评估市场条件与股票信息。从投资者的视角，这个过程可以看作由市场交互驱动的连续决策过程。强化学习算法为应对此类挑战提供了有前景的方法，下面是强化学习算法在量化投资领域的一些可能的应用场景：</p>
+
+
+
+
+
+
+
+
+
+  <h3 id="订单执行"><a class="anchor" href="#订单执行" title='Anchor for: 订单执行.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 订单执行</h3> 
+
+<p>订单执行任务需要在考虑多种目标因素的同时高效地执行订单，这些因素包括：最优化价格、最小化交易成本、减小市场冲击、最大化订单完成率，以及在特定时间范围内完成执行。通过将这些目标结合为奖励函数与动作选择过程，就可以在此类任务上使用强化学习算法。具体来说，强化学习智能体与市场环境进行交互，观察市场当前状态，并对下一步执行做出决策。强化学习算法通过试错学习出一个最优执行策略，以达到最大化累积奖励的目的，从而实现想要的目标。</p>
+<ul>
+<li>基本设定
+<ul>
+<li>环境：代表发生订单执行的市场，包含订货簿、流动性、价格走势与市场状况等变量</li>
+<li>状态：表示强化学习智能体在某一时刻能够获取的信息，通常包括当前订货簿状态（买卖价差、订货簿深度）、历史价格、历史成交量、市场波动率以及其它任何可以帮助进行决策的信息</li>
+<li>动作：指强化学习智能体基于可以观察到的状态所做出的决策。在订单执行任务中，动作包括选择订单大小、价格与执行时间</li>
+<li>奖励：是一个表示强化学习智能体动作性能的标量信号。奖励函数被设计为鼓励那些导致高效率、低成本的订单执行的动作。它通常考虑多个目标，例如最大化价格优势、最小化交易成本（包括手续费与滑点）、减小市场冲击（订单对市场价格的影响）以及最大化订单完成率。</li>
+</ul>
+</li>
+<li>场景
+<ul>
+<li>单资产订单执行：聚焦于在单个资产上执行单个订单的任务。主要目标是在高效执行订单的同时考虑最大化价格优势、最小化交易成本、减小市场冲击以及最大化订单完成率等因素。强化学习智能体与市场环境交互并对指定资产的订单大小、价格与执行时间做出决策。目标是学习出一个能够在考虑单个资产特性的同时最大化累积奖励的最优执行策略</li>
+<li>多资产订单执行：将订单执行任务扩展到多个资产上，需要同步地或顺序地执行跨资产的订单组合。不仅需要聚焦于执行单个订单，还要管理资产组合中不同资产间的相互作用与依赖。强化学习智能体需要对资产组合中每个资产的订单大小、价格与执行时间做出决策，同时考虑它们的相互依赖性、现金约束、市场状况及交易成本。目标是学习出一个可以平衡每个资产的执行效率，同时能将整个资产组合作为一个整体考虑其总体性能与目标的最优执行策略</li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h3 id="资产组合构建"><a class="anchor" href="#资产组合构建" title='Anchor for: 资产组合构建.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 资产组合构建</h3> 
+
+<p>资产组合构建是在一个资产组合中选择与分配资产的过程。强化学习提供了一个优化资产组合管理决策的框架，它从与市场环境的互动中学习，并在考虑风险的同时最大化长期回报。</p>
+<ul>
+<li>基本设定
+<ul>
+<li>状态：代表市场与资产组合的当前信息，通常包括历史价格与成交量、技术指标与其它相关数据</li>
+<li>动作：对应将资金分配给不同资产的决策，决定了每个资产的投资权重或比率</li>
+<li>奖励：评估投资组合表现的指标，可以通过不同的方式定义，如总回报率、无风险回报率，或其它目标如最大化夏普比率、最小化回撤</li>
+</ul>
+</li>
+<li>场景
+<ul>
+<li>股票市场：将强化学习用于构建股票的投资组合，智能体学习将资金分配给不同的股票</li>
+<li>加密货币市场：将强化学习用于构建加密货币的投资组合，智能体学习资金分配决策</li>
+<li>外汇市场：将强化学习用于构建货币对的投资组合，智能体学习基于汇率数据、经济指标和其它因素在不同货币间分配资金</li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h2 id="例子"><a class="anchor" href="#例子" title='Anchor for: 例子.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 例子</h2> 
+
+<p>QlibRL提供了一个例子，实现了一个单资产订单执行任务，下面是其训练配置文件：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">simulator</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># Each step contains 30mins</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">time_per_step</span><span class="p">:</span><span class="w"> </span><span class="m">30</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># Upper bound of volume, should be null or a float between 0 and 1, if it is a float, represent upper bound is calculated by the percentage of the market volume</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">vol_limit</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">env</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># Concurrent environment workers.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">concurrency</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># dummy or subproc or shmem. Corresponding to `parallelism in tianshou &lt;https://tianshou.readthedocs.io/en/master/api/tianshou.env.html#vectorenv&gt;`_.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">parallel_mode</span><span class="p">:</span><span class="w"> </span><span class="l">dummy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">action_interpreter</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">CategoricalActionInterpreter</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">kwargs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c"># Candidate actions, it can be a list with length L: [a_1, a_2,..., a_L] or an integer n, in which case the list of length n+1 is auto-generated, i.e., [0, 1/n, 2/n,..., n/n].</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="m">14</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c"># Total number of steps (an upper-bound estimation)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">max_step</span><span class="p">:</span><span class="w"> </span><span class="m">8</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.rl.order_execution.interpreter</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">state_interpreter</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">FullHistoryStateInterpreter</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">kwargs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c"># Number of dimensions in data.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">data_dim</span><span class="p">:</span><span class="w"> </span><span class="m">6</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c"># Equal to the total number of records. For example, in SAOE per minute, data_ticks is the length of the day in minutes.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">data_ticks</span><span class="p">:</span><span class="w"> </span><span class="m">240</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c"># The total number of steps (an upper-bound estimation). For example, 390min / 30min-per-step = 13 steps.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">max_step</span><span class="p">:</span><span class="w"> </span><span class="m">8</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c"># Provider of the processed data.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">processed_data_provider</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">PickleProcessedDataProvider</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.rl.data.pickle_styled</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">kwargs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="nt">data_dir</span><span class="p">:</span><span class="w"> </span><span class="l">./data/pickle_dataframe/feature</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.rl.order_execution.interpreter</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">reward</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">PAPenaltyReward</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">kwargs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c"># The penalty for a large volume in a short time.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">penalty</span><span class="p">:</span><span class="w"> </span><span class="m">100.0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.rl.order_execution.reward</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">data</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">order_dir</span><span class="p">:</span><span class="w"> </span><span class="l">./data/training_order_split</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">data_dir</span><span class="p">:</span><span class="w"> </span><span class="l">./data/pickle_dataframe/backtest</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c"># number of time indexes</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">total_time</span><span class="p">:</span><span class="w"> </span><span class="m">240</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c"># start time index</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">default_start_time</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c"># end time index</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">default_end_time</span><span class="p">:</span><span class="w"> </span><span class="m">240</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">proc_data_dim</span><span class="p">:</span><span class="w"> </span><span class="m">6</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">num_workers</span><span class="p">:</span><span class="w"> </span><span class="m">0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">queue_size</span><span class="p">:</span><span class="w"> </span><span class="m">20</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">network</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">Recurrent</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.rl.order_execution.network</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">policy</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">PPO</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">kwargs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">lr</span><span class="p">:</span><span class="w"> </span><span class="m">0.0001</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.rl.order_execution.policy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">runtime</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">seed</span><span class="p">:</span><span class="w"> </span><span class="m">42</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">use_cuda</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">trainer</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">max_epoch</span><span class="p">:</span><span class="w"> </span><span class="m">2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># Number of episodes collected in each training iteration</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">repeat_per_collect</span><span class="p">:</span><span class="w"> </span><span class="m">5</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">earlystop_patience</span><span class="p">:</span><span class="w"> </span><span class="m">2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># Episodes per collect at training.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">episode_per_collect</span><span class="p">:</span><span class="w"> </span><span class="m">20</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">batch_size</span><span class="p">:</span><span class="w"> </span><span class="m">16</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># Perform validation every n iterations</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">val_every_n_epoch</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">checkpoint_path</span><span class="p">:</span><span class="w"> </span><span class="l">./checkpoints</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">checkpoint_every_n_iters</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span></span></span></code></pre></div><p>下面是回测的配置：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">order_file</span><span class="p">:</span><span class="w"> </span><span class="l">./data/backtest_orders.csv</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">start_time</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;9:45&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">end_time</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;14:44&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">qlib</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">provider_uri_1min</span><span class="p">:</span><span class="w"> </span><span class="l">./data/bin</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">feature_root_dir</span><span class="p">:</span><span class="w"> </span><span class="l">./data/pickle</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># feature generated by today&#39;s information</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">feature_columns_today</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;$open&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;$high&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;$low&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;$close&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;$vwap&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;$volume&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># feature generated by yesterday&#39;s information</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">feature_columns_yesterday</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;$open_v1&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;$high_v1&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;$low_v1&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;$close_v1&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;$vwap_v1&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;$volume_v1&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">exchange</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># the expression for buying and selling stock limitation</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">limit_threshold</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;$close == 0&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;$close == 0&#39;</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># deal price for buying and selling</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">deal_price</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;If($close == 0, $vwap, $close)&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;If($close == 0, $vwap, $close)&#34;</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">volume_threshold</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># volume limits are both buying and selling, &#34;cum&#34; means that this is a cumulative value over time</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">all</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;cum&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;0.2 * DayCumsum($volume, &#39;9:45&#39;, &#39;14:44&#39;)&#34;</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># the volume limits of buying</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">buy</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;current&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;$close&#34;</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># the volume limits of selling, &#34;current&#34; means that this is a real-time value and will not accumulate over time</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">sell</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;current&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;$close&#34;</span><span class="p">]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">strategies</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">30min</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">TWAPStrategy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.contrib.strategy.rule_strategy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">kwargs</span><span class="p">:</span><span class="w"> </span>{}<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">1day</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">SAOEIntStrategy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.rl.order_execution.strategy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">kwargs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">state_interpreter</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">FullHistoryStateInterpreter</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.rl.order_execution.interpreter</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">kwargs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">max_step</span><span class="p">:</span><span class="w"> </span><span class="m">8</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">data_ticks</span><span class="p">:</span><span class="w"> </span><span class="m">240</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">data_dim</span><span class="p">:</span><span class="w"> </span><span class="m">6</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">processed_data_provider</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">PickleProcessedDataProvider</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.rl.data.pickle_styled</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="nt">kwargs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="nt">data_dir</span><span class="p">:</span><span class="w"> </span><span class="l">./data/pickle_dataframe/feature</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">action_interpreter</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">CategoricalActionInterpreter</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.rl.order_execution.interpreter</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">kwargs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">values</span><span class="p">:</span><span class="w"> </span><span class="m">14</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">max_step</span><span class="p">:</span><span class="w"> </span><span class="m">8</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">network</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">Recurrent</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.rl.order_execution.network</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">kwargs</span><span class="p">:</span><span class="w"> </span>{}<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">policy</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">PPO</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">module_path</span><span class="p">:</span><span class="w"> </span><span class="l">qlib.rl.order_execution.policy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">kwargs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="nt">lr</span><span class="p">:</span><span class="w"> </span><span class="m">1.0e-4</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="c"># Local path to the latest model. The model is generated during training, so please run training first if you want to run backtest with a trained policy. You could also remove this parameter file to run backtest with a randomly initialized policy.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="nt">weight_file</span><span class="p">:</span><span class="w"> </span><span class="l">./checkpoints/latest.pth</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Concurrent environment workers.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">concurrency</span><span class="p">:</span><span class="w"> </span><span class="m">5</span><span class="w">
+</span></span></span></code></pre></div><p>使用上面的配置文件，可以通过如下命令启动训练：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python -m qlib.rl.contrib.train_onpolicy.py --config_path train_config.yml
+</span></span></code></pre></div><p>训练完成后，可以使用如下命令进行回测：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python -m qlib.rl.contrib.backtest.py --config_path backtest_config.yml
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h2 id="框架"><a class="anchor" href="#框架" title='Anchor for: 框架.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 框架</h2> 
+
+<p>QlibRL包含一套完整的组件，覆盖了包括建立市场仿真器、塑造状态与动作、在仿真环境中训练策略与回测策略的强化学习流水线的整个生命周期。QlibRL基于<a href="https://tianshou.readthedocs.io/zh/latest/">天授</a>与Gym框架实现，其高层结构如下所示：</p>
+<p>
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+    
+    
+    
+      
+      
+        <img
+          
+          loading="lazy"
+          src="https://qlib.readthedocs.io/en/latest/_images/QlibRL_framework.png"
+          alt="QlibRL框架图"
+        />
+      
+    
+    
+  
+  
+
+</p>
+<p>下面简要介绍每个组件：</p>
+
+
+
+
+
+
+
+
+
+  <h3 id="环境-envwrapper"><a class="anchor" href="#环境-envwrapper" title='Anchor for: 环境 EnvWrapper.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 环境 EnvWrapper</h3> 
+
+<p><code>EnvWrapper</code>是对仿真环境的完整封装。它从外部（策略/智能体）接收动作，在市场中模拟变化，之后返回奖励并更新状态，从而形成一个互动循环。</p>
+<p>在QlibRL中，<code>EnvWrapper</code>是<code>gym.Env</code>的子类，因此实现了所有必需的接口。所有接收<code>gym.Env</code>的类或流水线也接收<code>EnvWrapper</code>。开发者无需为了建立环境实现自己的<code>EnvWrapper</code>，而只需实现<code>EnvWrapper</code>的4个组件即可：</p>
+<ul>
+<li>仿真器 Simulator：负责环境仿真的核心组件。开发者可以以任何方式实现与环境仿真直接相关的所有逻辑。在QlibRL中已经实现了两个用于单资产交易的仿真器：
+<ul>
+<li>SingleAssetOrderExecution：基于Qlib回测工具箱构建，考虑了许多实际交易细节，但是速度慢</li>
+<li>SimpleSingleAssetOrderExecution：基于简化的交易仿真器构建，忽略了许多细节（如交易限制、舍入），但是速度快</li>
+</ul>
+</li>
+<li>状态解释器 State interpreter：负责将原始格式（仿真器提供的格式）的状态解释为策略可以理解的格式，例如，将无结构原始特征转换为数值张量</li>
+<li>动作解释器 Action interpreter：将策略生成的动作解释为仿真器可以接收的格式</li>
+<li>奖励函数 Reward function：在每次策略执行一个动作后返回一个奖励值</li>
+</ul>
+<p><code>EnvWrapper</code>会将这些组件有机地组织起来。这样的分解可以在开发时得到更好的灵活性，例如，如果开发者要在一个相同的环境中训练多个类型的策略，只需设计一个仿真器并为每个类型的策略设计不同的状态解释器/动作解释器/奖励函数即可。QlibRL为以上组件均提供了基类，开发者只需继承基类并实现接口即可定义自己的组件。</p>
+
+
+
+
+
+
+
+
+
+  <h3 id="策略-policy"><a class="anchor" href="#策略-policy" title='Anchor for: 策略 Policy.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 策略 Policy</h3> 
+
+<p>QlibRL直接采用天授的策略，开发者可以直接使用其现有策略，或继承其策略以实现自己的策略。</p>
+
+
+
+
+
+
+
+
+
+  <h3 id="训练容器与训练器-training-vessel--trainer"><a class="anchor" href="#训练容器与训练器-training-vessel--trainer" title='Anchor for: 训练容器与训练器 Training Vessel &amp; Trainer.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 训练容器与训练器 Training Vessel &amp; Trainer</h3> 
+
+<p>训练容器与训练器是在训练中使用的辅助类。训练容器是一个包含仿真器/解释器/奖励函数/策略的容器，用于控制训练的算法相关部分。相应的，训练器负责控制训练的运行时部分。</p>
+<p>可以注意到，一个训练容器持有建立一个环境的所有必需组件，但并不直接持有一个环境实例。这允许训练容器在必要时（如并行训练时）动态地建立多个环境副本。</p>
+<p>与训练容器一起使用，训练器就可以通过类似Scikit-learn的简单接口启动训练流水线，如<code>trainer.fit()</code>。</p>
+
+
+
+    </article>
+  </main>
+
+
+    </div>
+    
+    <footer>
+      
+
+
+  
+
+    
+
+    
+      
+      
+    
+    
+    &lt;p&gt;Generated with &lt;a href=&#34;https://gohugo.io&#34;&gt;Hugo&lt;/a&gt; using the &lt;a href=&#34;https://gitlab.com/rmaguiar/hugo-theme-color-your-world&#34;&gt;Color Your World&lt;/a&gt; theme.&lt;/p&gt;
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="req-js">
+  <button class="outline-dashed" title="Change to light/dark mode."><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="#1dbc91" title="Change accent color." aria-label="Change accent color."><datalist id="presets"><option value="#1f676b"><option value="#1dbc91"><option value="#225670"><option value="#dd587c"><option value="#902b37"><option value="#f3a530"><option value="#754e85"><option value="#7fc121"><option value="#a8314a"><option value="#ff7433"><option value="#3e6728"><option value="#c063bd"><option value="#805080"><option value="#9d629d"><option value="#a064a0"><option value="#7daa50"><option value="#284531"><option value="#285790"><option value="#F5A83D"><option value="#88aa33"><option value="#015660"><option value="#bf274e"><option value="#bf4242"><option value="#51b37c"></datalist>
+</div>
+
+
+
+  <noscript>
+    <p class="noscript">Unable to execute JavaScript. Some features were disabled.</p>
+  </noscript>
+
+
+
+    </footer>
+    
+    
+    
+
+    
+    
+
+  </body>
+</html>

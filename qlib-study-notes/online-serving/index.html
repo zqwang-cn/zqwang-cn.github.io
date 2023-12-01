@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+  <head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo 0.120.4">
+<meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
+
+
+<title>进阶 - 在线服务 | Wang&#39;s blog</title>
+
+<meta name="author" content="zqwang">
+
+
+
+<meta name="robots" content="index follow">
+
+
+
+
+  
+    <link rel="canonical" href="https://zqwang-cn.github.io/qlib-study-notes/online-serving/">
+  
+
+
+
+
+
+
+
+
+<meta property="og:site_name" content="Wang&#39;s blog">
+<meta property="og:title" content="进阶 - 在线服务">
+
+  <meta property="og:url" content="https://zqwang-cn.github.io/qlib-study-notes/online-serving/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:type" content="website">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="theme-color" content="#222">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://zqwang-cn.github.io/",
+      "inLanguage": "en",
+      "name": "Wang's blog",
+      "description": "Wang's blog",
+      "publisher": "zqwang"
+    }
+  </script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://zqwang-cn.github.io/css/main.min.c166fa5a48e8b326dc193e5c2ea65b6f96720911149d941bddb3b0b8eff62af3.css" integrity="sha256-wWb6WkjosybcGT5cLqZbb5ZyCREUnZQb3bOwuO/2KvM=" crossorigin="anonymous">
+
+
+
+<noscript>
+
+  
+  
+
+  
+    <meta name="theme-color" content="#1dbc91" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1f676b" media="(prefers-color-scheme: light)">
+  
+
+  
+  <link rel="stylesheet" href="https://zqwang-cn.github.io/css/noscript.min.3f3b95436b19eaeb9223fb12c0b86737d53ee0a47fdba271a886c244bc03975c.css" integrity="sha256-PzuVQ2sZ6uuSI/sSwLhnN9U&#43;4KR/26JxqIbCRLwDl1w=" crossorigin="anonymous">
+
+</noscript>
+
+
+
+<link rel="preload" href="/fonts/open-sans-v34-latin-700.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-italic.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-regular.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/oswald-v29-latin-700.woff2" as="font" crossorigin="anonymous">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="https://zqwang-cn.github.io/js/main.f1da21dfea83dc0c36cea0b202c14a97e00aedab567e32702eb120f5ab8d974b.js" integrity="sha256-8doh3&#43;qD3Aw2zqCyAsFKl&#43;AK7atWfjJwLrEg9auNl0s=" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body>
+
+    <header>
+      
+
+  <a href="/">Wang&#39;s blog</a>
+
+
+
+
+  
+    <nav aria-label="Main menu.">
+      <ul>
+        
+          <li>
+            <a class="btn" href="/">Home</a>
+          </li>
+        
+      </ul>
+    </nav>
+  
+
+
+    </header>
+
+    <div class="filler">
+      
+
+  <main>
+    <article>
+      <header>
+        
+        <h1>进阶 - 在线服务</h1>
+
+        
+          <div class="terms">
+            <ul><li><a class="btn" href="/tags/qlib/">Qlib</a></li></ul>
+          </div>
+          <p>
+            
+              Published on <time datetime="2023-11-23">2023-11-23</time>
+            
+          </p>
+        
+        
+        
+        
+      </header>
+    
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="简介"><a class="anchor" href="#简介" title='Anchor for: 简介.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 简介</h2> 
+
+<p>一般情况下，Qlib使用静态的配置文件或代码定义模型、数据集与训练任务，如果它们有任何改变，则需要修改配置文件或代码并重新运行任务。但是频繁地进行此操作过于繁琐，为此，Qlib提出了在线服务功能，通过事先定义配置文件模板，此功能可以自动更新配置文件并重新运行任务。其架构图如下：</p>
+<p>
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+    
+    
+    
+      
+      
+        <img
+          
+          loading="lazy"
+          src="https://qlib.readthedocs.io/en/latest/_images/online_serving.png"
+          alt="架构图"
+        />
+      
+    
+    
+  
+  
+
+</p>
+<p><a href="https://github.com/microsoft/qlib/tree/main/examples/online_srv">这里</a>有一些可供参考的例子，它们展示了在线服务的不同特性。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="在线管理器"><a class="anchor" href="#在线管理器" title='Anchor for: 在线管理器.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 在线管理器</h2> 
+
+<p>在线管理器可以管理一组在线策略并动态地运行它们。</p>
+<p>随着时间变化，模型也会变化。在本模块中，这些模型被称为在线模型。在每个例行程序（如每天或每分钟）中，在线模型可能有变化，因此它们的预测也需要更新，所以本模块提供一系列方法来控制这个过程。本模块也提供一个方法以在历史上仿真在线策略，这意味着可以验证策略或找到一个更好的策略。</p>
+<p>在不同的情况下使用不同的训练器的组合一共有4种：</p>
+<ul>
+<li>在线+训练器：当想要运行真实例行程序时，训练器会帮助逐任务逐策略地训练模型</li>
+<li>在线+延迟训练器：在所有策略都准备好任务后，延迟训练器才会开始训练，这使用户可以在<code>routine</code>或<code>first_train</code>结束后并行地训练所有任务；在策略准备好任务前，这些函数会阻塞</li>
+<li>仿真+训练器：与第一种组合表现相同，唯一区别是本组合用于仿真/回测而不是在线交易</li>
+<li>仿真+延迟训练器：在模型没有时间依赖时，可以使用延迟训练器的多任务能力。这意味着在仿真结束时，所有例行程序中的所有任务都会被真正地训练。根据是否有新模型在线，信号会在不同的时间段准备好</li>
+</ul>
+<p>下面是演示每种情况工作流的伪代码。其中做了以下简化：</p>
+<ul>
+<li>只使用了一个策略</li>
+<li><code>update_online_pred</code>只有在在线模式才会被调用</li>
+</ul>
+<p>在线+训练器：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">tasks</span> <span class="o">=</span> <span class="n">first_train</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">models</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">tasks</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">trainer</span><span class="o">.</span><span class="n">end_train</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">online_trading_days</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># OnlineManager.routine</span>
+</span></span><span class="line"><span class="cl">    <span class="n">models</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">prepare_tasks</span><span class="p">())</span>  <span class="c1"># 对于每个策略</span>
+</span></span><span class="line"><span class="cl">    <span class="n">strategy</span><span class="o">.</span><span class="n">prepare_online_models</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>  <span class="c1"># 对于每个策略</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">trainer</span><span class="o">.</span><span class="n">end_train</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">prepare_signals</span><span class="p">()</span>  <span class="c1"># 每天准备交易信号</span>
+</span></span></code></pre></div><p>在线+延迟训练器：与在线+训练器的工作流相同</p>
+<p>仿真+延迟训练器：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 仿真</span>
+</span></span><span class="line"><span class="cl"><span class="n">tasks</span> <span class="o">=</span> <span class="n">first_train</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">models</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">tasks</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">historical_calendars</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># OnlineManager.routine</span>
+</span></span><span class="line"><span class="cl">    <span class="n">models</span> <span class="o">=</span> <span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">strategy</span><span class="o">.</span><span class="n">prepare_tasks</span><span class="p">())</span>  <span class="c1"># 对于每个策略</span>
+</span></span><span class="line"><span class="cl">    <span class="n">strategy</span><span class="o">.</span><span class="n">prepare_online_models</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>  <span class="c1"># 对于每个策略</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># delay_prepare()</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># FIXME: 目前delay_prepare没有用合适的方式实现</span>
+</span></span><span class="line"><span class="cl"><span class="n">trainer</span><span class="o">.</span><span class="n">end_train</span><span class="p">(</span><span class="o">&lt;</span><span class="k">for</span> <span class="nb">all</span> <span class="n">previous</span> <span class="n">models</span><span class="o">&gt;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">prepare_signals</span><span class="p">()</span>
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h2 id="在线策略"><a class="anchor" href="#在线策略" title='Anchor for: 在线策略.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 在线策略</h2> 
+
+<p>本模块是在线服务的一个元素。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="在线工具"><a class="anchor" href="#在线工具" title='Anchor for: 在线工具.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 在线工具</h2> 
+
+<p>本模块是一个设置与取消设置一系列在线模型的模块。在线模型是在某些时间点上的决策模型，它们可以随时间变化而变化。这允许我们随着市场风格变化使用高效的子模型。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="更新器"><a class="anchor" href="#更新器" title='Anchor for: 更新器.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 更新器</h2> 
+
+<p>本模块在股票数据更新时，更新预测等输出信息。</p>
+
+
+
+    </article>
+  </main>
+
+
+    </div>
+    
+    <footer>
+      
+
+
+  
+
+    
+
+    
+      
+      
+    
+    
+    &lt;p&gt;Generated with &lt;a href=&#34;https://gohugo.io&#34;&gt;Hugo&lt;/a&gt; using the &lt;a href=&#34;https://gitlab.com/rmaguiar/hugo-theme-color-your-world&#34;&gt;Color Your World&lt;/a&gt; theme.&lt;/p&gt;
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="req-js">
+  <button class="outline-dashed" title="Change to light/dark mode."><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="#1dbc91" title="Change accent color." aria-label="Change accent color."><datalist id="presets"><option value="#1f676b"><option value="#1dbc91"><option value="#225670"><option value="#dd587c"><option value="#902b37"><option value="#f3a530"><option value="#754e85"><option value="#7fc121"><option value="#a8314a"><option value="#ff7433"><option value="#3e6728"><option value="#c063bd"><option value="#805080"><option value="#9d629d"><option value="#a064a0"><option value="#7daa50"><option value="#284531"><option value="#285790"><option value="#F5A83D"><option value="#88aa33"><option value="#015660"><option value="#bf274e"><option value="#bf4242"><option value="#51b37c"></datalist>
+</div>
+
+
+
+  <noscript>
+    <p class="noscript">Unable to execute JavaScript. Some features were disabled.</p>
+  </noscript>
+
+
+
+    </footer>
+    
+    
+    
+
+    
+    
+
+  </body>
+</html>

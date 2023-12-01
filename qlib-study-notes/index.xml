@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2023, zqwang; All rights reserved.</copyright>
-    <lastBuildDate>Thu, 23 Nov 2023 16:01:57 +0800</lastBuildDate><atom:link href="https://zqwang-cn.github.io/qlib-study-notes/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 27 Nov 2023 10:18:01 +0800</lastBuildDate><atom:link href="https://zqwang-cn.github.io/qlib-study-notes/index.xml" rel="self" type="application/rss+xml" />
       <item>
         <title>简介</title>
         <link>https://zqwang-cn.github.io/qlib-study-notes/introduction/</link>
@@ -52,7 +52,7 @@ qlib_init: provider_uri: &amp;#34;~/.qlib/qlib_data/cn_data&amp;#34; region: cn 
         <guid>https://zqwang-cn.github.io/qlib-study-notes/data-framework/</guid>
         <description>简介 Qlib的数据框架提供了友好的API用于管理与检索数据，以及高性能的数据基础设施。它是专门为量化投资设计的，例如，用户可以轻松地建立公式化alpha。
 下面是使用Qlib数据工作流的一个典型的例子：
-下载基础数据并转换为Qlib格式（后缀名为.bin） 使用Qlib表达式引擎建立一些基本特征，例如Ref($close, 60) / $close表示最近60个交易日的回报率。这一步骤通常实现在数据处理器中的数据加载器组件内 如果用户需要更加复杂的数据处理（如数据归一化），数据处理器模块支持用户自定义处理器。处理器可以实现表达式引擎难以支持的复杂数据处理方法 基于预处理的数据生成模型所需的数据集 数据预处理 Qlib格式数据 Qlib专门设计了一种数据结构用于处理财务数据，此类数据被存储于.bin文件中。
+下载基础数据并转换为Qlib格式（后缀名为.bin） 使用Qlib表达式引擎建立一些基本特征，例如Ref($close, 60) / $close表示最近60个交易日的回报率。这一步骤通常实现在数据处理器中的数据加载器组件内 如果用户需要更加复杂的数据处理（如数据归一化），数据处理器模块支持用户自定义处理器。处理器可以实现表达式引擎难以支持的复杂数据处理方法 基于预处理的数据生成模型所需的数据集 数据预处理 Qlib格式数据 Qlib专门设计了一种数据结构用于处理金融数据，此类数据被存储于.bin文件中。
 Qlib提供了两个现成的数据集：
 数据集 美国市场 中国市场 Alpha360 √ √ Alpha158 √ √ 同时Qlib也提供了一个高频数据集。
 Qlib格式数据集 Qlib提供脚本scripts/get_data.py用于下载数据集。使用如下命令下载中国市场股票数据集：
@@ -118,6 +118,140 @@ SignalRecord：生成模型的预测结果 SigAnaRecord：生成模型的IC/ICIR
         <description> 简介 本模块用于展示日内交易的图形报表，从而帮助用户从视觉上评估与分析投资组合。下面是一些可用报表：
 analysis_position：仓位分析 report_graph：回测报表 score_ic_graph：分数IC报表 cumulative_return_graph：累积回报率报表 risk_analysis_graph：风险分析报表 rank_label_graph：排名标签报表 analysis_model：模型分析 model_performance_graph：模型性能报表 所有图形报表 使用如下代码获取所有支持的报表：
 &amp;gt;&amp;gt; import qlib.contrib.report as qcr &amp;gt;&amp;gt; print(qcr.GRAPH_NAME_LIST) [&amp;#39;analysis_position.report_graph&amp;#39;, &amp;#39;analysis_position.score_ic_graph&amp;#39;, &amp;#39;analysis_position.cumulative_return_graph&amp;#39;, &amp;#39;analysis_position.risk_analysis_graph&amp;#39;, &amp;#39;analysis_position.rank_label_graph&amp;#39;, &amp;#39;analysis_model.model_performance_graph&amp;#39;] </description>
+      </item>
+    
+      <item>
+        <title>进阶 - 强化学习</title>
+        <link>https://zqwang-cn.github.io/qlib-study-notes/reinforcement-learning/</link>
+        <pubDate>Fri, 24 Nov 2023 11:25:32 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/qlib-study-notes/reinforcement-learning/</guid>
+        <description>简介 与监督学习（如分类或回归）不同，强化学习是另一种重要的机器学习范式，它尝试在马尔可夫决策过程等假设下通过直接与环境互动来最大化累积奖励。此处不介绍强化学习本身的内容，只介绍Qlib中与之相关的内容。Qlib提供了一个强化学习工具箱QlibRL，它是一个针对量化投资的强化学习平台。
+量化交易中的使用场景 在投资的场景中，投资者通过买卖操作来管理他们的仓位，以努力优化投资回报率。投资者在每次做出买卖决策之前，都会小心地评估市场条件与股票信息。从投资者的视角，这个过程可以看作由市场交互驱动的连续决策过程。强化学习算法为应对此类挑战提供了有前景的方法，下面是强化学习算法在量化投资领域的一些可能的应用场景：
+订单执行 订单执行任务需要在考虑多种目标因素的同时高效地执行订单，这些因素包括：最优化价格、最小化交易成本、减小市场冲击、最大化订单完成率，以及在特定时间范围内完成执行。通过将这些目标结合为奖励函数与动作选择过程，就可以在此类任务上使用强化学习算法。具体来说，强化学习智能体与市场环境进行交互，观察市场当前状态，并对下一步执行做出决策。强化学习算法通过试错学习出一个最优执行策略，以达到最大化累积奖励的目的，从而实现想要的目标。
+基本设定 环境：代表发生订单执行的市场，包含订货簿、流动性、价格走势与市场状况等变量 状态：表示强化学习智能体在某一时刻能够获取的信息，通常包括当前订货簿状态（买卖价差、订货簿深度）、历史价格、历史成交量、市场波动率以及其它任何可以帮助进行决策的信息 动作：指强化学习智能体基于可以观察到的状态所做出的决策。在订单执行任务中，动作包括选择订单大小、价格与执行时间 奖励：是一个表示强化学习智能体动作性能的标量信号。奖励函数被设计为鼓励那些导致高效率、低成本的订单执行的动作。它通常考虑多个目标，例如最大化价格优势、最小化交易成本（包括手续费与滑点）、减小市场冲击（订单对市场价格的影响）以及最大化订单完成率。 场景 单资产订单执行：聚焦于在单个资产上执行单个订单的任务。主要目标是在高效执行订单的同时考虑最大化价格优势、最小化交易成本、减小市场冲击以及最大化订单完成率等因素。强化学习智能体与市场环境交互并对指定资产的订单大小、价格与执行时间做出决策。目标是学习出一个能够在考虑单个资产特性的同时最大化累积奖励的最优执行策略 多资产订单执行：将订单执行任务扩展到多个资产上，需要同步地或顺序地执行跨资产的订单组合。不仅需要聚焦于执行单个订单，还要管理资产组合中不同资产间的相互作用与依赖。强化学习智能体需要对资产组合中每个资产的订单大小、价格与执行时间做出决策，同时考虑它们的相互依赖性、现金约束、市场状况及交易成本。目标是学习出一个可以平衡每个资产的执行效率，同时能将整个资产组合作为一个整体考虑其总体性能与目标的最优执行策略 资产组合构建 资产组合构建是在一个资产组合中选择与分配资产的过程。强化学习提供了一个优化资产组合管理决策的框架，它从与市场环境的互动中学习，并在考虑风险的同时最大化长期回报。
+基本设定 状态：代表市场与资产组合的当前信息，通常包括历史价格与成交量、技术指标与其它相关数据 动作：对应将资金分配给不同资产的决策，决定了每个资产的投资权重或比率 奖励：评估投资组合表现的指标，可以通过不同的方式定义，如总回报率、无风险回报率，或其它目标如最大化夏普比率、最小化回撤 场景 股票市场：将强化学习用于构建股票的投资组合，智能体学习将资金分配给不同的股票 加密货币市场：将强化学习用于构建加密货币的投资组合，智能体学习资金分配决策 外汇市场：将强化学习用于构建货币对的投资组合，智能体学习基于汇率数据、经济指标和其它因素在不同货币间分配资金 例子 QlibRL提供了一个例子，实现了一个单资产订单执行任务，下面是其训练配置文件：
+simulator: # Each step contains 30mins time_per_step: 30 # Upper bound of volume, should be null or a float between 0 and 1, if it is a float, represent upper bound is calculated by the percentage of the market volume vol_limit: null env: # Concurrent environment workers.</description>
+      </item>
+    
+      <item>
+        <title>进阶 - 元学习</title>
+        <link>https://zqwang-cn.github.io/qlib-study-notes/meta-controller/</link>
+        <pubDate>Thu, 23 Nov 2023 12:24:51 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/qlib-study-notes/meta-controller/</guid>
+        <description>简介 普通的机器学习算法从训练数据中学习出规律，之后用来对新的数据进行预测。元学习，意为“学习如何学习”，也是一个机器学习算法，不过它学习的目标不是某一个具体任务，而是学习任务本身。Qlib提供了元控制器模块用于进行元学习，该模块可以从一系列预测任务中学习出规律，用于指导之后的预测任务。用户可以基于元控制器模块实现自己的元模型。
+元任务 元任务实例是元学习框架的基本元素，它保存有元模型能够使用的数据。多个元任务实例可以使用相同的由元数据集控制的数据处理器。用户应当使用prepare_task_data函数获取能够直接输入元模型的数据。
+元数据集 元数据集控制元信息的生成过程，它负责为训练元模型提供数据。用户应当使用prepare_tasks函数获取一个元任务实例列表。
+元模型 通用元模型 元模型实例是控制工作流的部分。元模型的使用方式是：
+通过fit函数训练元模型 通过inference函数给出有用的信息以指导工作流 元任务模型 此类元模型可以直接与任务定义交互，它们通过修改基础任务的定义对其进行指导。可以使用prepare_tasks函数获取修改后的基础任务定义。
+元指导模型 此类元模型参与基础模型的训练过程，它们通过在基础模型训练时进行指导以提高其性能。
+例子 Qlib提供了元模型的一个实现：DDG-DA，它可以适应市场的变化。DDG-DA包含以下4个步骤：
+计算元信息并封装进元任务实例，所有元任务构成一个元数据集实例 使用元数据集中的训练数据训练DDG-DA 推理DDG-DA以获取指导信息 在基础模型上应用指导信息以提高其性能 该例子可以在文件examples/benchmarks_dynamic/DDG-DA/workflow.py中找到。</description>
+      </item>
+    
+      <item>
+        <title>进阶 - 嵌套决策执行框架</title>
+        <link>https://zqwang-cn.github.io/qlib-study-notes/nested-decision-execution/</link>
+        <pubDate>Thu, 23 Nov 2023 11:34:23 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/qlib-study-notes/nested-decision-execution/</guid>
+        <description> 简介 日间交易（如投资组合管理）与日内交易（如订单执行）是量化投资的两个热门主题，它们通常被分开研究。为了获得二者的联合交易性能，它们必须进行交互并且一起进行回测。为了支持这种多层次联合回测策略，需要一种对应的框架，但是目前没有公开可用的高频交易框架考虑这种情况，这使得此类回测并不准确。
+除了回测，不同层次策略的优化也不是独立的，而是相互影响的。例如，最好的投资组合管理策略可能随着订单执行性能的变化而变化（随着订单执行策略的改进，高换手率的投资组合可能成为更好的选择）。为了达到整体最优性能，不同层次策略之间的交互是需要考虑的。
+为了解决以上问题，需要建立一个能够在多个层次上进行交易的新框架。因此，Qlib设计了一个能够考虑策略间互动的嵌套决策执行框架。
+上图中黄色部分为此框架。每个层次均包含交易代理（Trading Agent）与执行环境（Execution Env）。交易代理有自己的数据处理模块（Information Extractor）、预测模块（Forecast Model）和决策生成器（Decision Generator）。交易算法基于预测模块输出的预测信号，通过决策生成器生成决策，之后决策被送至执行环境，执行环境返回执行结果。
+交易算法、决策内容与执行环境的频率可以由用户自定义，并且执行环境可以与内部更细粒度的交易算法与执行环境进行嵌套（即图中的子工作流）。例如，日间交易的订单可以通过订单拆分转换为日内的更细粒度的决策。嵌套决策执行框架的灵活性使得用户可以容易地探索结合不同层次交易策略的效果，并且打破交易算法不同层次之间的优化壁垒。
+例子 一个使用嵌套决策执行框架的高频交易例子在这里。
+Qlib中其它有关高频交易的工作：
+使用高频数据进行预测 从没有固定频率的高频数据中提取特征的例子 一篇高频交易的论文 </description>
+      </item>
+    
+      <item>
+        <title>进阶 - 在线服务</title>
+        <link>https://zqwang-cn.github.io/qlib-study-notes/online-serving/</link>
+        <pubDate>Thu, 23 Nov 2023 16:09:11 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/qlib-study-notes/online-serving/</guid>
+        <description>简介 一般情况下，Qlib使用静态的配置文件或代码定义模型、数据集与训练任务，如果它们有任何改变，则需要修改配置文件或代码并重新运行任务。但是频繁地进行此操作过于繁琐，为此，Qlib提出了在线服务功能，通过事先定义配置文件模板，此功能可以自动更新配置文件并重新运行任务。其架构图如下：
+这里有一些可供参考的例子，它们展示了在线服务的不同特性。
+在线管理器 在线管理器可以管理一组在线策略并动态地运行它们。
+随着时间变化，模型也会变化。在本模块中，这些模型被称为在线模型。在每个例行程序（如每天或每分钟）中，在线模型可能有变化，因此它们的预测也需要更新，所以本模块提供一系列方法来控制这个过程。本模块也提供一个方法以在历史上仿真在线策略，这意味着可以验证策略或找到一个更好的策略。
+在不同的情况下使用不同的训练器的组合一共有4种：
+在线+训练器：当想要运行真实例行程序时，训练器会帮助逐任务逐策略地训练模型 在线+延迟训练器：在所有策略都准备好任务后，延迟训练器才会开始训练，这使用户可以在routine或first_train结束后并行地训练所有任务；在策略准备好任务前，这些函数会阻塞 仿真+训练器：与第一种组合表现相同，唯一区别是本组合用于仿真/回测而不是在线交易 仿真+延迟训练器：在模型没有时间依赖时，可以使用延迟训练器的多任务能力。这意味着在仿真结束时，所有例行程序中的所有任务都会被真正地训练。根据是否有新模型在线，信号会在不同的时间段准备好 下面是演示每种情况工作流的伪代码。其中做了以下简化：
+只使用了一个策略 update_online_pred只有在在线模式才会被调用 在线+训练器：
+tasks = first_train() models = trainer.train(tasks) trainer.end_train(models) for day in online_trading_days: # OnlineManager.routine models = trainer.train(strategy.prepare_tasks()) # 对于每个策略 strategy.prepare_online_models(models) # 对于每个策略 trainer.end_train(models) prepare_signals() # 每天准备交易信号 在线+延迟训练器：与在线+训练器的工作流相同
+仿真+延迟训练器：
+# 仿真 tasks = first_train() models = trainer.train(tasks) for day in historical_calendars: # OnlineManager.routine models = trainer.train(strategy.prepare_tasks()) # 对于每个策略 strategy.prepare_online_models(models) # 对于每个策略 # delay_prepare() # FIXME: 目前delay_prepare没有用合适的方式实现 trainer.</description>
+      </item>
+    
+      <item>
+        <title>进阶 - 任务管理</title>
+        <link>https://zqwang-cn.github.io/qlib-study-notes/task-management/</link>
+        <pubDate>Mon, 27 Nov 2023 10:16:24 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/qlib-study-notes/task-management/</guid>
+        <description>简介 工作流部分介绍了如何以低耦合的方式运行研究工作流，但是使用qrun时只能执行一个任务。为了自动生成与执行不同的任务，任务管理模块提供了一整套流程，包括任务生成、任务储存、任务训练与任务收集。使用此模块，用户可以在不同周期下，使用不同的损失甚至不同的模型运行任务。任务生成、模型训练以及数据合并与收集的流程如下：
+该流程的一个例子在这里。该流程可以用于在线服务。
+任务生成 一个任务包括模型、数据集、记录以及任何用户添加的内容。即使任务模板是固定的，用户仍然可以通过自定义TaskGen类来生成不同的任务。Qlib提供了RollingGen类来生成一系列使用不同时间段数据集的任务，这允许用户在一个实验中验证不同时间段数据在模型上的效果。
+任务储存 为了达到更高的效率，并获得集群操作的可能性，任务管理器将所有任务保存在MongoDB中。任务管理器可以自动获取未完成的任务并通过错误处理来管理一组任务的生命周期。用户在使用本模块时必须完成MongoDB的配置，可以在初始化时提供MongoDB的URL和数据库名，或在代码中做如下声明：
+from qlib.config import C C[&amp;#34;mongo&amp;#34;] = { &amp;#34;task_url&amp;#34; : &amp;#34;mongodb://localhost:27017/&amp;#34;, # MongoDB的url &amp;#34;task_db_name&amp;#34; : &amp;#34;rolling_db&amp;#34; # 数据库名 } 任务训练 在生成与储存任务后，就需要运行处于等待状态的任务。Qlib提供了run_task方法来运行任务池中的任务，但是用户也可以自定义如何执行任务。获取task_func的一个简单的方法是使用直接qlib.model.trainer.task_train方法，它将运行被任务定义的包括了模型、数据集、记录的整个工作流。
+训练器训练一组任务并返回一组模型记录器。Qlib提供了两种训练器，TrainerR是最简单的方式；TrainerRM基于任务管理器，可以帮助自动管理任务的生命周期。如果不需要使用任务管理器，则使用TrainerR训练一组TaskGen生成的任务就足够了。
+任务收集 在收集模型的训练结果前，需要使用qlib.init指出mlrun的路径。
+为了在训练后收集任务的结果，Qlib提供了Collector、Group和Ensemble，它们分别以只读、可扩展和松耦合的方式收集结果。
+Collector可以从任何地方收集对象，并对它们进行处理，如合并、分组、平均等。它有两步操作：collect（将所有信息收集到一个字典中）与process_collect（处理收集的字典）。
+Group同样有两个步骤：group（基于group_func将一些对象分组并将它们转换为字典）与reduce（基于某些规则将字典转换为一个整体）。
+Ensemble可以将多个对象合并为一个整体。可以在Collector的处理列表中设置想要的整合方法。常用的整合方法包括AverageEnsemble与RollingEnsemble。AverageEnsemble用于将同一时间段不同模型的结果合并；RollingEnsemble用于将不同时间段相同模型的结果合并。
+所以以上三种方法的层次是：Collector的第二个步骤对应Group，而Group的第二个步骤对应Ensemble。</description>
+      </item>
+    
+      <item>
+        <title>其它 - 建立公式化alpha</title>
+        <link>https://zqwang-cn.github.io/qlib-study-notes/formulaic-alpha/</link>
+        <pubDate>Mon, 27 Nov 2023 10:11:03 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/qlib-study-notes/formulaic-alpha/</guid>
+        <description>简介 在量化交易实践中，设计能够解释并预测未来资产回报率的新因子对于策略的盈利能力是至关重要的。这些因子通常称为alpha因子或简称为alpha。公式化alpha，顾名思义，是指能够表示为公式或数学表达式的alpha。
+例子 在Qlib中，用户可以方便地建立公式化alpha。例如，用户可以使用数据处理器建立MACD这一常用公式化alpha：
+&amp;gt;&amp;gt; from qlib.data.dataset.loader import QlibDataLoader &amp;gt;&amp;gt; MACD_EXP = &amp;#39;(EMA($close, 12) - EMA($close, 26))/$close - EMA((EMA($close, 12) - EMA($close, 26))/$close, 9)/$close&amp;#39; &amp;gt;&amp;gt; fields = [MACD_EXP] # MACD &amp;gt;&amp;gt; names = [&amp;#39;MACD&amp;#39;] &amp;gt;&amp;gt; labels = [&amp;#39;Ref($close, -2)/Ref($close, -1) - 1&amp;#39;] # 标签 &amp;gt;&amp;gt; label_names = [&amp;#39;LABEL&amp;#39;] &amp;gt;&amp;gt; data_loader_config = { .. &amp;#34;feature&amp;#34;: (fields, names), .. &amp;#34;label&amp;#34;: (labels, label_names) .. } &amp;gt;&amp;gt; data_loader = QlibDataLoader(config=data_loader_config) &amp;gt;&amp;gt; df = data_loader.</description>
+      </item>
+    
+      <item>
+        <title>其它 - 序列化</title>
+        <link>https://zqwang-cn.github.io/qlib-study-notes/serialization/</link>
+        <pubDate>Mon, 27 Nov 2023 10:13:37 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/qlib-study-notes/serialization/</guid>
+        <description> 简介 Qlib支持将DataHandler、DataSet、Processor、Model等对象的状态转存至硬盘以及重新载入它们。
+序列化类 Qlib提供了基类Serializable，它的状态可以以pickle格式转存至硬盘或从硬盘载入。当转存一个Serializable类的实例时，该实例的所有不以下划线开头的属性将被保存至硬盘。然而，用户可以通过使用config方法或覆盖default_dump_all属性阻止这一特性。
+用户也可以覆盖pickle_backend属性以选择pickle后端，支持的值有pickle（默认、常用）与dill（转存更多东西，比如函数）。
+例子 可以使用如下代码序列化DatasetH：
+##=============转存数据集============= dataset.to_pickle(path=&amp;#34;dataset.pkl&amp;#34;) # dataset是qlib.data.dataset.DatasetH类的实例 ##=============载入数据集============= with open(&amp;#34;dataset.pkl&amp;#34;, &amp;#34;rb&amp;#34;) as file_dataset: dataset = pickle.load(file_dataset) </description>
+      </item>
+    
+      <item>
+        <title>其它 - 时间点数据库</title>
+        <link>https://zqwang-cn.github.io/qlib-study-notes/pit-database/</link>
+        <pubDate>Mon, 27 Nov 2023 10:17:22 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/qlib-study-notes/pit-database/</guid>
+        <description>简介 在进行任何类型的历史市场分析时，时间点数据都是非常重要的。假设我们使用过去5年的历史数据对一个交易策略进行回测，模型每天在市场收盘时交易一次，如果我们正在为2020年1月1日计算交易信号，则在这个时间点，我们应该只有这一天及之前的数据。
+在金融数据（尤其是金融报表）中，同一数据可能随着时间被修改过多次。如果我们只使用最新版本的数据做历史回测，则会产生数据泄漏。时间点数据库用于解决此问题，以保证用户在任何历史时间点上都能得到正确版本的数据，这可以使在线交易与历史回测的性能保持相同。
+数据准备 首先需要使用Qlib提供的爬虫下载金融数据，并使用转换脚本将其转换为Qlib格式。
+基于文件设计的时间点数据 Qlib为时间点数据提供了一个基于文件的存储。
+特征数据保存在文件XXXX.data中，其中每行是一个特征在一个时间点的记录，每行有以下4列：
+data：该行数据的发布日期 period：特征的周期（在多数市场里为季度） 如果周期为年，则为对应的整数 如果周期为季度，则为形如&amp;lt;year&amp;gt;&amp;lt;index of quarter&amp;gt;的整数 value：存储的数值 _next：同一特征下一次出现的位置索引 该文件中的数据按照data字段升序排列。
+除了特征数据外，还有一个索引文件XXXX.index，用于加快查询的速度。该文件中保存了每个特征第一次出现的索引，如果一个特征出现了多次，可以通过XXXX.data文件中的_next字段逐个访问。
+# XXXX.data文件的数据格式 array([(20070428, 200701, 0.090219 , 4294967295), (20070817, 200702, 0.13933 , 4294967295), (20071023, 200703, 0.24586301, 4294967295), (20080301, 200704, 0.3479 , 80), (20080313, 200704, 0.395989 , 4294967295), (20080422, 200801, 0.100724 , 4294967295), (20080828, 200802, 0.24996801, 4294967295), (20081027, 200803, 0.33412001, 4294967295), (20090325, 200804, 0.39011699, 4294967295), (20090421, 200901, 0.102675 , 4294967295), (20090807, 200902, 0.230712 , 4294967295), (20091024, 200903, 0.</description>
+      </item>
+    
+      <item>
+        <title>其它 - 在线模式与离线模式</title>
+        <link>https://zqwang-cn.github.io/qlib-study-notes/online-offline-mode/</link>
+        <pubDate>Mon, 27 Nov 2023 10:18:01 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/qlib-study-notes/online-offline-mode/</guid>
+        <description>简介 Qlib支持在线模式与离线模式，前面只介绍了离线模式。在线模式被设计用于解决以下问题：
+使用中心化的方式管理数据，使用户无需管理不同版本的数据 减少生成的缓存数量 使数据可以远程访问 Qlib-Server Qlib-Server是Qlib的服务器系统，它利用Qlib做基础计算，并提供了服务器系统与缓存机制。Qlib-Server让用户可以以在线模式使用Qlib。</description>
       </item>
     
   </channel>

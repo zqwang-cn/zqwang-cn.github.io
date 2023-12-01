@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+  <head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo 0.120.4">
+<meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
+
+
+<title>进阶 - 任务管理 | Wang&#39;s blog</title>
+
+<meta name="author" content="zqwang">
+
+
+
+<meta name="robots" content="index follow">
+
+
+
+
+  
+    <link rel="canonical" href="https://zqwang-cn.github.io/qlib-study-notes/task-management/">
+  
+
+
+
+
+
+
+
+
+<meta property="og:site_name" content="Wang&#39;s blog">
+<meta property="og:title" content="进阶 - 任务管理">
+
+  <meta property="og:url" content="https://zqwang-cn.github.io/qlib-study-notes/task-management/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:type" content="website">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="theme-color" content="#222">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://zqwang-cn.github.io/",
+      "inLanguage": "en",
+      "name": "Wang's blog",
+      "description": "Wang's blog",
+      "publisher": "zqwang"
+    }
+  </script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://zqwang-cn.github.io/css/main.min.c166fa5a48e8b326dc193e5c2ea65b6f96720911149d941bddb3b0b8eff62af3.css" integrity="sha256-wWb6WkjosybcGT5cLqZbb5ZyCREUnZQb3bOwuO/2KvM=" crossorigin="anonymous">
+
+
+
+<noscript>
+
+  
+  
+
+  
+    <meta name="theme-color" content="#1dbc91" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1f676b" media="(prefers-color-scheme: light)">
+  
+
+  
+  <link rel="stylesheet" href="https://zqwang-cn.github.io/css/noscript.min.3f3b95436b19eaeb9223fb12c0b86737d53ee0a47fdba271a886c244bc03975c.css" integrity="sha256-PzuVQ2sZ6uuSI/sSwLhnN9U&#43;4KR/26JxqIbCRLwDl1w=" crossorigin="anonymous">
+
+</noscript>
+
+
+
+<link rel="preload" href="/fonts/open-sans-v34-latin-700.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-italic.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-regular.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/oswald-v29-latin-700.woff2" as="font" crossorigin="anonymous">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="https://zqwang-cn.github.io/js/main.f1da21dfea83dc0c36cea0b202c14a97e00aedab567e32702eb120f5ab8d974b.js" integrity="sha256-8doh3&#43;qD3Aw2zqCyAsFKl&#43;AK7atWfjJwLrEg9auNl0s=" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body>
+
+    <header>
+      
+
+  <a href="/">Wang&#39;s blog</a>
+
+
+
+
+  
+    <nav aria-label="Main menu.">
+      <ul>
+        
+          <li>
+            <a class="btn" href="/">Home</a>
+          </li>
+        
+      </ul>
+    </nav>
+  
+
+
+    </header>
+
+    <div class="filler">
+      
+
+  <main>
+    <article>
+      <header>
+        
+        <h1>进阶 - 任务管理</h1>
+
+        
+          <div class="terms">
+            <ul><li><a class="btn" href="/tags/qlib/">Qlib</a></li></ul>
+          </div>
+          <p>
+            
+              Published on <time datetime="2023-11-27">2023-11-27</time>
+            
+          </p>
+        
+        
+        
+        
+      </header>
+    
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="简介"><a class="anchor" href="#简介" title='Anchor for: 简介.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 简介</h2> 
+
+<p>工作流部分介绍了如何以低耦合的方式运行研究工作流，但是使用<code>qrun</code>时只能执行一个任务。为了自动生成与执行不同的任务，任务管理模块提供了一整套流程，包括任务生成、任务储存、任务训练与任务收集。使用此模块，用户可以在不同周期下，使用不同的损失甚至不同的模型运行任务。任务生成、模型训练以及数据合并与收集的流程如下：</p>
+<p>
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+    
+    
+    
+      
+      
+        <img
+          
+          loading="lazy"
+          src="https://qlib.readthedocs.io/en/latest/_images/Task-Gen-Recorder-Collector.svg"
+          alt="流程图"
+        />
+      
+    
+    
+  
+  
+
+</p>
+<p>该流程的一个例子在<a href="https://github.com/microsoft/qlib/tree/main/examples/model_rolling/task_manager_rolling.py">这里</a>。该流程可以用于在线服务。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="任务生成"><a class="anchor" href="#任务生成" title='Anchor for: 任务生成.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 任务生成</h2> 
+
+<p>一个任务包括模型、数据集、记录以及任何用户添加的内容。即使任务模板是固定的，用户仍然可以通过自定义<code>TaskGen</code>类来生成不同的任务。Qlib提供了<code>RollingGen</code>类来生成一系列使用不同时间段数据集的任务，这允许用户在一个实验中验证不同时间段数据在模型上的效果。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="任务储存"><a class="anchor" href="#任务储存" title='Anchor for: 任务储存.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 任务储存</h2> 
+
+<p>为了达到更高的效率，并获得集群操作的可能性，任务管理器将所有任务保存在MongoDB中。任务管理器可以自动获取未完成的任务并通过错误处理来管理一组任务的生命周期。用户在使用本模块时必须完成MongoDB的配置，可以在初始化时提供MongoDB的URL和数据库名，或在代码中做如下声明：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">qlib.config</span> <span class="kn">import</span> <span class="n">C</span>
+</span></span><span class="line"><span class="cl"><span class="n">C</span><span class="p">[</span><span class="s2">&#34;mongo&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;task_url&#34;</span> <span class="p">:</span> <span class="s2">&#34;mongodb://localhost:27017/&#34;</span><span class="p">,</span> <span class="c1"># MongoDB的url</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;task_db_name&#34;</span> <span class="p">:</span> <span class="s2">&#34;rolling_db&#34;</span> <span class="c1"># 数据库名</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div>
+
+
+
+
+
+
+
+
+  <h2 id="任务训练"><a class="anchor" href="#任务训练" title='Anchor for: 任务训练.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 任务训练</h2> 
+
+<p>在生成与储存任务后，就需要运行处于等待状态的任务。Qlib提供了<code>run_task</code>方法来运行任务池中的任务，但是用户也可以自定义如何执行任务。获取<code>task_func</code>的一个简单的方法是使用直接<code>qlib.model.trainer.task_train</code>方法，它将运行被任务定义的包括了模型、数据集、记录的整个工作流。</p>
+<p>训练器训练一组任务并返回一组模型记录器。Qlib提供了两种训练器，<code>TrainerR</code>是最简单的方式；<code>TrainerRM</code>基于任务管理器，可以帮助自动管理任务的生命周期。如果不需要使用任务管理器，则使用<code>TrainerR</code>训练一组<code>TaskGen</code>生成的任务就足够了。</p>
+
+
+
+
+
+
+
+
+
+  <h2 id="任务收集"><a class="anchor" href="#任务收集" title='Anchor for: 任务收集.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> 任务收集</h2> 
+
+<p>在收集模型的训练结果前，需要使用<code>qlib.init</code>指出<code>mlrun</code>的路径。</p>
+<p>为了在训练后收集任务的结果，Qlib提供了<code>Collector</code>、<code>Group</code>和<code>Ensemble</code>，它们分别以只读、可扩展和松耦合的方式收集结果。</p>
+<p><code>Collector</code>可以从任何地方收集对象，并对它们进行处理，如合并、分组、平均等。它有两步操作：<code>collect</code>（将所有信息收集到一个字典中）与<code>process_collect</code>（处理收集的字典）。</p>
+<p><code>Group</code>同样有两个步骤：<code>group</code>（基于<code>group_func</code>将一些对象分组并将它们转换为字典）与<code>reduce</code>（基于某些规则将字典转换为一个整体）。</p>
+<p><code>Ensemble</code>可以将多个对象合并为一个整体。可以在<code>Collector</code>的处理列表中设置想要的整合方法。常用的整合方法包括<code>AverageEnsemble</code>与<code>RollingEnsemble</code>。<code>AverageEnsemble</code>用于将同一时间段不同模型的结果合并；<code>RollingEnsemble</code>用于将不同时间段相同模型的结果合并。</p>
+<p>所以以上三种方法的层次是：<code>Collector</code>的第二个步骤对应<code>Group</code>，而<code>Group</code>的第二个步骤对应<code>Ensemble</code>。</p>
+
+
+
+    </article>
+  </main>
+
+
+    </div>
+    
+    <footer>
+      
+
+
+  
+
+    
+
+    
+      
+      
+    
+    
+    &lt;p&gt;Generated with &lt;a href=&#34;https://gohugo.io&#34;&gt;Hugo&lt;/a&gt; using the &lt;a href=&#34;https://gitlab.com/rmaguiar/hugo-theme-color-your-world&#34;&gt;Color Your World&lt;/a&gt; theme.&lt;/p&gt;
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="req-js">
+  <button class="outline-dashed" title="Change to light/dark mode."><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="#1dbc91" title="Change accent color." aria-label="Change accent color."><datalist id="presets"><option value="#1f676b"><option value="#1dbc91"><option value="#225670"><option value="#dd587c"><option value="#902b37"><option value="#f3a530"><option value="#754e85"><option value="#7fc121"><option value="#a8314a"><option value="#ff7433"><option value="#3e6728"><option value="#c063bd"><option value="#805080"><option value="#9d629d"><option value="#a064a0"><option value="#7daa50"><option value="#284531"><option value="#285790"><option value="#F5A83D"><option value="#88aa33"><option value="#015660"><option value="#bf274e"><option value="#bf4242"><option value="#51b37c"></datalist>
+</div>
+
+
+
+  <noscript>
+    <p class="noscript">Unable to execute JavaScript. Some features were disabled.</p>
+  </noscript>
+
+
+
+    </footer>
+    
+    
+    
+
+    
+    
+
+  </body>
+</html>

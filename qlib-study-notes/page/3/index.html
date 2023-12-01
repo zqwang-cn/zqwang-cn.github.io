@@ -7,7 +7,7 @@
 <meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
 
 
-<title>Rust学习笔记</title>
+<title>Qlib学习笔记</title>
 
 <meta name="author" content="zqwang">
 
@@ -18,12 +18,14 @@
 
 
 
-  <link rel="canonical" href="https://zqwang-cn.github.io/rust-study-notes/page/4/">
+  <link rel="canonical" href="https://zqwang-cn.github.io/qlib-study-notes/page/3/">
   
   
-    <link rel="prev" href="https://zqwang-cn.github.io/rust-study-notes/page/3/">
+    <link rel="prev" href="https://zqwang-cn.github.io/qlib-study-notes/page/2/">
   
   
+  
+    <link rel="next" href="https://zqwang-cn.github.io/qlib-study-notes/page/4/">
   
 
 
@@ -34,9 +36,9 @@
 
 
 <meta property="og:site_name" content="Wang&#39;s blog">
-<meta property="og:title" content="Rust学习笔记">
+<meta property="og:title" content="Qlib学习笔记">
 
-  <meta property="og:url" content="https://zqwang-cn.github.io/rust-study-notes/">
+  <meta property="og:url" content="https://zqwang-cn.github.io/qlib-study-notes/">
 
 
 
@@ -63,7 +65,7 @@
 
 
 
-  <link rel="alternate" type="application/rss+xml" href="https://zqwang-cn.github.io/rust-study-notes/index.xml" title="Wang&#39;s blog">
+  <link rel="alternate" type="application/rss+xml" href="https://zqwang-cn.github.io/qlib-study-notes/index.xml" title="Wang&#39;s blog">
 
 
 
@@ -184,7 +186,7 @@
     
     
     
-    <h1>Rust学习笔记</h1>
+    <h1>Qlib学习笔记</h1>
     
     
 
@@ -200,28 +202,11 @@
     
 
     <li>
-      <a class="btn" href="/rust-study-notes/macros/" title="十六、宏 (2023-03-31)">
-        <p>十六、宏</p>
+      <a class="btn" href="/qlib-study-notes/nested-decision-execution/" title="进阶 - 嵌套决策执行框架 (2023-11-23)">
+        <p>进阶 - 嵌套决策执行框架</p>
 
         
-          <time datetime="2023-03-31">2023-03-31</time>
-        
-      </a>
-    </li>
-  
-  
-    
-    
-    
-      
-    
-
-    <li>
-      <a class="btn" href="/rust-study-notes/unsafe-operations/" title="十七、不安全操作 (2023-04-01)">
-        <p>十七、不安全操作</p>
-
-        
-          <time datetime="2023-04-01">2023-04-01</time>
+          <time datetime="2023-11-23">2023-11-23</time>
         
       </a>
     </li>
@@ -234,28 +219,11 @@
     
 
     <li>
-      <a class="btn" href="/rust-study-notes/code-organization/" title="十八、代码组织 (2023-04-02)">
-        <p>十八、代码组织</p>
+      <a class="btn" href="/qlib-study-notes/online-serving/" title="进阶 - 在线服务 (2023-11-23)">
+        <p>进阶 - 在线服务</p>
 
         
-          <time datetime="2023-04-02">2023-04-02</time>
-        
-      </a>
-    </li>
-  
-  
-    
-    
-    
-      
-    
-
-    <li>
-      <a class="btn" href="/rust-study-notes/tests/" title="十九、测试 (2023-04-03)">
-        <p>十九、测试</p>
-
-        
-          <time datetime="2023-04-03">2023-04-03</time>
+          <time datetime="2023-11-23">2023-11-23</time>
         
       </a>
     </li>
@@ -268,11 +236,45 @@
     
 
     <li>
-      <a class="btn" href="/rust-study-notes/others/" title="二十、其他 (2023-04-04)">
-        <p>二十、其他</p>
+      <a class="btn" href="/qlib-study-notes/task-management/" title="进阶 - 任务管理 (2023-11-27)">
+        <p>进阶 - 任务管理</p>
 
         
-          <time datetime="2023-04-04">2023-04-04</time>
+          <time datetime="2023-11-27">2023-11-27</time>
+        
+      </a>
+    </li>
+  
+  
+    
+    
+    
+      
+    
+
+    <li>
+      <a class="btn" href="/qlib-study-notes/formulaic-alpha/" title="其它 - 建立公式化alpha (2023-11-27)">
+        <p>其它 - 建立公式化alpha</p>
+
+        
+          <time datetime="2023-11-27">2023-11-27</time>
+        
+      </a>
+    </li>
+  
+  
+    
+    
+    
+      
+    
+
+    <li>
+      <a class="btn" href="/qlib-study-notes/serialization/" title="其它 - 序列化 (2023-11-27)">
+        <p>其它 - 序列化</p>
+
+        
+          <time datetime="2023-11-27">2023-11-27</time>
         
       </a>
     </li>
@@ -306,7 +308,7 @@
       
       
       <li>
-        <a class="btn" href="/rust-study-notes/" aria-label="Go to first page.">
+        <a class="btn" href="/qlib-study-notes/" aria-label="Go to first page.">
           <svg aria-hidden="true">
             <use transform="rotate(180) translate(-18 -18)" xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#angle-double-right"/>
           </svg>
@@ -317,7 +319,7 @@
       
       
       <li>
-        <a class="btn" href="/rust-study-notes/page/3/" aria-label="Go to previous page.">
+        <a class="btn" href="/qlib-study-notes/page/2/" aria-label="Go to previous page.">
           <svg transform="rotate(180)" aria-hidden="true">
             <use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#angle-right"/>
           </svg>
@@ -379,40 +381,7 @@
         
           <li >
           
-            <a class="btn" href="/rust-study-notes/page/2/" aria-label="Go to page 2." >2</a>
-          
-          </li>
-        
-
-      
-      
-        
-        
-        
-        
-
-          
-          
-          
-
-            
-            
-              
-            
-
-
-          
-          
-
-        
-        
-        
-
-        
-        
-          <li >
-          
-            <a class="btn" href="/rust-study-notes/page/3/" aria-label="Go to page 3." >3</a>
+            <a class="btn" href="/qlib-study-notes/page/2/" aria-label="Go to page 2." >2</a>
           
           </li>
         
@@ -445,7 +414,40 @@
         
           <li class="current">
           
-            <p>4</p>
+            <p>3</p>
+          
+          </li>
+        
+
+      
+      
+        
+        
+        
+        
+
+          
+          
+          
+
+            
+            
+              
+            
+
+
+          
+          
+
+        
+        
+        
+
+        
+        
+          <li >
+          
+            <a class="btn" href="/qlib-study-notes/page/4/" aria-label="Go to page 4." >4</a>
           
           </li>
         
@@ -454,8 +456,24 @@
 
       
       
+      <li>
+        <a class="btn" href="/qlib-study-notes/page/4/" aria-label="Go to next page.">
+          <svg aria-hidden="true">
+            <use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#angle-right"/>
+          </svg>
+        </a>
+      </li>
+      
 
       
+      
+      <li>
+        <a class="btn" href="/qlib-study-notes/page/4/" aria-label="Go to last page.">
+          <svg aria-hidden="true">
+            <use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#angle-double-right"/>
+          </svg>
+        </a>
+      </li>
       
 
     </ul>
