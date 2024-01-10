@@ -7,7 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2023, zqwang; All rights reserved.</copyright>
-    <lastBuildDate>Mon, 27 Nov 2023 10:18:01 +0800</lastBuildDate><atom:link href="https://zqwang-cn.github.io/tags/qlib/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 13 Dec 2023 18:02:02 +0800</lastBuildDate><atom:link href="https://zqwang-cn.github.io/tags/qlib/index.xml" rel="self" type="application/rss+xml" />
+      <item>
+        <title>基础 - 序列化</title>
+        <link>https://zqwang-cn.github.io/qlib-code-analysis/serializable/</link>
+        <pubDate>Wed, 13 Dec 2023 12:16:27 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/qlib-code-analysis/serializable/</guid>
+        <description>在Qlib中，类qlib.utils.serial.Serializable是所有可序列化类（包括DataHandler、DataSet、Processor、Model等）的基类。
+该类提供了以下方法进行序列化/反序列化：
+config：设置哪些属性需要/不需要序列化 to_pickle：将对象序列化为文件 load：类方法，将文件反序列化为对象 general_dump：类方法，序列化任意对象。对于本类对象，调用其to_pickle方法；对于非本类对象，直接使用pickle进行序列化 该类使用以下机制灵活地控制每个属性是否需要序列化：
+_is_kept方法：判断一个属性是否需要序列化。规则如下（按优先级排序）： 如果属性在self.config_attr中，不需要序列化 如果属性在self._get_attr_list(&amp;ldquo;include&amp;rdquo;)中，需要序列化 如果属性在self._get_attr_list(&amp;ldquo;exclude&amp;rdquo;)中，不需要序列化 如果self.dump_all为真，需要序列化 如果属性以下划线开头，不需要序列化 config_attr字段：永远不会序列化此列表中的属性。默认为[&amp;quot;_include&amp;quot;, &amp;ldquo;_exclude&amp;rdquo;] _get_attr_list方法：获取需要序列化与不需要序列化的属性列表 _include与include_attr字段：需要序列化的属性列表。前者存在时返回前者，不存在时返回后者 _exclude与exclude_attr字段：不需要序列化的属性列表。前者存在时返回前者，不存在时返回后者 dump_all属性：表示是否序列化所有属性，为否则只序列化不以下划线开头的属性（优先级最低） _dump_all字段：dump_all属性的底层字段。默认为default_dump_all default_dump_all：默认情况下是否序列化所有属性。默认为否 该类提供以下字段/方法用于选择序列化后端：
+pickle_backend字段：序列化后端名称。目前可为pickle或dill get_backend方法：类方法，获取当前序列化后端 此外，该类实现了以下方法供序列化后端调用，以完成实际的序列化/反序列化工作：
+__getstate__：获取所有需要序列化的属性 __setstate__：设置所有需要反序列化的属性 </description>
+      </item>
+    
       <item>
         <title>简介</title>
         <link>https://zqwang-cn.github.io/qlib-study-notes/introduction/</link>
@@ -19,6 +33,37 @@
 框架 Qlib是一个由以上模块构成的平台。这些模块被设计为松耦合，每个模块可以单独使用。
 框架主要分为4层：
 基础设施层：提供量化研究的底层支持 学习框架层：用于训练可训练模型，支持监督学习与强化学习两类 工作流层：覆盖量化研究的整个工作流 接口层：为用户提供友好的接口 </description>
+      </item>
+    
+      <item>
+        <title>数据 - 数据集</title>
+        <link>https://zqwang-cn.github.io/qlib-code-analysis/dataset/</link>
+        <pubDate>Wed, 13 Dec 2023 18:02:02 +0800</pubDate>
+        
+        <guid>https://zqwang-cn.github.io/qlib-code-analysis/dataset/</guid>
+        <description>Dataset qlib.data.dataset.Dataset类是所有数据集类的基类。该类未实现任何实际功能，只设计了基本接口。该类是Serializable类的子类，因此所有数据集都可以序列化。
+在该类的设计中，一个数据集对象可以根据参数返回不同的分片（如训练集/测试集等），因此该类将数据的准备过程拆分为两个方法：
+setup_data：进行整个数据集的准备工作，如从硬盘加载数据等。不返回数据 prepare：根据参数准备不同分片的数据，对数据进行预处理并返回 该类的其它方法有：
+__init__：初始化对象。会调用setup_data方法 config：配置对象 DatasetH qlib.data.dataset.DatasetH类表示带有数据处理器的数据集，它是Dataset类的子类。
+在数据集的使用过程中，有以下两个常见的问题：
+在绝大部分情况下，数据集本身的操作完全相同，只是不同的底层数据需要进行不同的预处理操作。如果将预处理操作放在数据集类中进行，则对于每类数据都需要实现一个新的数据集类，这显然没有必要 prepare方法被设计为根据参数准备分片数据。对于金融数据，一般根据时间范围进行分片，但是如果每次调用prepare方法都传入时间范围则显得比较多余且容易出错 为了解决以上两个问题，该类进行了以下两点设计：
+将数据预处理操作与数据集类解耦，交由数据处理器负责，这样就无需重复实现数据集类。需要注意的是，如果有一些特殊的预处理操作，如：与特定模型相关的操作或与数据分片相关的操作，则仍需实现自定义数据集类 预先定义好所有可能的分片名称与对应的时间范围，这样在调用prepare方法时就可以直接使用分片名称作为参数 成员变量：
+handler：数据处理器
+segments：数据集分片信息，格式如下：
+{ &amp;#39;train&amp;#39;: (&amp;#34;2008-01-01&amp;#34;, &amp;#34;2014-12-31&amp;#34;), &amp;#39;valid&amp;#39;: (&amp;#34;2017-01-01&amp;#34;, &amp;#34;2020-08-01&amp;#34;,), &amp;#39;test&amp;#39;: (&amp;#34;2015-01-01&amp;#34;, &amp;#34;2016-12-31&amp;#34;,), } 核心方法：
+prepare：准备数据。根据参数中的分片名称获取相应的时间范围，并调用_prepare_seg生成每个分片的数据 _prepare_seg：准备一个分片的数据。根据时间范围调用数据处理器的fetch方法获取一个分片的数据 setup_data：准备原始数据。调用数据处理器的同名方法 其它方法：
+__init__：初始化对象。必须传入数据处理器与数据分片信息 config：配置对象 帮助方法（静态）：
+_get_extrema：获取数据极值 get_min_time：获取最小时间 get_max_time：获取最大时间 TSDatasetH qlib.data.dataset.TSDatasetH类表示带有数据处理器的时序数据集，该类是DatasetH类的子类。
+DatasetH类用于返回原始的表格数据（格式一般为pandas.DataFrame），表格数据中存储了每个标的在每个时间点的特征数据。而TSDatasetH类用于返回时序数据，每个标的在每个时间点的时序数据是由该时间点及之前一段时间的原始数据组成的序列。
+成员变量：
+step_len：每个时间点的时序数据中包含的原始数据长度 核心方法：
+prepare：准备数据。继承自父类，不作修改 _prepare_seg：准备一个分片的数据。使用父类同名方法获取需要使用的原始数据，之后封装为TSDataSampler类对象并返回 setup_data：准备原始数据 其它方法：
+__init__：初始化对象。可以设置step_len（默认为DEFAULT_STEP_LEN） config：配置对象。可以设置step_len _extend_slice：静态方法。将时序数据的起止时间扩展为所依赖的原始数据的起止时间 TSDataSampler qlib.data.dataset.TSDataSampler类表示时序数据采样器，它是TSDatasetH类prepare方法的返回结果。
+该类通过索引机制获取时序数据，其接口格式与torch.data.utils.Dataset类似，包含以下方法：
+__len__：获取数据集大小 __getitem__：根据索引获取时序数据 其中索引可以为以下两种形式之一：
+整数：例如tsds[len(tsds) - 1] 时间点-标的对：例如tsds[&#39;2016-12-31&#39;, &amp;quot;SZ300315&amp;quot;] 由于每个时间点的时序数据都包含之前一段时间的原始数据，因此相邻时间点的时序数据中存在大量重复的原始数据，此时如果储存全部时序数据会出现严重的冗余。为了解决这个问题，该类只存储原始数据，在每次检索时根据传入的索引获取原始数据、动态构建时序数据并返回。用户传入的原始数据通常是索引为&amp;quot;时间点-标的对&amp;quot;的pd.DataFrame格式数据，为了加快检索速度，该类在初始化时将索引顺序掉换为&amp;quot;标的-时间点对&amp;quot;，并将数据格式转换为np.ndarray。
+储存转换后的原始数据的字段为：
+data_arr：np.ndarray类型。转换后的原始数据 由于np.ndarray类型不包含索引，因此该类使用以下字段储存从索引到原始数据位置的映射：</description>
       </item>
     
       <item>

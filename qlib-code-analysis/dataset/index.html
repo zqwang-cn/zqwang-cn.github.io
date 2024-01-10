@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="dark">
+  <head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo 0.121.1">
+<meta name="theme" content="Color Your World -- gitlab.com/rmaguiar/hugo-theme-color-your-world">
+
+
+<title>数据 - 数据集 | Wang&#39;s blog</title>
+
+<meta name="author" content="zqwang">
+
+
+
+<meta name="robots" content="index follow">
+
+
+
+
+  
+    <link rel="canonical" href="https://zqwang-cn.github.io/qlib-code-analysis/dataset/">
+  
+
+
+
+
+
+
+
+
+<meta property="og:site_name" content="Wang&#39;s blog">
+<meta property="og:title" content="数据 - 数据集">
+
+  <meta property="og:url" content="https://zqwang-cn.github.io/qlib-code-analysis/dataset/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:type" content="website">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="theme-color" content="#222">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://zqwang-cn.github.io/",
+      "inLanguage": "en",
+      "name": "Wang's blog",
+      "description": "Wang's blog",
+      "publisher": "zqwang"
+    }
+  </script>
+
+
+
+
+
+
+<link rel="stylesheet" href="https://zqwang-cn.github.io/css/main.min.c166fa5a48e8b326dc193e5c2ea65b6f96720911149d941bddb3b0b8eff62af3.css" integrity="sha256-wWb6WkjosybcGT5cLqZbb5ZyCREUnZQb3bOwuO/2KvM=" crossorigin="anonymous">
+
+
+
+<noscript>
+
+  
+  
+
+  
+    <meta name="theme-color" content="#1dbc91" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#1f676b" media="(prefers-color-scheme: light)">
+  
+
+  
+  <link rel="stylesheet" href="https://zqwang-cn.github.io/css/noscript.min.3f3b95436b19eaeb9223fb12c0b86737d53ee0a47fdba271a886c244bc03975c.css" integrity="sha256-PzuVQ2sZ6uuSI/sSwLhnN9U&#43;4KR/26JxqIbCRLwDl1w=" crossorigin="anonymous">
+
+</noscript>
+
+
+
+<link rel="preload" href="/fonts/open-sans-v34-latin-700.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-italic.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/open-sans-v34-latin-regular.woff2" as="font" crossorigin="anonymous">
+<link rel="preload" href="/fonts/oswald-v29-latin-700.woff2" as="font" crossorigin="anonymous">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<script src="https://zqwang-cn.github.io/js/main.f1da21dfea83dc0c36cea0b202c14a97e00aedab567e32702eb120f5ab8d974b.js" integrity="sha256-8doh3&#43;qD3Aw2zqCyAsFKl&#43;AK7atWfjJwLrEg9auNl0s=" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body>
+
+    <header>
+      
+
+  <a href="/">Wang&#39;s blog</a>
+
+
+
+
+  
+    <nav aria-label="Main menu.">
+      <ul>
+        
+          <li>
+            <a class="btn" href="/">Home</a>
+          </li>
+        
+      </ul>
+    </nav>
+  
+
+
+    </header>
+
+    <div class="filler">
+      
+
+  <main>
+    <article>
+      <header>
+        
+        <h1>数据 - 数据集</h1>
+
+        
+          <div class="terms">
+            <ul><li><a class="btn" href="/tags/qlib/">Qlib</a></li><li><a class="btn" href="/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a></li></ul>
+          </div>
+          <p>
+            
+              Published on <time datetime="2023-12-13">2023-12-13</time>
+            
+          </p>
+        
+        
+        
+        
+      </header>
+    
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="dataset"><a class="anchor" href="#dataset" title='Anchor for: Dataset.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> Dataset</h2> 
+
+<p><code>qlib.data.dataset.Dataset</code>类是所有数据集类的基类。该类未实现任何实际功能，只设计了基本接口。该类是<code>Serializable</code>类的子类，因此所有数据集都可以序列化。</p>
+<p>在该类的设计中，一个数据集对象可以根据参数返回不同的分片（如训练集/测试集等），因此该类将数据的准备过程拆分为两个方法：</p>
+<ul>
+<li>setup_data：进行整个数据集的准备工作，如从硬盘加载数据等。不返回数据</li>
+<li>prepare：根据参数准备不同分片的数据，对数据进行预处理并返回</li>
+</ul>
+<p>该类的其它方法有：</p>
+<ul>
+<li>__init__：初始化对象。会调用setup_data方法</li>
+<li>config：配置对象</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h2 id="dataseth"><a class="anchor" href="#dataseth" title='Anchor for: DatasetH.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> DatasetH</h2> 
+
+<p><code>qlib.data.dataset.DatasetH</code>类表示带有数据处理器的数据集，它是<code>Dataset</code>类的子类。</p>
+<p>在数据集的使用过程中，有以下两个常见的问题：</p>
+<ul>
+<li>在绝大部分情况下，数据集本身的操作完全相同，只是不同的底层数据需要进行不同的预处理操作。如果将预处理操作放在数据集类中进行，则对于每类数据都需要实现一个新的数据集类，这显然没有必要</li>
+<li>prepare方法被设计为根据参数准备分片数据。对于金融数据，一般根据时间范围进行分片，但是如果每次调用prepare方法都传入时间范围则显得比较多余且容易出错</li>
+</ul>
+<p>为了解决以上两个问题，该类进行了以下两点设计：</p>
+<ul>
+<li>将数据预处理操作与数据集类解耦，交由数据处理器负责，这样就无需重复实现数据集类。需要注意的是，如果有一些特殊的预处理操作，如：与特定模型相关的操作或与数据分片相关的操作，则仍需实现自定义数据集类</li>
+<li>预先定义好所有可能的分片名称与对应的时间范围，这样在调用prepare方法时就可以直接使用分片名称作为参数</li>
+</ul>
+<p>成员变量：</p>
+<ul>
+<li>
+<p>handler：数据处理器</p>
+</li>
+<li>
+<p>segments：数据集分片信息，格式如下：</p>
+<div class="highlight"><pre aria-label="Box containing code sample." tabindex=0 class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;train&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&#34;2008-01-01&#34;</span><span class="p">,</span> <span class="s2">&#34;2014-12-31&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;valid&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&#34;2017-01-01&#34;</span><span class="p">,</span> <span class="s2">&#34;2020-08-01&#34;</span><span class="p">,),</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;test&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&#34;2015-01-01&#34;</span><span class="p">,</span> <span class="s2">&#34;2016-12-31&#34;</span><span class="p">,),</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div></li>
+</ul>
+<p>核心方法：</p>
+<ul>
+<li>prepare：准备数据。根据参数中的分片名称获取相应的时间范围，并调用_prepare_seg生成每个分片的数据</li>
+<li>_prepare_seg：准备一个分片的数据。根据时间范围调用数据处理器的fetch方法获取一个分片的数据</li>
+<li>setup_data：准备原始数据。调用数据处理器的同名方法</li>
+</ul>
+<p>其它方法：</p>
+<ul>
+<li>__init__：初始化对象。必须传入数据处理器与数据分片信息</li>
+<li>config：配置对象</li>
+</ul>
+<p>帮助方法（静态）：</p>
+<ul>
+<li>_get_extrema：获取数据极值</li>
+<li>get_min_time：获取最小时间</li>
+<li>get_max_time：获取最大时间</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h2 id="tsdataseth"><a class="anchor" href="#tsdataseth" title='Anchor for: TSDatasetH.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> TSDatasetH</h2> 
+
+<p><code>qlib.data.dataset.TSDatasetH</code>类表示带有数据处理器的时序数据集，该类是<code>DatasetH</code>类的子类。</p>
+<p><code>DatasetH</code>类用于返回原始的表格数据（格式一般为<code>pandas.DataFrame</code>），表格数据中存储了每个标的在每个时间点的特征数据。而<code>TSDatasetH</code>类用于返回时序数据，每个标的在每个时间点的时序数据是由该时间点及之前一段时间的原始数据组成的序列。</p>
+<p>成员变量：</p>
+<ul>
+<li>step_len：每个时间点的时序数据中包含的原始数据长度</li>
+</ul>
+<p>核心方法：</p>
+<ul>
+<li>prepare：准备数据。继承自父类，不作修改</li>
+<li>_prepare_seg：准备一个分片的数据。使用父类同名方法获取需要使用的原始数据，之后封装为<code>TSDataSampler</code>类对象并返回</li>
+<li>setup_data：准备原始数据</li>
+</ul>
+<p>其它方法：</p>
+<ul>
+<li>__init__：初始化对象。可以设置step_len（默认为DEFAULT_STEP_LEN）</li>
+<li>config：配置对象。可以设置step_len</li>
+<li>_extend_slice：静态方法。将时序数据的起止时间扩展为所依赖的原始数据的起止时间</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  <h2 id="tsdatasampler"><a class="anchor" href="#tsdatasampler" title='Anchor for: TSDataSampler.'><svg aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#hashtag"/></svg></a> TSDataSampler</h2> 
+
+<p><code>qlib.data.dataset.TSDataSampler</code>类表示时序数据采样器，它是<code>TSDatasetH</code>类prepare方法的返回结果。</p>
+<p>该类通过索引机制获取时序数据，其接口格式与<code>torch.data.utils.Dataset</code>类似，包含以下方法：</p>
+<ul>
+<li>__len__：获取数据集大小</li>
+<li>__getitem__：根据索引获取时序数据</li>
+</ul>
+<p>其中索引可以为以下两种形式之一：</p>
+<ul>
+<li>整数：例如<code>tsds[len(tsds) - 1]</code></li>
+<li>时间点-标的对：例如<code>tsds['2016-12-31', &quot;SZ300315&quot;]</code></li>
+</ul>
+<p>由于每个时间点的时序数据都包含之前一段时间的原始数据，因此相邻时间点的时序数据中存在大量重复的原始数据，此时如果储存全部时序数据会出现严重的冗余。为了解决这个问题，该类只存储原始数据，在每次检索时根据传入的索引获取原始数据、动态构建时序数据并返回。用户传入的原始数据通常是索引为&quot;时间点-标的对&quot;的<code>pd.DataFrame</code>格式数据，为了加快检索速度，该类在初始化时将索引顺序掉换为&quot;标的-时间点对&quot;，并将数据格式转换为<code>np.ndarray</code>。</p>
+<p>储存转换后的原始数据的字段为：</p>
+<ul>
+<li>data_arr：<code>np.ndarray</code>类型。转换后的原始数据</li>
+</ul>
+<p>由于<code>np.ndarray</code>类型不包含索引，因此该类使用以下字段储存从索引到原始数据位置的映射：</p>
+<ul>
+<li>idx_df字段：<code>pd.DataFrame</code>类型。该字段的行索引为时间点，列索引为标的，每个&quot;时间点-标的对&quot;对应该字段的一个&quot;行-列&quot;坐标，位于该坐标的数据为该&quot;时间点-标的对&quot;在data_arr字段中的原始数据位置</li>
+<li>idx_map字段：<code>np.ndarray</code>类型。储存从整数索引到idx_df的&quot;行-列&quot;坐标的映射</li>
+<li>data_index字段：<code>pd.MultiIndex</code>类型。储存从整数索引到&quot;时间点-标的对&quot;索引的映射</li>
+</ul>
+<p>基于以上字段，该类使用以下方法从索引找到相应的原始数据：</p>
+<ul>
+<li>_get_row_col方法：将整数索引或&quot;时间点-标的对&quot;索引转换为idx_df的&quot;行-列&quot;坐标</li>
+<li>_get_indices：将idx_df的&quot;行-列&quot;坐标转换为data_arr中的原始数据位置</li>
+</ul>
+<p>该类的其它成员：</p>
+<ul>
+<li>__init__：初始化对象。调用以下静态方法：
+<ul>
+<li>build_index：根据原始数据构建idx_df与idx_map字段</li>
+<li>idx_map2arr：将idx_map字段转换为<code>np.ndarray</code>格式</li>
+<li>flt_idx_map：根据flt_data过滤idx_map字段</li>
+<li>slice_idx_map_and_data_index：根据起止时间过滤idx_map与data_index字段</li>
+</ul>
+</li>
+<li>config：配置对象</li>
+<li>get_index：获取索引</li>
+<li>empty：属性。判断数据集是否为空</li>
+</ul>
+
+
+
+    </article>
+  </main>
+
+
+    </div>
+    
+    <footer>
+      
+
+
+  
+
+    
+
+    
+      
+      
+    
+    
+    &lt;p&gt;Generated with &lt;a href=&#34;https://gohugo.io&#34;&gt;Hugo&lt;/a&gt; using the &lt;a href=&#34;https://gitlab.com/rmaguiar/hugo-theme-color-your-world&#34;&gt;Color Your World&lt;/a&gt; theme.&lt;/p&gt;
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="req-js">
+  <button class="outline-dashed" title="Change to light/dark mode."><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use xlink:href="/img/bundle.min.fc89b321aa39dfb355170fc007ce5b94.svg#adjust"/></svg></button><input class="outline-dashed" type="color" list="presets" value="#1dbc91" title="Change accent color." aria-label="Change accent color."><datalist id="presets"><option value="#1f676b"><option value="#1dbc91"><option value="#225670"><option value="#dd587c"><option value="#902b37"><option value="#f3a530"><option value="#754e85"><option value="#7fc121"><option value="#a8314a"><option value="#ff7433"><option value="#3e6728"><option value="#c063bd"><option value="#805080"><option value="#9d629d"><option value="#a064a0"><option value="#7daa50"><option value="#284531"><option value="#285790"><option value="#F5A83D"><option value="#88aa33"><option value="#015660"><option value="#bf274e"><option value="#bf4242"><option value="#51b37c"></datalist>
+</div>
+
+
+
+  <noscript>
+    <p class="noscript">Unable to execute JavaScript. Some features were disabled.</p>
+  </noscript>
+
+
+
+    </footer>
+    
+    
+    
+
+    
+    
+
+  </body>
+</html>
